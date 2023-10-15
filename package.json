@@ -23,7 +23,7 @@
     "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.13",
     "@mui/x-date-pickers": "^6.10.1",
-    "@prisma/client": "^5.0.0",
+    "@prisma/client": "^5.4.2",
     "@reduxjs/toolkit": "^1.9.2",
     "@remix-run/css-bundle": "2.0.1",
     "@remix-run/node": "2.0.1",
@@ -69,7 +69,7 @@
     "eslint-plugin-mui-path-imports": "^0.0.15",
     "eslint": "^8.38.0",
     "typescript": "^5.1.6",
-    "prisma": "^5.0.0",
+    "prisma": "^5.4.2",
     "ts-node": "^10.9.1"
   },
   "engines": {
