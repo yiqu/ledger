@@ -1,0 +1,17 @@
+import type { Account } from "./account.model";
+import type { Expense } from "./expense.model";
+
+export enum DataBlockDisplayMode {
+  TABLE = "table",
+  CARD = "card"
+}
+
+export interface AccountAndExpense {
+  account: Account;
+  expense: Expense;
+}
+
+export interface DateDisplayFormat {
+  display: string;
+  tooltip: string;
+}

@@ -25,8 +25,8 @@ model Expense {
   date      DateTime
   dateAdded DateTime  @default(now())
   updatedAt DateTime? @updatedAt
-  Account   Account?  @relation(fields: [accountId], references: [id])
-  accountId String?   @db.ObjectId
+  account   Account   @relation(fields: [accountId], references: [id])
+  accountId String    @db.ObjectId
 }
 
 model DataSettings {
