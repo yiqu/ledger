@@ -1,8 +1,7 @@
 import type { DataSettingsToAdd, SettingsAllData } from "~/shared/models/settings";
 import { prisma } from "./database.server";
 import type { Prisma } from "@prisma/client";
-
-export const USER_ID = "KEVINQ";
+import { USER_ID } from "~/shared/utils/constants";
 
 export async function getDataSettingsByUserId(userId: string) {
   try {

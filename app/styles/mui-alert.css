@@ -1,0 +1,8 @@
+.MuiAlert-message {
+  width: 100%;
+}
+
+.MuiAlert-icon {
+  justify-content: center;
+  align-items: center;
+}

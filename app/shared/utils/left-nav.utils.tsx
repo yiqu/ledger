@@ -18,8 +18,8 @@ import { NavigationItem } from "~/shared/models/nav-item.model";
 export const GET_LEFT_NAV_ITEMS = () => {
   const LEFT_NAV_ITEMS = [
     new NavigationItem('Dashboard', 'dashboard', ['/'], <DashboardOutlinedIcon color='primary' />),
-    new NavigationItem('Data', 'data', ['/',  'data'], <FormatListBulletedOutlinedIcon color='primary' />),
-    new NavigationItem('Banks', 'banks', ['/', 'banks'], <AccountBalanceIconOutlined color='primary' />),
+    new NavigationItem('Expenses', 'expenses', ['/', 'expenses'], <FormatListBulletedOutlinedIcon color='primary' />),
+    new NavigationItem('Accounts', 'accounts', ['/', 'accounts'], <AccountBalanceIconOutlined color='primary' />),
     new NavigationItem('Settings', 'settings', ['/', 'settings'], <SettingsIconOutlined color='primary' />),
     new NavigationItem('About', 'about', ['/', 'about'], <InfoIconOutlined color='primary' />),
   ];
@@ -31,10 +31,10 @@ export const getFilledIcon = (pathName: string): JSX.Element => {
     case 'dashboard': {
       return <DashboardIcon color='primary' />;
     }
-    case 'data': {
+    case 'expenses': {
       return <FormatListBulletedIcon color='primary' />;
     }
-    case 'banks': {
+    case 'accounts': {
       return <AccountBalanceIcon color='primary' />;
     }
     case 'Settings': {

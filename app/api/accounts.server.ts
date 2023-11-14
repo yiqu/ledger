@@ -106,21 +106,17 @@ export async function getAccountExpenses(accountId: string) {
     return res?.expenses;
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
     console.log('Server error at getAccountExpenses(): ', JSON.stringify(error));
-    throw new Error(`Account records could not be retrieved. Code: ${error.code}`);
+    throw new Error(`Account expenses could not be retrieved. Code: ${error.code}`);
   }
 }
 
 
 
 export async function getShownAccountAndExpenses(): Promise<AccountWithPreCalculateExpenses[]> {
-  // const currentTime = Date.now();
-  // if ((currentTime - cachedShownBanksAndRecords.insertTime) < 60_000) {
-  //   return cachedShownBanksAndRecords.data;
-  // }
 
   const settings = await getDataSettingsByUserId(USER_ID);
   const dashboardCount: number = settings?.dashboardCount || 20;
-      
+
   try {
     const shownAccounts = await prisma.account.findMany({
       where: {
@@ -140,7 +136,7 @@ export async function getShownAccountAndExpenses(): Promise<AccountWithPreCalcul
     });
 
     const shownAccountIds = shownAccounts.map(account => account.id);
-    
+
     const totalExpenseCountByAccountId = await prisma.expense.groupBy({
       by: ['accountId'],
       _count: {
@@ -153,7 +149,7 @@ export async function getShownAccountAndExpenses(): Promise<AccountWithPreCalcul
       }
     });
 
-    const accountsWithExpenseCount: AccountWithPreCalculateExpenses[] = shownAccounts.map(account => { 
+    const accountsWithExpenseCount: AccountWithPreCalculateExpenses[] = shownAccounts.map(account => {
       const expenseCount = totalExpenseCountByAccountId.find(expense => expense.accountId === account.id);
 
       return {
@@ -161,11 +157,6 @@ export async function getShownAccountAndExpenses(): Promise<AccountWithPreCalcul
         expenseCount: expenseCount?._count?.accountId || 0
       };
     });
-
-    // cachedShownBanksAndRecords = {
-    //   data: banksWithRecordCount,
-    //   insertTime: Date.now()
-    // };
 
     return accountsWithExpenseCount;
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
@@ -175,7 +166,7 @@ export async function getShownAccountAndExpenses(): Promise<AccountWithPreCalcul
 }
 
 export async function getDashboardChartData(): Promise<DashboardChartData[]> {
-  // Get all bank data 
+  // Get all account data 
   const allAccountData = await prisma.account.findMany({
     where: {
       shown: true

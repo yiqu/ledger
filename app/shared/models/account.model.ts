@@ -17,7 +17,7 @@ export interface Account extends AccountAddable {
   dateAdded: string | Date | null;
   updatedAt: string | Date | null;
   _count?: {
-    records: number;
+    expenses: number;
   };
   dateAddedFromNow?: DateDisplayFormat;
   updatedAtFromNow?: DateDisplayFormat;
@@ -48,10 +48,10 @@ export interface AccountWithExpenses {
 }
 
 export interface DashboardChartData {
-  [bankName: string]: number | string | null;
+  [accountName: string]: number | string | null;
 }
 
-export interface DashboardRecordsData {
+export interface DashboardExpensesData {
   accountsData: AccountWithExpenses[];
   isChartShown: boolean;
   chartType: DashboardChartType;

@@ -1,10 +1,10 @@
-export const USER_ID = "KEVINQ";
+export const USER_ID = "Kqpro";
 export const LS_APP_THEME = 'app-theme';
 
-export const TransformPageTitle: {[key: string]: string} = {
+export const TransformPageTitle: { [key: string]: string } = {
   '': 'Dashboard',
   data: 'Data',
-  banks: 'Banks',
+  accounts: 'Accounts',
   about: 'About',
   settings: 'Settings'
 };

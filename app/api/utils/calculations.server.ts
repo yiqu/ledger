@@ -3,7 +3,7 @@ import { convertDateDisplay } from "./date.server";
 import type { AccountWithExpenses, AccountWithPreCalculateExpenses } from "~/shared/models/account.model";
 import type { ExpenseDisplay, ExpenseWithoutAccount } from "~/shared/models/expense.model";
 
-export function calculateGainRateForBank(account: AccountWithPreCalculateExpenses): AccountWithExpenses {
+export function calculateGainRateForAccount(account: AccountWithPreCalculateExpenses): AccountWithExpenses {
   const expensesCopy: ExpenseWithoutAccount[] = [...account.expenses]; 
   const result: ExpenseDisplay[] = [];
   const totalAmount = expensesCopy.reduce((acc, expense) => {

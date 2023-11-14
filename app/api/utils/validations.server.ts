@@ -12,11 +12,11 @@ export async function isValidStringCount(text: string, count: number = 1) {
 }
 
 
-export async function validateRecordToAdd(record: ExpenseAddable) {
+export async function validateExpenseToAdd(expense: ExpenseAddable) {
   const schema = object().shape({
     amount: number().required("Dollar amount field is required.").min(0, `Amount has to be greater than 0.`),
     date: date().required("Date field is required."),
     accountId: string().required("Account id is required.")
   });
-  return await schema.validate(record);
+  return await schema.validate(expense);
 }

@@ -18,10 +18,10 @@ export function getRandomColor2(number: number) {
   return `hsl(${hue},50%,75%)`;
 }
 
-export const getLineColorByBankName = (bankName: string, index: number): string => {
+export const getLineColorByAccountName = (accountName: string, index: number): string => {
   let color = '';
 
-  switch (bankName) {
+  switch (accountName) {
     case 'Ascensus (RC)': {
       color = '#cccc00';
       break;

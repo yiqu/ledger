@@ -1,0 +1,50 @@
+.positive {
+  color: #00b33c;
+}
+
+.negative {
+  color: #b32400;
+}
+
+.no-change {
+  color: #888;
+}
+
+.pos-bg {
+  background-color: #e1f5e154;
+}
+
+.neg-bg-1 {
+  background-color: #f7e5e536;
+}
+
+.neg-bg-2 {
+  background-color: #f7e5e59e;
+}
+
+.neg-bg-3 {
+  background-color: #f7e5e5d9;
+}
+
+.no-change-bg {
+  background-color: #cccccc0f;
+}
+
+.expense-box .decimal {
+  font-size: 10px;
+  margin-bottom: 3px;
+  margin-left: 1px;
+  color: #555;
+}
+
+.account-header-total .integer {
+  font-size: 20px;
+  line-height: 1.334;
+  font-weight: 500;
+}
+
+.account-header-total .decimal {
+  font-size: 15px;
+  margin-bottom: 4px;
+  margin-left: 1px;
+}
