@@ -92,7 +92,7 @@ function Layout({ child }: { child: React.ReactNode }) {
             }
           } }
         />
-        <Tooltip id="tooltip" variant='dark' style={ { zIndex: 1300 } } />
+        {/* <Tooltip id="tooltip" variant='dark' style={ { zIndex: 1300 } } /> */ }
       </Box>
     </ThemeProvider>
 

@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import type { HeadersFunction, TypedResponse } from "@remix-run/node";
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
@@ -26,6 +25,7 @@ import { TitleNameDisplay } from "~/shared/components/Title";
 import { getDashboardChartData, getShownAccountAndExpenses } from "~/api/accounts.server";
 import { calculateGainRateForAccount } from "~/api/utils/calculations.server";
 import { getLineColorByAccountName } from "~/api/utils/utils.server";
+import Box from "@mui/material/Box";
 
 
 
