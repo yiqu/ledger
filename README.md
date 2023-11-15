@@ -17,7 +17,7 @@ It is generally recommended to use a Git repository, because future commits will
 ```sh
 git checkout master
 npm install
-npx npx prisma init --datasource-provider mongodb # if no prisma folder has been generated
+npx prisma init --datasource-provider mongodb # if no prisma folder has been generated
 touch .env # create a .env file
 # add DATABASE_URL = "mongodb+srv://userName:password@mycluster.emeuyw6.mongodb.net/ledgerdev?retryWrites=true&w=majority" inside .env file
 npx prisma generate
