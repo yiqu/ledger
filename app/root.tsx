@@ -53,7 +53,7 @@ function Document({ title, children }: { title?: string; children: React.ReactNo
   return (
     <html lang="en">
       <head>
-        {title && <title>{title}</title>}
+        { title && <title>{ title }</title> }
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
@@ -64,9 +64,9 @@ function Document({ title, children }: { title?: string; children: React.ReactNo
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-        {process.env.NODE_ENV === "production" && (
+        { process.env.NODE_ENV === "production" && (
           <Analytics />
-        )}
+        ) }
       </body>
     </html>
   );
@@ -91,7 +91,7 @@ export function ErrorBoundary({ error }: { error: any }) {
   // Any value can be thrown, not just errors!
   return (
     <Document>
-      {comp}
+      { comp }
     </Document>
   );
 }

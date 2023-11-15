@@ -36,7 +36,7 @@ export function links() {
 export const meta: MetaFunction = (data) => {
   return [
     { title: "Dashboard - Ledger" },
-    { name: "description", content: "Summary of all data." },
+    { name: "description", content: "Summary of all expenses." },
   ];
 };
 
