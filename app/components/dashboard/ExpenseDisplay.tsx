@@ -3,12 +3,9 @@ import Typography from "@mui/material/Typography";
 import { grey } from "@mui/material/colors";
 import { Link } from "@remix-run/react";
 import Currency from "~/shared/components/Currency";
-import useScreenSize from "~/shared/hooks/useIsMobile";
 import type { ExpenseDisplay as IExpenseDisplay } from "~/shared/models/expense.model";
 
 function ExpenseDisplay({ expense }: { expense: IExpenseDisplay }) {
-  const sizes = useScreenSize();
-  const isLargeScreen: boolean = sizes.isAboveXl;
 
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="start" width="100%" mb={ 1 } py={ 1 } px={ 2 } className={ `${expense.bgColorClassName} expense-box` }>

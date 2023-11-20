@@ -7,7 +7,7 @@ import TitleBarLayout from "~/components/title/TitleBarLayout";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import type { Account } from "~/shared/models/account.model";
 import { TitleNameDisplay } from "~/shared/components/Title";
-import AccountList from "~/components/account/AccountList";
+import AccountsDisplay from "~/components/account/Accounts";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -38,7 +38,8 @@ function Accounts() {
           Total: { accounts.length }
         </Typography>
       </TitleBarLayout>
-      <AccountList accounts={ accounts } />
+
+      <AccountsDisplay />
     </Stack>
   );
 }

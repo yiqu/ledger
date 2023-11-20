@@ -1,4 +1,3 @@
-import type { FormControlLabelProps } from "@mui/material/FormControlLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -34,7 +33,7 @@ function HFSwitch({ name, label, control, helperText, formcontrolSize, labelProp
           <FormControl size={ formcontrolSize ?? 'medium' } >
             <FormControlLabel
               control={
-                <Switch 
+                <Switch
                   id={ `${name}-switch` }
                   { ...props }
                   { ...field }
@@ -45,14 +44,14 @@ function HFSwitch({ name, label, control, helperText, formcontrolSize, labelProp
               label={ label }
               { ...labelProps }
             />
-            <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ {ml: 0} } >
+            <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ { ml: 0 } } >
               {
                 <Typography variant="caption" color={ red } component="span"> { error ? error.message : helperText } </Typography>
               }
             </FormHelperText>
           </FormControl>
         );
-       } }
+      } }
     />
   );
 }

@@ -5,20 +5,20 @@ import type { ErrorResponse } from "@remix-run/react";
 import { Link } from "@remix-run/react";
 //import type { ErrorResponse } from "~/shared/models/http.model";
 
-function ActionLoaderErrorDisplay({ error, backToUrl = "/" }: {error: ErrorResponse, backToUrl?: string}) {
+function ActionLoaderErrorDisplay({ error, backToUrl = "/" }: { error: ErrorResponse, backToUrl?: string }) {
 
   return (
-    <Stack direction="column" justifyContent="center" alignItems="center" width="100%" spacing={ 3 }>
+    <Stack direction="column" justifyContent="center" alignItems="center" width="100%" spacing={ 3 } mt={ 3 }>
       <Alert severity="error">
         <Typography variant="h5" fontFamily="Poppins">
           Status: { error.status } - { error.statusText }
         </Typography>
       </Alert>
-      <Typography> 
-        Error occurred!
+      <Typography>
+        Error occurred:
       </Typography>
       <Typography>
-        { error.data.message }
+        { error.data.message ? error.data.message : error.data.error }
       </Typography>
       <Link to={ `${backToUrl}` }>Back to safely</Link>
     </Stack>

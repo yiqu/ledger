@@ -9,7 +9,7 @@ import moneylogo from '../../../public/images/money.png';
 import { DrawerHeader } from '../layouts/LayoutComponents';
 import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
-import { Link, useLocation, useNavigation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import type { LeftNavHeaderProps } from '~/shared/models/nav-item.model';
 import { flexCenter } from '~/shared/utils/css.utils';
@@ -32,21 +32,21 @@ function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
   const [displayLogo, setDisplayLogo] = useState(dollarLogo);
 
   useEffect(() => {
-    setDisplayLogo(LOGO_LIST[getRandomArbitrary(0, LOGO_LIST.length-1)]);
+    setDisplayLogo(LOGO_LIST[getRandomArbitrary(0, LOGO_LIST.length - 1)]);
   }, [location.pathname]);
 
   return (
     <DrawerHeader >
-      <Link to={ "/" } style={ {color: '#000'} }>
-        <Stack direction="row" sx={ {...flexCenter} }>
-          <Typography component="img" src={ displayLogo } sx={ {height: '2rem', mr: '10px'} } alt="logo"></Typography>
+      <Link to={ "/" } style={ { color: '#000' } }>
+        <Stack direction="row" sx={ { ...flexCenter } }>
+          <Typography component="img" src={ displayLogo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>
           <Typography variant='h6' fontFamily="Poppins"
-            sx={ {color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'white'} }>{ leftNavTitle }</Typography>
+            sx={ { color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'white' } }>{ leftNavTitle }</Typography>
         </Stack>
       </Link>
-        
+
       <IconButton onClick={ handleDrawerClose }>
-        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+        { theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon /> }
       </IconButton>
     </DrawerHeader>
   );

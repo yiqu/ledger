@@ -24,7 +24,7 @@ import { accountSchema } from "~/shared/validation/yup-schemas";
 import { updateAccount } from "~/api/accounts.server";
 
 function AccountDetailEdit() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const accountAndExpense = useRouteLoaderData('routes/accounts.$accountId') as AccountAndExpense | null;
   invariant(accountAndExpense?.account, "Expected account details data to be defined");
 

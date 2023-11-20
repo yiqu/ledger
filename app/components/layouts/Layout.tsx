@@ -13,7 +13,6 @@ import ThemeContext from '~/theme/ThemeContext';
 import Grid from '@mui/material/Unstable_Grid2';
 import { GREY } from '~/theme/palette';
 import { Toaster } from 'react-hot-toast';
-import { Tooltip } from 'react-tooltip';
 import LeftNavHeader from '../left-nav/LeftNavHeader';
 import TopNav from '../top-nav/TopNav';
 import LeftNav from '../left-nav/LeftNav';

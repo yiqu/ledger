@@ -1,9 +1,9 @@
-import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
+import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import AppToolbar from "~/shared/toolbar/Toolbar";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
-import { Outlet, useFetcher, useLocation, useNavigate, useParams, useSubmit } from "@remix-run/react";
+import { Outlet, useFetcher, useLocation, useNavigate, useParams } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 //@ts-ignore
@@ -16,7 +16,7 @@ import type { Expense } from "~/shared/models/expense.model";
 import { getExpensesPaged } from "~/api/expenses.server";
 
 function Expenses() {
-  const { isMobile, isAboveXl } = useScreenSize();
+  const { isMobile } = useScreenSize();
   const navigate = useNavigate();
   const { expenseId } = useParams();
   const deleteFetcher = useFetcher();

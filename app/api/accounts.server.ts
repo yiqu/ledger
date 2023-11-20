@@ -1,4 +1,5 @@
 import { prisma } from "./database.server";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
 import { getDataSettingsByUserId } from "./settings.server";
 import { USER_ID } from "~/shared/utils/constants";

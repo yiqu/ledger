@@ -4,8 +4,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "npx prisma generate && remix build",
-    "dev": "remix dev",
-    "dev-manual": "remix dev --manual",
+    "dev2": "remix dev",
+    "dev": "remix dev --manual",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc",
     "lint": "eslint --fix app",

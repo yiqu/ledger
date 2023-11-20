@@ -14,7 +14,7 @@ import { TitleNameDisplay } from "~/shared/components/Title";
 
 
 function SettingsComponent({ settings, defaultAccount, accountList, updatedTime }: { settings: DataSettings, defaultAccount: Account | null | undefined, accountList: Account[], updatedTime: DateDisplayFormat }) {
-  const { isActionSubmission, isActionReload, isNormalLoad } = useNavigationType();
+  const { isActionSubmission, isActionReload } = useNavigationType();
   const apiLoading = isActionSubmission || isActionReload;
 
   return (
@@ -29,15 +29,15 @@ function SettingsComponent({ settings, defaultAccount, accountList, updatedTime 
           Updated { `${updatedTime.display}` }
         </Typography>
       </TitleBarLayout>
-      
+
       <Box height="5px" width="100%" mt={ -2 }>
         { apiLoading && <LinearProgress color={ 'success' } /> }
       </Box>
-      
-      <SettingsData addAnotherAfterSubmit={ settings.addAnotherAfterSubmit } account={ defaultAccount } accountList={ accountList }/>
+
+      <SettingsData addAnotherAfterSubmit={ settings.addAnotherAfterSubmit } account={ defaultAccount } accountList={ accountList } />
 
       <SettingsDashboard showDashboardChart={ settings.showDashboardChart } dashboardCount={ settings.dashboardCount } dashboardChartType={ settings.dashboardChartType } />
-      
+
     </Stack>
   );
 }

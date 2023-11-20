@@ -1,6 +1,5 @@
 import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
-import useScreenSize from "~/shared/hooks/useIsMobile";
 import { Outlet, isRouteErrorResponse, useLoaderData, useLocation, useRouteError, useSearchParams, useSubmit } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
@@ -11,7 +10,7 @@ import HFSwitch from "~/shared/hook-forms/Switch";
 import { useForm } from "react-hook-form";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { handleError } from "~/api/utils/utils.server";
 import NoResult from "~/components/no-result/NoResult";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
@@ -45,7 +44,6 @@ export const headers: HeadersFunction = ({
 });
 
 function AccountDetail() {
-  const { isMobile } = useScreenSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const { account, expenses: { currentResultSetCount, data, pageSize, totalCount, totalPages } } = useLoaderData<typeof loader>();
   const { pathname } = useLocation();

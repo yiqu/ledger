@@ -4,7 +4,7 @@ import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/nod
 import AppToolbar from "~/shared/toolbar/Toolbar";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
-import { Link, isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from "@remix-run/react";
+import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from "@remix-run/react";
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import Dashboard from "~/components/dashboard/Dashboard";

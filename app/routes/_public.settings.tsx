@@ -25,7 +25,7 @@ export const meta: MetaFunction = (data) => {
 };
 
 function Settings() {
-  const { isMobile, isAboveXl } = useScreenSize();
+  const { isMobile } = useScreenSize();
   const { settings: dataSettings, currentDefaultAccount, accountList, updatedAtFromNow } = useLoaderData<typeof loader>();
 
   return (

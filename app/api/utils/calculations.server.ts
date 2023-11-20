@@ -4,11 +4,8 @@ import type { AccountWithExpenses, AccountWithPreCalculateExpenses } from "~/sha
 import type { ExpenseDisplay, ExpenseWithoutAccount } from "~/shared/models/expense.model";
 
 export function calculateGainRateForAccount(account: AccountWithPreCalculateExpenses): AccountWithExpenses {
-  const expensesCopy: ExpenseWithoutAccount[] = [...account.expenses]; 
+  const expensesCopy: ExpenseWithoutAccount[] = [...account.expenses];
   const result: ExpenseDisplay[] = [];
-  const totalAmount = expensesCopy.reduce((acc, expense) => {
-    return acc + expense.amount;
-  }, 0);
 
   const latest = expensesCopy[0]?.amount ?? 0;
   const [latestInteger, latestDecimal] = splitNumberByDot(latest);
@@ -35,7 +32,7 @@ export function calculateGainRateForAccount(account: AccountWithPreCalculateExpe
     } else {
       bgColorClassName = '';
     }
-    
+
     result.push({
       ...expense,
       dateFromNowDisplay: convertDateDisplay(expense.date, 'fromNow'),
@@ -50,7 +47,7 @@ export function calculateGainRateForAccount(account: AccountWithPreCalculateExpe
       textColorClassName: (gain > 0) ? "positive" : (gain === 0 ? "no-change" : 'negative'),
     });
   });
-  
+
   const expenseData = result.sort((a, b) => a.date < b.date ? 1 : -1);
 
   return {

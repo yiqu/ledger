@@ -15,7 +15,6 @@ import Alert from "@mui/material/Alert";
 import { useNavigationType } from "~/shared/hooks/useNavigationType";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
-import NewFormFields from "~/components/add/NewFormFields";
 import format from "date-fns/format";
 import HFTextField from "~/shared/hook-forms/TextField";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
@@ -33,7 +32,7 @@ function ExpenseEdit() {
   invariant(accountData, "Expected accounts to be defined");
 
   const accountFromId = accountData.find(account => account.id === expenseData.accountId);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const redirectUrl: string = searchParams.get('redirectUrl') || '../';
   const { isActionSubmission, isActionRedirect } = useNavigationType();
   const actionData: any | undefined = useActionData<typeof action>();

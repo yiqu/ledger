@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { LeftNavProps, NavigationItem } from "~/shared/models/nav-item.model";
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,12 +11,12 @@ import { GET_LEFT_NAV_ITEMS } from "~/shared/utils/left-nav.utils";
 import { NavLink } from "@remix-run/react";
 
 
-function LeftNav (props: LeftNavProps) {
+function LeftNav(props: LeftNavProps) {
 
   const location = useLocation();
   const navLinkActiveToEnd = location.pathname === '/' ? true : false;
 
-  const [leftNavItems, setLeftNavItems] = useState(GET_LEFT_NAV_ITEMS);
+  const [leftNavItems] = useState(GET_LEFT_NAV_ITEMS);
 
   useEffect(() => {
     // const currentMainPath = location.pathname.split("/")[1];
@@ -32,15 +32,15 @@ function LeftNav (props: LeftNavProps) {
 
   return (
     <React.Fragment>
-      <List sx={ {p: 0} }>
+      <List sx={ { p: 0 } }>
         { leftNavItems.map((navItem: NavigationItem, index) => (
           <React.Fragment key={ navItem.id }>
             {
-              (navItem.id === 'settings') && <Divider sx={ {my: 1} } />
+              (navItem.id === 'settings') && <Divider sx={ { my: 1 } } />
             }
 
             <ListItem key={ navItem.id } disablePadding sx={ { display: 'block' } }>
-              <ListItemButton 
+              <ListItemButton
                 sx={ {
                   height: 40,
                   justifyContent: props.open ? 'initial' : 'center',
@@ -48,7 +48,7 @@ function LeftNav (props: LeftNavProps) {
                   py: '5px'
                 } }
                 component={ NavLink } to={ navItem.url.join("") } end={ navLinkActiveToEnd } prefetch="intent"
-                // selected={ navItem.url.join("") === location.pathname || location.pathname.includes(navItem.url.join("")) }
+              // selected={ navItem.url.join("") === location.pathname || location.pathname.includes(navItem.url.join("")) }
               >
                 <ListItemIcon
                   sx={ {
@@ -63,9 +63,9 @@ function LeftNav (props: LeftNavProps) {
               </ListItemButton>
             </ListItem>
           </React.Fragment>
-          )) }
+        )) }
       </List>
-        
+
     </React.Fragment>
   );
 }

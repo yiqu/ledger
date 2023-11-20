@@ -5,7 +5,7 @@ import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { Controller, useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { red } from '@mui/material/colors';
 import Close from "@mui/icons-material/Close";
 
@@ -43,14 +43,14 @@ function HFTextField({ name, label, control, clearField, ...props }: FieldProps)
                   </IconButton>
                 </InputAdornment>)
               } } />
-            <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ {ml: 0} } >
+            <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ { ml: 0 } } >
               {
                 <Typography variant="caption" color={ red } component="span"> { error ? error.message : props.helperText } </Typography>
               }
             </FormHelperText>
           </FormControl>
         );
-       } }
+      } }
     />
   );
 }

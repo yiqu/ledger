@@ -1,6 +1,6 @@
 import { prisma } from "./database.server";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
-import isNumber from "lodash/isNumber";
 import parseInt from "lodash/parseInt";
 import { convertDateDisplay } from "./utils/date.server";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
@@ -81,7 +81,7 @@ export async function getExpensesPaged(page: number, filterString: string | null
 export async function addExpense(expense: ExpenseAddable) {
   try {
     const res = await prisma.expense.create({
-      data: { 
+      data: {
         amount: +expense.amount,
         date: new Date(expense.date),
         account: { connect: { id: expense.accountId } }
@@ -106,11 +106,7 @@ export async function getExpensesByAccountId(accountId: string, page: number, fi
       accountId: accountId
     }
   });
-  const filter = (filterString !== null) ? filterString.trim() : '';
 
-  const filterParsedNumber: number = parseInt(filter.replaceAll(",", ""));
-  const filterAsNumber: number | undefined = filterParsedNumber ? (filter.includes(",") ? +(filter.replaceAll(",", "")) : +filter) : undefined;
-  
   try {
     const res: Expense[] = await prisma.expense.findMany({
       where: {

@@ -1,4 +1,4 @@
-interface CachedData<T> {
+export interface CachedData<T> {
   data?: T;
   insertTime: number;
 }

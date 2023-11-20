@@ -1,4 +1,4 @@
-import { json, type ActionFunctionArgs, type MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import AppToolbar from "~/shared/toolbar/Toolbar";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
@@ -22,7 +22,7 @@ export const headers: HeadersFunction = ({
 });
 
 function Accounts() {
-  const { isMobile, isAboveXl } = useScreenSize();
+  const { isMobile } = useScreenSize();
   const navigate = useNavigate();
   const { accountId } = useParams();
   const submit = useSubmit();

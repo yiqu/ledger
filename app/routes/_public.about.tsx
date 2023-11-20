@@ -24,7 +24,7 @@ export const meta: MetaFunction = (data) => {
 };
 
 function About() {
-  const { isMobile, isAboveXl } = useScreenSize();
+  const { isMobile } = useScreenSize();
 
   return (
     <Stack direction="column" width="100%">
@@ -47,16 +47,16 @@ function About() {
                 <Typography variant="h5" fontFamily="Poppins" mr={ 2 }>
                   What is Ledger?
                 </Typography>
-                <Typography component="img" src={ dollarLogo } sx={ {height: '2rem', mr: '10px'} } alt="logo"></Typography>
-                <Typography component="img" src={ logologo } sx={ {height: '2rem', mr: '10px'} } alt="logo"></Typography>
-                <Typography component="img" src={ moneylogo } sx={ {height: '2rem', mr: '10px'} } alt="logo"></Typography>
+                <Typography component="img" src={ dollarLogo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>
+                <Typography component="img" src={ logologo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>
+                <Typography component="img" src={ moneylogo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>
               </Stack>
-             
+
 
               <Typography variant="body1" fontFamily="Poppins" mb={ 2 }>
                 Ledger is a simple web app that helps you to keep track of your expenses.
               </Typography>
-              
+
             </Box>
 
             <Box p={ 3 } borderRadius="20px" width="100%" bgcolor="background.paper">
@@ -103,7 +103,7 @@ function About() {
                 Dashboard will show the analysis of the user's expenses.
               </Typography>
             </Box>
-      
+
           </Stack>
 
         </LayoutWithGutter>

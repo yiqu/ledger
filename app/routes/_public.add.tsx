@@ -41,16 +41,16 @@ function AddNewExpense() {
   const navigate = useNavigate();
   const submit = useSubmit();
   const { isActionSubmission, isActionRedirect } = useNavigationType();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const actionData: any | undefined = useActionData<typeof action>();
-  const { accounts: accountList, currentAccountFromUrl, dataSettings: { addAnotherAfterSubmit } } = useLoaderData<typeof loader>();
+  const { currentAccountFromUrl, dataSettings: { addAnotherAfterSubmit } } = useLoaderData<typeof loader>();
 
   const hasActionError = actionData && !!actionData.error;
   const redirectUrl: string = searchParams.get('redirectUrl') || '/';
   const entityType = searchParams.get('type') as 'account' | 'expense' | null;
   const isApiLoading = isActionSubmission || isActionRedirect;
 
-  const { control, reset, setValue, watch, handleSubmit } = useForm<ExpenseAddable | AccountAddable>({
+  const { control, reset, setValue, handleSubmit } = useForm<ExpenseAddable | AccountAddable>({
     defaultValues: getDefaultValue(entityType, getInitAddableData(currentAccountFromUrl)),
     shouldFocusError: true
     //resolver: yupResolver(productSchema),

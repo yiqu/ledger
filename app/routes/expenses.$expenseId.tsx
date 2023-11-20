@@ -1,7 +1,6 @@
 import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
-import useScreenSize from "~/shared/hooks/useIsMobile";
-import { Form, Link, Outlet, useLoaderData, useNavigate, useSubmit } from "@remix-run/react";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
 import Typography from "@mui/material/Typography";
@@ -31,10 +30,7 @@ export const headers: HeadersFunction = ({
 });
 
 function ExpenseDetail() {
-  const { isMobile } = useScreenSize();
-  const navigate = useNavigate();
   const { expense } = useLoaderData<typeof loader>();
-  const submit = useSubmit();
 
   if (!expense) {
     return (

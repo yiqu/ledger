@@ -17,10 +17,10 @@ import type { Account } from "~/shared/models/account.model";
 
 function SettingsData({ addAnotherAfterSubmit, account, accountList }: { addAnotherAfterSubmit: boolean, account: Account | undefined | null, accountList: Account[] }) {
   const submit = useSubmit();
-  const { isActionSubmission, isActionReload, isNormalLoad } = useNavigationType();
+  const { isActionSubmission, isActionReload } = useNavigationType();
   const apiLoading = isActionSubmission || isActionReload;
-  
-  const { control, reset, setValue, watch, handleSubmit, formState } = useForm<DataSettingsForm>({
+
+  const { control, reset, handleSubmit } = useForm<DataSettingsForm>({
     defaultValues: {
       addAnotherAfterSubmit: addAnotherAfterSubmit,
       account: account
@@ -53,22 +53,22 @@ function SettingsData({ addAnotherAfterSubmit, account, accountList }: { addAnot
         </Typography>
         <Typography variant="body1">Settings related to adding and updating data.</Typography>
       </Stack>
-      <Divider variant="fullWidth" flexItem sx={ {my:2} } />
-      
+      <Divider variant="fullWidth" flexItem sx={ { my: 2 } } />
+
       <Form method="PATCH" onSubmit={ handleSubmit(handleFormSubmit) }>
         <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 1 } width="100%">
           <FormGroup>
-            <HFSwitch control={ control } name="addAnotherAfterSubmit" label={ `Add another after save:` } labelProps={ {labelPlacement:"start", sx: {ml: 0}} } />
+            <HFSwitch control={ control } name="addAnotherAfterSubmit" label={ `Add another after save:` } labelProps={ { labelPlacement: "start", sx: { ml: 0 } } } />
           </FormGroup>
 
           <Stack direction="row" justifyContent="start" alignItems="end" width="100%">
             <Typography variant="body1" flexBasis="30%">Default account on add: </Typography>
-            
-            <HFAutocompleteField 
-              name="account" 
-              label="Select an account" 
-              control={ control } 
-              options={ accountList } 
+
+            <HFAutocompleteField
+              name="account"
+              label="Select an account"
+              control={ control }
+              options={ accountList }
               getOptionLabel={ (option: Account) => (option?.name ?? '') }
               fullWidth={ true }
               isOptionEqualToValue={ (option: Account, value: Account) => option.id === value.id }

@@ -6,10 +6,10 @@ import noresultquerylogo from '../../../public/images/no-results.png';
 
 function NoResult() {
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const searchParam: string | null = searchParams.get('q');
 
-  const notFoundText = searchParam ? `No result found with the query: '${ searchParam }'` : 'No result found';
+  const notFoundText = searchParam ? `No result found with the query: '${searchParam}'` : 'No result found';
 
   return (
     <Stack direction="column" justifyContent="start" alignItems="center" width="100%" spacing={ 3 }>

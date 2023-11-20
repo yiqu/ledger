@@ -17,10 +17,10 @@ import type { DashboardChartType } from "@prisma/client";
 
 function SettingsDashboard({ showDashboardChart, dashboardChartType, dashboardCount }: { showDashboardChart: boolean; dashboardChartType: DashboardChartType; dashboardCount: number }) {
   const submit = useSubmit();
-  const { isActionSubmission, isActionReload, isNormalLoad } = useNavigationType();
+  const { isActionSubmission, isActionReload } = useNavigationType();
   const apiLoading = isActionSubmission || isActionReload;
-  
-  const { control, reset, setValue, watch, handleSubmit, formState } = useForm<DashboardSettingsForm>({
+
+  const { control, reset, handleSubmit } = useForm<DashboardSettingsForm>({
     defaultValues: {
       showDashboardChart: showDashboardChart,
       dashboardCount: dashboardCount,
@@ -55,12 +55,12 @@ function SettingsDashboard({ showDashboardChart, dashboardChartType, dashboardCo
         </Typography>
         <Typography variant="body1">Settings related to Dashboard.</Typography>
       </Stack>
-      <Divider variant="fullWidth" flexItem sx={ {my:2} } />
-      
+      <Divider variant="fullWidth" flexItem sx={ { my: 2 } } />
+
       <Form method="PATCH" onSubmit={ handleSubmit(handleFormSubmit) }>
         <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 1 } width="100%">
           <FormGroup>
-            <HFSwitch control={ control } name="showDashboardChart" label={ `Show Dashboard Chart:` } labelProps={ {labelPlacement:"start", sx: {ml: 0}} } />
+            <HFSwitch control={ control } name="showDashboardChart" label={ `Show Dashboard Chart:` } labelProps={ { labelPlacement: "start", sx: { ml: 0 } } } />
           </FormGroup>
 
           <Stack direction="row" justifyContent="start" alignItems="end" width="100%">
@@ -75,7 +75,7 @@ function SettingsDashboard({ showDashboardChart, dashboardChartType, dashboardCo
 
           <Stack direction="row" justifyContent="start" alignItems="end" width="100%">
             <Typography variant="body1" flexBasis="30%">Dashboard Data Count: </Typography>
-            
+
             <HFSelectField control={ control } name="dashboardCount" label={ `Dashboard Data Count:` } variant="standard">
               <MenuItem value={ 10 }>10</MenuItem>
               <MenuItem value={ 20 }>20</MenuItem>

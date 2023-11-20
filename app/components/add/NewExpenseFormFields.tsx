@@ -1,6 +1,7 @@
 import InputAdornment from "@mui/material/InputAdornment";
 import { useLoaderData } from "@remix-run/react";
 import type { Control } from "react-hook-form";
+import type { loader } from "~/routes/_public.add";
 import HFAutocompleteField from "~/shared/hook-forms/Autocomplete";
 import HFTextField from "~/shared/hook-forms/TextField";
 import type { Account } from "~/shared/models/account.model";
@@ -29,11 +30,11 @@ function NewExpenseFormFields({ control, onClearField }: NewExpenseFormFieldsPro
 
       { }
 
-      <HFAutocompleteField 
-        name="account" 
-        label="Select an Account" 
-        control={ control } 
-        options={ accountList } 
+      <HFAutocompleteField
+        name="account"
+        label="Select an Account"
+        control={ control }
+        options={ accountList }
         getOptionLabel={ (option: Account) => (option?.name ?? '') }
         fullWidth={ true }
         isOptionEqualToValue={ (option: Account, value: Account) => option.id === value.id }
