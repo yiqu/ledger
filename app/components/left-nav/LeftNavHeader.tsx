@@ -4,7 +4,6 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import dollarLogo from '../../../public/images/dollar.png';
-import logologo from '../../../public/images/logo.png';
 import moneylogo from '../../../public/images/money.png';
 import { DrawerHeader } from '../layouts/LayoutComponents';
 import { useTheme } from '@mui/material/styles';
@@ -17,7 +16,7 @@ import { getRandomArbitrary } from '~/shared/utils/number.utils';
 import { APP_TITLE } from '~/constants/title';
 
 
-const LOGO_LIST = [dollarLogo, logologo, moneylogo];
+const LOGO_LIST = [dollarLogo, moneylogo];
 
 function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
 

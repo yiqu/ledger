@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext } from "react";
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -6,8 +5,6 @@ import IconButton from '@mui/material/IconButton';
 import { AppBar } from '~/components/layouts/LayoutComponents';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Stack from "@mui/material/Stack";
@@ -21,19 +18,8 @@ export interface TopNavProps {
 }
 
 export default function TopNav({ open, onNavOpen }: TopNavProps) {
-
   const location = useLocation();
-  const [title, setTitle] = useState<string>();
-  const [titleUrlPath, setTitleUrlPath] = useState<string>('');
   const themeContext = useContext(ThemeContext);
-
-
-  useEffect(() => {
-    const urlArray: string[] = location.pathname.split("/");
-    let pathTitle: string = urlArray[1];
-    setTitleUrlPath(pathTitle);
-    setTitle(pathTitle);
-  }, [location.pathname]);
 
   const handleDrawerOpen = () => {
     onNavOpen(true);
@@ -62,9 +48,9 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
               >
                 <MenuIcon />
               </IconButton>
-              <Link to={ `/${titleUrlPath}` }>
+              <Link to={ `/${location.pathname.split("/")[1]}` }>
                 <Typography variant="h5" noWrap sx={ { fontWeight: 400, fontFamily: 'Poppins', color: "#fff" } }>
-                  { startCase(TransformPageTitle[title + '']) }
+                  { startCase(TransformPageTitle[`${location.pathname}`]) }
                 </Typography>
               </Link>
             </Stack>

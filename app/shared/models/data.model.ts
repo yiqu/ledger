@@ -1,4 +1,3 @@
-import { format } from 'date-fns';
 import type { ExpenseAddable } from './expense.model';
 import type { AccountAddable } from './account.model';
 

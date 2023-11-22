@@ -1,5 +1,6 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
+import { json, type LinksFunction, type LoaderFunctionArgs } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -31,6 +32,7 @@ import styles from "~/styles/mui-alert.css";
 import ActionLoaderErrorDisplay from "./components/error/ActionLoaderError";
 import OtherErrorDisplay from "./components/error/OtherError";
 import { Analytics } from '@vercel/analytics/react';
+import { userPrefCookie } from "./server/user-preference.server";
 
 
 export const links: LinksFunction = () => [
@@ -71,6 +73,33 @@ function Document({ title, children }: { title?: string; children: React.ReactNo
     </html>
   );
 }
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const cookieHeader = request.headers.get("Cookie");
+  const cookie = (await userPrefCookie.parse(cookieHeader)) || {};
+  return json({
+    leftNavOpen: cookie.leftNavOpen
+  });
+}
+
+export async function action({ request }: ActionFunctionArgs) {
+  const cookieHeader = request.headers.get("Cookie");
+  const cookie = (await userPrefCookie.parse(cookieHeader)) || {};
+  const bodyParams = await request.formData();
+
+  if (bodyParams.get("leftNavOpen") === "true") {
+    cookie.leftNavOpen = true;
+  } else if (bodyParams.get("leftNavOpen") === "false") {
+    cookie.leftNavOpen = false;
+  }
+
+  return json("User pref. cookie set", {
+    headers: {
+      "Set-Cookie": await userPrefCookie.serialize(cookie),
+    },
+  });
+}
+
 
 export function ErrorBoundary({ error }: { error: any }) {
   const err: any = useRouteError();

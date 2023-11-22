@@ -1,11 +1,9 @@
 import React from 'react';
-import { useContext, useEffect, useMemo } from 'react';
-import { useTheme } from '@mui/material/styles';
+import { useContext, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import { Drawer, DrawerHeader } from './LayoutComponents';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import type { Theme } from '@mui/material/styles';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getMyTheme } from '~/theme/AppTheme';
@@ -18,41 +16,37 @@ import TopNav from '../top-nav/TopNav';
 import LeftNav from '../left-nav/LeftNav';
 import LinearProgress from "@mui/material/LinearProgress";
 import { useNavigationType } from '~/shared/hooks/useNavigationType';
+import { useLoaderData } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
+import type { loader } from '~/root';
+
 
 function Layout({ child }: { child: React.ReactNode }) {
-
-  const currentTheme = useTheme();
   const themeContext = useContext(ThemeContext);
-  const [open, setOpen] = React.useState(true);
-  const isMobileScreenSize = useMediaQuery(currentTheme.breakpoints.down('sm'));
   const { isNormalLoad, isActionReload, isActionRedirect, isReloading, isActionSubmission, isLoaderSubmission, isLoaderSubmissionRedirect } = useNavigationType();
   const showProgress = isNormalLoad || isActionSubmission || isLoaderSubmission || isLoaderSubmissionRedirect || isReloading || isActionReload || isActionRedirect;
   const theme: Theme = useMemo(() => {
     return createTheme(getMyTheme(themeContext.currentTheme));
   }, [themeContext.currentTheme]);
+  const fetcher = useFetcher();
+  const { leftNavOpen } = useLoaderData<typeof loader>();
 
   const handleDrawerOpen = (openState: boolean) => {
-    setOpen(openState);
+    fetcher.submit({ leftNavOpen: 'true' }, { preventScrollReset: true, method: 'post' });
   };
 
   const handleDrawerClose = (openState: boolean) => {
-    setOpen(openState);
+    fetcher.submit({ leftNavOpen: 'false' }, { preventScrollReset: true, method: 'post' });
   };
-
-  useEffect(() => {
-    if (isMobileScreenSize) {
-      setOpen(false);
-    }
-  }, [isMobileScreenSize]);
 
   return (
     <ThemeProvider theme={ theme }>
       <Box sx={ { display: 'flex', height: '100%' } }>
         <CssBaseline />
 
-        <TopNav open={ open } onNavOpen={ handleDrawerOpen } />
+        <TopNav open={ leftNavOpen } onNavOpen={ handleDrawerOpen } />
 
-        <Drawer variant="permanent" open={ open }>
+        <Drawer variant="permanent" open={ leftNavOpen }>
 
           <LeftNavHeader closeDrawerHandler={ handleDrawerClose } />
 
@@ -62,7 +56,7 @@ function Layout({ child }: { child: React.ReactNode }) {
 
           <Divider />
 
-          <LeftNav open={ open } />
+          <LeftNav open={ leftNavOpen } />
 
         </Drawer>
 

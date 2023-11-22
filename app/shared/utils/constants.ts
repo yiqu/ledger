@@ -2,11 +2,11 @@ export const USER_ID = "Kqpro";
 export const LS_APP_THEME = 'app-theme';
 
 export const TransformPageTitle: { [key: string]: string } = {
-  '': 'Dashboard',
-  data: 'Data',
-  accounts: 'Accounts',
-  about: 'About',
-  settings: 'Settings'
+  '/': 'Dashboard',
+  '/expenses': 'Expenses',
+  '/accounts': 'Accounts',
+  '/about': 'About',
+  '/settings': 'Settings'
 };
 
 export const PAGE_LIMIT = 999;
