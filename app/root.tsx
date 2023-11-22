@@ -78,7 +78,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const cookieHeader = request.headers.get("Cookie");
   const cookie = (await userPrefCookie.parse(cookieHeader)) || {};
   return json({
-    leftNavOpen: cookie.leftNavOpen
+    leftNavOpen: cookie.leftNavOpen ?? true
   });
 }
 
