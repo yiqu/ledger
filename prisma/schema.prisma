@@ -11,24 +11,28 @@ datasource db {
 }
 
 model Account {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  name      String    @unique
-  expenses  Expense[]
-  shown     Boolean   @default(true)
-  dateAdded DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  User      User?     @relation(fields: [userId], references: [id])
-  userId    String?   @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String    @unique
+  expenses       Expense[]
+  shown          Boolean   @default(true)
+  dateAdded      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+  dateAddedEpoch Int
+  updatedAtEpoch Int
+  User           User?     @relation(fields: [userId], references: [id])
+  userId         String?   @db.ObjectId
 }
 
 model Expense {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  amount    Float
-  date      DateTime
-  dateAdded DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  account   Account   @relation(fields: [accountId], references: [id])
-  accountId String    @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  amount         Float
+  date           Int
+  dateAdded      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
+  addedAtEpoch   Int
+  updatedAtEpoch Int
+  account        Account   @relation(fields: [accountId], references: [id])
+  accountId      String    @db.ObjectId
 }
 
 model DataSettings {

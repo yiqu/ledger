@@ -5,6 +5,8 @@ import type { DashboardChartType } from "@prisma/client";
 export interface AccountAddable {
   name: string;
   shown?: boolean;
+  dateAddedEpoch: number;
+  updatedAtEpoch: number
 }
 
 export interface AccountUpdateable {

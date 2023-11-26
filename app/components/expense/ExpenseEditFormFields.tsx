@@ -18,7 +18,7 @@ function ExpenseEditFormFields({ accountList, control, onClearField }: { account
         } }
       />
 
-      <HFTextField name="date" label="" control={ control } type="datetime-local" variant="standard" helperText="Expense submission date" fullWidth clearField={ onClearField } />
+      <HFTextField name="dateStringForInput" label="" control={ control } type="datetime-local" variant="standard" helperText="Expense submission date" fullWidth clearField={ onClearField } />
 
       <HFAutocompleteField
         name="account"

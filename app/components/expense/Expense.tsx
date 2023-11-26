@@ -36,13 +36,13 @@ function Expense({ expense }: { expense: IExpense }) {
 
   const handleActionClick = (actionId: 'editExpense' | 'deleteExpense' | 'details') => () => {
     if (actionId === 'editExpense') {
-      const url = urlcat('', '/data/:expenseId/edit', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
+      const url = urlcat('', '/expenses/:expenseId/edit', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
       navigate(url);
     } else if (actionId === 'deleteExpense') {
       const proceed = confirm(`Are you sure you want to delete this item?`);
       if (!proceed) return;
 
-      const url = urlcat('', '/data/:expenseId', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
+      const url = urlcat('', '/expenses/:expenseId', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
       deleteFetcher.submit({ id: expense.id }, { method: 'DELETE', action: url, preventScrollReset: true });
     } else if (actionId === 'details') {
       setShowExpenseDetail(true);
@@ -103,7 +103,7 @@ export default Expense;
 export function ExpenseName({ expense, props }: { expense: IExpense, props?: TypographyProps }) {
   return (
     <Typography style={ { ...ellipsisBlock } } className='montserrat' { ...props } >
-      <Link to={ `/data/${expense.id}` }>
+      <Link to={ `/expenses/${expense.id}` }>
         ${ expense.amount.toLocaleString() }
       </Link>
     </Typography>

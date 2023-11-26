@@ -1,5 +1,4 @@
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
-import AppToolbar from "~/shared/toolbar/Toolbar";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
@@ -14,6 +13,7 @@ import type { HttpResponsePaged } from "~/shared/models/http.model";
 import AccountNavBar from "~/components/navbar/AccountNavBar";
 import type { Expense } from "~/shared/models/expense.model";
 import { getExpensesPaged } from "~/api/expenses.server";
+import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 
 function Expenses() {
   const { isMobile } = useScreenSize();
@@ -34,7 +34,7 @@ function Expenses() {
 
   const handleEditExpense = (expenseId?: string) => {
     invariant(expenseId, "Expected expense id to be defined");
-    const url = urlcat('', '/data/:expenseId/edit', { expenseId: expenseId, redirectUrl: pathname });
+    const url = urlcat('', '/expenses/:expenseId/edit', { expenseId: expenseId, redirectUrl: pathname });
     navigate(url);
   };
 
@@ -43,7 +43,7 @@ function Expenses() {
     const proceed = confirm(`Are you sure you want to delete this expense?`);
     if (!proceed) return;
 
-    const url = urlcat('', '/data/:expenseId', { expenseId: expenseId, redirectUrl: '/data' });
+    const url = urlcat('', '/expenses/:expenseId', { expenseId: expenseId, redirectUrl: '/data' });
     deleteFetcher.submit({ id: expenseId }, { method: 'DELETE', action: url });
   };
 
@@ -73,14 +73,9 @@ function Expenses() {
 
   return (
     <Stack direction="column" width="100%">
-      <AppToolbar toolbarProps={ {
-        position: "sticky",
-        sx: { top: isMobile ? '56px' : '64px' }
-      } }>
-
+      <StickyToolbar>
         <AccountNavBar onClickAction={ handleActionClick } />
-
-      </AppToolbar>
+      </StickyToolbar>
 
       <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
         <LayoutWithGutter size={ 'wide' }>
@@ -105,7 +100,6 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const expenses = response.data.map((rec: Expense) => {
     return {
       ...rec,
-      dateFromNow: convertDateDisplay(rec.date, 'longAndNow'),
       dateAddedFromNow: convertDateDisplay(rec.dateAdded, 'fromNow'),
       updatedAtFromNow: convertDateDisplay(rec.updatedAt, 'fromNow'),
     };

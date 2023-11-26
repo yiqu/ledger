@@ -1,7 +1,6 @@
 import Stack from "@mui/material/Stack";
 import type { HeadersFunction, TypedResponse } from "@remix-run/node";
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
-import AppToolbar from "~/shared/toolbar/Toolbar";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
 import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from "@remix-run/react";
@@ -26,6 +25,7 @@ import { getDashboardChartData, getShownAccountAndExpenses } from "~/api/account
 import { calculateGainRateForAccount } from "~/api/utils/calculations.server";
 import { getLineColorByAccountName } from "~/api/utils/utils.server";
 import Box from "@mui/material/Box";
+import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 
 
 
@@ -68,14 +68,9 @@ export default function Index() {
 
   return (
     <Stack direction="column" width="100%">
-      <AppToolbar toolbarProps={ {
-        position: "sticky",
-        sx: { top: isMobile ? '56px' : '64px' }
-      } }>
-
+      <StickyToolbar>
         <AccountNavBar onClickAction={ handleActionClick } />
-
-      </AppToolbar>
+      </StickyToolbar>
 
       <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
         <LayoutWithGutter size={ 'wide' }>

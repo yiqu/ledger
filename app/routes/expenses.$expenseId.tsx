@@ -6,7 +6,6 @@ import invariant from "tiny-invariant";
 import Typography from "@mui/material/Typography";
 import { handleError } from "~/api/utils/utils.server";
 //import { ClientOnly } from "remix-utils";
-import { convertDateDisplay } from "~/api/utils/date.server";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import NoResult from "~/components/no-result/NoResult";
@@ -108,15 +107,6 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   invariant(params.expenseId, "Expected params.expenseId to be defined");
   let expense: Expense | null = await getExpenseById(params.expenseId);
   const accounts = await getAccounts();
-  if (expense) {
-    expense = {
-      ...expense,
-      id: expense.id,
-      dateFromNow: convertDateDisplay(expense.date, 'longAndNow'),
-      dateAddedFromNow: convertDateDisplay(expense.dateAdded, 'longAndNow'),
-      updatedAtFromNow: convertDateDisplay(expense.updatedAt, 'longAndNow')
-    };
-  }
   const payload = {
     expense,
     accounts

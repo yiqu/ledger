@@ -4,12 +4,19 @@ import type { Prisma } from "@prisma/client";
 import { getDataSettingsByUserId } from "./settings.server";
 import { USER_ID } from "~/shared/utils/constants";
 import format from "date-fns/format";
-import type { Account, AccountAddable, AccountUpdateable, AccountWithPreCalculateExpenses, DashboardChartData } from "~/shared/models/account.model";
+import type {
+  Account, AccountAddable, AccountUpdateable, AccountWithPreCalculateExpenses,
+  DashboardChartData
+} from "~/shared/models/account.model";
 
 export async function addAccount(item: AccountAddable) {
   try {
     const res = await prisma.account.create({
-      data: item,
+      data: {
+        ...item,
+        dateAddedEpoch: Date.now(),
+        updatedAtEpoch: 0
+      },
     });
     return res;
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
@@ -63,7 +70,8 @@ export async function updateAccount(accountId: string, item: AccountUpdateable) 
       },
       data: {
         name: item.name || undefined,
-        shown: item.shown
+        shown: item.shown,
+        updatedAtEpoch: Date.now()
       },
     });
     return res;

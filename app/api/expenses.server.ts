@@ -2,7 +2,6 @@ import { prisma } from "./database.server";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
 import parseInt from "lodash/parseInt";
-import { convertDateDisplay } from "./utils/date.server";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
 
 /**
@@ -83,8 +82,10 @@ export async function addExpense(expense: ExpenseAddable) {
     const res = await prisma.expense.create({
       data: {
         amount: +expense.amount,
-        date: new Date(expense.date),
-        account: { connect: { id: expense.accountId } }
+        date: new Date(expense.date).getTime(),
+        account: { connect: { id: expense.accountId } },
+        addedAtEpoch: Date.now(),
+        updatedAtEpoch: 0
       },
     });
     return res;
@@ -133,7 +134,6 @@ export async function getExpensesByAccountId(accountId: string, page: number, fi
     const expenseWithDateFormatted: Expense[] = res.map((expense: Expense) => {
       return {
         ...expense,
-        dateFromNow: convertDateDisplay(expense.date, 'shortAndNow'),
       };
     });
 
@@ -190,8 +190,9 @@ export async function editExpense(expense: ExpenseEditable) {
       },
       data: {
         amount: +expense.amount,
-        date: new Date(expense.date),
-        accountId: expense.accountId
+        date: new Date(expense.date).getTime(),
+        accountId: expense.accountId,
+        updatedAtEpoch: Date.now()
       },
     });
     return res;

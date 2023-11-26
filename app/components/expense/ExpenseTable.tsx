@@ -36,7 +36,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
   const handleCellMenuAction = (expense: Expense) => (action: 'editExpense' | 'deleteExpense') => {
     switch (action) {
       case 'editExpense': {
-        const url = urlcat('', '/data/:expenseId/edit', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
+        const url = urlcat('', '/expenses/:expenseId/edit', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
         navigate(url);
         break;
       }
@@ -44,7 +44,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
         const proceed = confirm(`Are you sure you want to delete this item?`);
         if (!proceed) return;
 
-        const url = urlcat('', '/data/:expenseId', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
+        const url = urlcat('', '/expenses/:expenseId', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
         deleteFetcher.submit({ id: expense.id }, { method: 'DELETE', action: url, preventScrollReset: true });
         break;
       }

@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import type { Account as IAccount } from '~/shared/models/account.model';
 // @ts-ignore
 import urlcat from 'urlcat';
+import Moment from 'react-moment';
 
 
 function Account({ account }: { account: IAccount }) {
@@ -94,10 +95,13 @@ function AccountNameDisplay({ account }: { account: IAccount }) {
 function AccountSubText({ account }: { account: IAccount }) {
   return (
     <span style={ { ...ellipsisBlock, fontSize: '13px' } }>
-      <span title={ account.dateAddedFromNow?.tooltip } >created: { account.dateAddedFromNow?.display }</span>
-      { (account.updatedAt && account.updatedAt !== account.dateAdded) &&
-        <span title={ account.updatedAtFromNow?.tooltip }> (updated: { account.updatedAtFromNow?.display })
-        </span> }
+      {
+        account.updatedAtEpoch ? (
+          <span title={ `${account.dateAdded}` }> updated: { <Moment date={ account.updatedAtEpoch } fromNow /> }</span>
+        ) : (
+          <span title={ `${account.updatedAt}` }> created: { <Moment date={ account.dateAddedEpoch } fromNow /> }</span>
+        )
+      }
     </span>
   );
 }

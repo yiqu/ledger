@@ -170,6 +170,8 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
       const result = await addAccount({
         name: accountName,
         shown: accountShown === 'true',
+        dateAddedEpoch: Date.now(),
+        updatedAtEpoch: 0
       });
       return redirect(`${redirectUrl}?addedAccountId=${result.id}`);
     } catch (err: any) {
@@ -181,8 +183,10 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
     const shouldRedirect = (body.get('addAnotherAfterSubmit') === 'false');
     const expense: ExpenseAddable = {
       accountId: body.get('accountId') as string,
-      date: body.get('date') as string,
+      date: new Date(body.get('date') as string).getTime(),
       amount: +(body.get('amount') as string),
+      addedAtEpoch: Date.now(),
+      updatedAtEpoch: 0,
     };
 
     try {

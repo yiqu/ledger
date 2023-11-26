@@ -45,7 +45,8 @@ function ExpenseEdit() {
       amount: expenseData.amount,
       account: accountFromId,
       accountId: accountFromId?.id,
-      date: format(new Date(expenseData?.date ?? 0), 'yyyy-MM-dd HH:mm'),
+      dateStringForInput: format(new Date(expenseData?.date ?? 0), 'yyyy-MM-dd HH:mm'),
+      date: expenseData.date,
     },
     resolver: yupResolver(expenseSchema),
     mode: "onChange"
@@ -113,8 +114,9 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
   const expense: ExpenseEditable = {
     id: expenseId,
     accountId: body.get('accountId') as string,
-    date: body.get('date') as string,
+    date: new Date(body.get('date') as string).getTime(),
     amount: +(body.get('amount') as string),
+    updatedAtEpoch: Date.now(),
   };
 
   try {
