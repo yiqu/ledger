@@ -1,7 +1,6 @@
 import type { AppBarProps } from "@mui/material/AppBar";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from '@mui/material/Toolbar';
-import { GREY } from "~/theme/palette";
 
 interface ToolbarProps {
   toolbarProps: AppBarProps;
@@ -15,7 +14,6 @@ export default function AppToolbar({ toolbarProps, children }: ToolbarProps) {
       <Toolbar
         variant="dense"
         sx={ {
-          bgcolor: (theme) => theme.palette.mode === 'light' ? GREY[50] : null,
           color: (theme) => theme.palette.mode === 'light' ? '#000' : null,
           pr: 0
         } }>
