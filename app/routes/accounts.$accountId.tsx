@@ -1,16 +1,13 @@
 import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
-import { Outlet, isRouteErrorResponse, useLoaderData, useLocation, useRouteError, useSearchParams, useSubmit } from "@remix-run/react";
+import { Outlet, isRouteErrorResponse, useLoaderData, useRouteError, useSearchParams } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Typography from "@mui/material/Typography";
 import styles from "~/styles/mui-alert.css";
-import HFSwitch from "~/shared/hook-forms/Switch";
-import { useForm } from "react-hook-form";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
-import { useEffect } from "react";
 import { handleError } from "~/api/utils/utils.server";
 import NoResult from "~/components/no-result/NoResult";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
@@ -21,10 +18,8 @@ import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { deleteAccount, getAccount } from "~/api/accounts.server";
 import type { Expense } from "~/shared/models/expense.model";
 import { getExpensesByAccountId } from "~/api/expenses.server";
-import type { AccountAddable } from "~/shared/models/account.model";
 import { TitleNameDisplay } from "~/shared/components/Title";
 import ExpenseList from "~/components/expense/ExpenseList";
-
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -46,27 +41,10 @@ export const headers: HeadersFunction = ({
 function AccountDetail() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { account, expenses: { currentResultSetCount, data, pageSize, totalCount, totalPages } } = useLoaderData<typeof loader>();
-  const { pathname } = useLocation();
-  const submit = useSubmit();
   invariant(account, "Expected account to be defined");
 
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
-
-  const { control, watch } = useForm<AccountAddable>({
-    defaultValues: { name: account.name, shown: account.shown },
-  });
-  const toggleShowHide = watch('shown', account.shown);
-
-  useEffect(() => {
-    if (toggleShowHide !== account.shown) {
-      submit({ shown: toggleShowHide } as any, {
-        action: `/accounts/${account.id}/edit?redirectUrl=${pathname}`,
-        method: 'PATCH',
-        replace: true,
-      });
-    }
-  }, [account.id, account.shown, submit, toggleShowHide, watch, pathname]);
 
   const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
     setSearchParams((params: URLSearchParams) => {
@@ -84,10 +62,6 @@ function AccountDetail() {
           <TitleNameDisplay name={ account.name } />
         </Stack>
         <Stack direction="row" justifyContent="end" alignItems="center">
-          <Box height="23px">
-            <HFSwitch name="shown" label={ `Toggle (currently ${account.shown ? 'shown' : 'hidden'})` } size="small" control={ control } />
-          </Box>
-
           <Typography variant="h5" fontFamily="Poppins">
             Total: { totalCount }
           </Typography>

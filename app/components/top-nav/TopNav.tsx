@@ -20,6 +20,7 @@ export interface TopNavProps {
 export default function TopNav({ open, onNavOpen }: TopNavProps) {
   const location = useLocation();
   const themeContext = useContext(ThemeContext);
+  const title = location.pathname.split("/")[1];
 
   const handleDrawerOpen = () => {
     onNavOpen(true);
@@ -50,7 +51,7 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
               </IconButton>
               <Link to={ `/${location.pathname.split("/")[1]}` }>
                 <Typography variant="h5" noWrap sx={ { fontWeight: 400, fontFamily: 'Poppins', color: "#fff" } }>
-                  { startCase(TransformPageTitle[`${location.pathname}`]) }
+                  { startCase(TransformPageTitle[`${title}`]) }
                 </Typography>
               </Link>
             </Stack>

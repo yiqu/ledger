@@ -17,6 +17,7 @@ export interface AccountNavBarProps {
 function AccountNavBar({ accountId, onClickAction }: AccountNavBarProps) {
   const params = useParams();
   const { pathname } = useLocation();
+  const routePath: string = pathname.split('/')[1];
 
   const handleNavActionClick = (actionId: string) => () => {
     onClickAction(actionId);
@@ -90,7 +91,7 @@ function AccountNavBar({ accountId, onClickAction }: AccountNavBarProps) {
     );
   }
 
-  if (pathname === '/accounts') {
+  if (routePath === 'accounts') {
     return (
       <Grid container xs={ 12 }>
         <Grid xs={ 4 }>

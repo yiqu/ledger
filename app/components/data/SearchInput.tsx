@@ -48,11 +48,11 @@ function SearchInput() {
                 </InputAdornment>
               }
               endAdornment={
-                <InputAdornment position="end">
+                searchInput ? <InputAdornment position="end">
                   <IconButton onClick={ handleSearchInputClear }>
                     <Close />
                   </IconButton>
-                </InputAdornment>
+                </InputAdornment> : null
               }
               value={ searchInput }
               onChange={ handleSearchInputChange }

@@ -18,7 +18,7 @@ import { useCallback } from "react";
 import { useNavigationType } from "~/shared/hooks/useNavigationType";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
-import { getDefaultValue, getInitAddableData } from "~/shared/utils/time";
+import { getInitFormValue } from "~/shared/utils/time";
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import { getDataSettingsByUserId } from "~/api/settings.server";
@@ -37,7 +37,7 @@ export const meta: MetaFunction = (data) => {
   ];
 };
 
-function AddNewExpense() {
+function AddNew() {
   const navigate = useNavigate();
   const submit = useSubmit();
   const { isActionSubmission, isActionRedirect } = useNavigationType();
@@ -51,7 +51,7 @@ function AddNewExpense() {
   const isApiLoading = isActionSubmission || isActionRedirect;
 
   const { control, reset, setValue, handleSubmit } = useForm<ExpenseAddable | AccountAddable>({
-    defaultValues: getDefaultValue(entityType, getInitAddableData(currentAccountFromUrl)),
+    defaultValues: getInitFormValue(entityType, currentAccountFromUrl),
     shouldFocusError: true
     //resolver: yupResolver(productSchema),
     //mode: "onChange",
@@ -124,7 +124,7 @@ function AddNewExpense() {
   );
 }
 
-export default AddNewExpense;
+export default AddNew;
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const url = new URL(request.url);

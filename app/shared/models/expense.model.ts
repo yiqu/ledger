@@ -11,6 +11,14 @@ export interface ExpenseAddable {
   accountId: string;
 }
 
+export interface ExpenseAddable2 {
+  amount: number | '';
+  date: number | string;
+  account?: Account | null;
+  accountId: string;
+
+}
+
 export interface ExpenseEditable {
   id: string;
   amount: number;

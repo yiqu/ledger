@@ -21,6 +21,7 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 //@ts-ignore
 import urlcat from 'urlcat';
 import type { Expense as IExpense } from '~/shared/models/expense.model';
+import format from 'date-fns/format';
 
 function Expense({ expense }: { expense: IExpense }) {
   const navigate = useNavigate();
@@ -112,10 +113,8 @@ export function ExpenseName({ expense, props }: { expense: IExpense, props?: Typ
 
 function ExpenseSubText({ expense }: { expense: IExpense }) {
   return (
-    <span style={ { ...ellipsisBlock, fontSize: '13px', height: '18.5px' } } title={ expense.dateFromNow?.tooltip }>
-      {
-        expense.dateFromNow?.display
-      }
+    <span style={ { ...ellipsisBlock, fontSize: '13px', height: '18.5px' } } title={ `${expense.date}` }>
+      { format(expense.date, 'MM/dd/yyyy HH:mm (pp)') }
     </span>
   );
 }

@@ -13,6 +13,7 @@ import { deleteExpense, getExpenseById } from "~/api/expenses.server";
 import type { Expense } from "~/shared/models/expense.model";
 import { getAccounts } from "~/api/accounts.server";
 import { TitleNameDisplay } from "~/shared/components/Title";
+import format from "date-fns/format";
 
 
 export const meta: MetaFunction = (data) => {
@@ -57,42 +58,63 @@ function ExpenseDetail() {
 
       <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
         <Typography variant="h6">
-          id: { expense.id }
+          ID:
+          <Typography variant="body2" title={ expense.id }>
+            { expense.id }
+          </Typography>
+
         </Typography>
         <Typography variant="h6">
           Date:
+          <Typography variant="body2" title={ `${expense.date}` }>
+            {
+              format(expense.date, 'MM/dd/yyyy pp')
+            }
+          </Typography>
+          <Typography variant="body2" title={ `${expense.date}` }>
+            {
+              format(expense.date, 'MM/dd/yyyy HH:mm')
+            }
+          </Typography>
+          <Typography variant="body2" title={ `${expense.date}` }>
+            {
+              `${new Date(expense.date)}`
+            }
+          </Typography>
+
         </Typography>
-        <Typography variant="body2" title={ expense.dateFromNow?.tooltip }>
-          {
-            expense.dateFromNow?.display
-          }
-        </Typography>
+
       </Stack>
 
       <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
         <Typography variant="h6">
           Added:
+          <Typography variant="body2" title={ `${expense.addedAtEpoch}` }>
+            {
+              format(expense.addedAtEpoch, 'MM/dd/yyyy HH:mm (pp)')
+            }
+          </Typography>
         </Typography>
-        <Typography variant="body2" title={ expense.dateAddedFromNow?.tooltip }>
-          {
-            expense.dateAddedFromNow?.display
-          }
-        </Typography>
+
         <Typography variant="h6">
           Last Updated:
+          <Typography variant="body2" title={ `${expense.updatedAtEpoch}` }>
+            {
+              expense.updatedAtEpoch ? format(expense.updatedAtEpoch, 'MM/dd/yyyy HH:mm (pp)') : 'N/A'
+            }
+          </Typography>
         </Typography>
-        <Typography variant="body2" title={ expense.updatedAtFromNow?.tooltip }>
-          {
-            expense.updatedAtFromNow?.display
-          }
-        </Typography>
+
       </Stack>
 
       <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
         <Typography variant="h6">
-          <Link to={ `/accounts/${expense.account.id}` }>
-            { expense.account.name }
-          </Link>
+          Account:
+          <div>
+            <Link to={ `/accounts/${expense.account.id}` }>
+              { expense.account.name }
+            </Link>
+          </div>
         </Typography>
       </Stack>
 

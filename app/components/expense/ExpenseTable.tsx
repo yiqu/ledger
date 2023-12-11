@@ -9,7 +9,6 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import TableBody from "@mui/material/TableBody";
 import { ellipsis, stickyDataCellClass } from "~/shared/utils/css.utils";
-import { GREY } from "~/theme/palette";
 import { TABLE_COLUMNS, transformColumnName } from "~/shared/utils/table";
 import { StyledDataCell, StyledHeaderCell, transformTableData } from "../table/TableComponents";
 import { useLocation, useNavigate } from "@remix-run/react";
@@ -53,19 +52,22 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
 
 
   return (
-    <Box width="100%">
+    <Paper sx={ { width: '100%', p: 2, borderRadius: '20px' } } elevation={ 0 }>
       <Box height="5px" width="100%">
         { isApiLoading && <LinearProgress color={ isFetcherActionSubmission ? 'warning' : 'info' } /> }
       </Box>
-      <TableContainer component={ Paper } elevation={ 0 } sx={ { overflowX: 'hidden', '&:hover': { overflowX: 'auto' } } }>
+      <TableContainer sx={ { overflowX: 'hidden', '&:hover': { overflowX: 'auto' } } }>
         <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: 'fixed' } }>
           <TableHead>
             <TableRow>
               {
-                TABLE_COLUMNS.map((col, index) => {
+                TABLE_COLUMNS.map((col, index, array) => {
                   return (
                     <StyledHeaderCell
                       key={ col }
+                      sx={ {
+                        //borderRight: (index < array.length - 1) ? `1px solid ${GREY[400]}` : 'none',
+                      } }
                     >
                       <Stack direction="row" justifyContent="space-between" alignItems="center" overflow="hidden">
                         <TableSortLabel active={ false } direction="asc" style={ { width: 'calc(100%)' } }>
@@ -86,7 +88,6 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
               expenses.map((expense: Expense, rindex: number) => (
                 <TableRow
                   key={ expense.id }
-                  sx={ { '&:hover': { backgroundColor: GREY[300] }, opacity: 1 } }
                   id={ `expense-${expense.id}-${rindex}` }
                 >
                   {
@@ -108,7 +109,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
         </Table>
       </TableContainer>
 
-    </Box>
+    </Paper>
   );
 }
 

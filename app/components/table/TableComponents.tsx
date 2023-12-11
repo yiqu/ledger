@@ -9,6 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import type { Expense } from '~/shared/models/expense.model';
+import format from "date-fns/format";
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+
 
 export const StyledHeaderCell = styled(TableCell)(() => ({
   ...ellipsis,
@@ -17,7 +20,6 @@ export const StyledHeaderCell = styled(TableCell)(() => ({
   fontSize: '15px',
   // borderRight: `1px solid ${GREY[400]}`,
   borderColor: GREY[400],
-  backgroundColor: GREY[200],
 }));
 
 export const StyledDataCell = styled(TableCell)(() => ({
@@ -25,21 +27,21 @@ export const StyledDataCell = styled(TableCell)(() => ({
   paddingTop: '10px',
   paddingBottom: '10px',
   fontSize: '14px',
-  borderRight: `1px solid ${GREY[300]}`,
-  borderBottom: "none",
   maxWidth: '22rem', // the max width data cells can have
 }));
 
 export function transformTableData(expense: Expense, columnId: typeof TABLE_COLUMNS[number], onMenuClick: (actionId: 'editExpense' | 'deleteExpense') => void) {
-  
   const handleTitleCellMenuAction = (actionId: 'editExpense' | 'deleteExpense') => () => {
     onMenuClick(actionId);
   };
 
   switch (columnId) {
     case 'account': {
-      return <span 
-      title={ `${expense.account.name}` }> {expense.account.name } </span>;
+      return (
+        <span
+          title={ `${expense.account.name}` }> { expense.account.name }
+        </span>
+      );
     }
     case 'amount': {
       return (
@@ -48,28 +50,34 @@ export function transformTableData(expense: Expense, columnId: typeof TABLE_COLU
     }
     case 'date': {
       return (
-        <span title={ expense.dateFromNow?.tooltip }> {expense.dateFromNow?.display } </span>
+        <span title={ format(expense.date, 'MM/dd/yy HH:mm') }>
+          { formatDistanceToNow(expense.date, { addSuffix: true }) }
+        </span>
       );
     }
     case 'dateAdded': {
       return (
-        <span title={ expense.dateAddedFromNow?.tooltip }> {expense.dateAddedFromNow?.display } </span>
+        <span title={ format(expense.addedAtEpoch, 'MM/dd/yy HH:mm') }>
+          { formatDistanceToNow(expense.addedAtEpoch, { addSuffix: true }) }
+        </span>
       );
     }
     case 'updatedAt': {
       return (
-        <span title={ expense.updatedAtFromNow?.tooltip }> {expense.updatedAtFromNow?.display } </span>
+        <span title={ expense.updatedAtEpoch ? format(expense.addedAtEpoch, 'MM/dd/yy HH:mm') : 'N/A' }>
+          { expense.updatedAtEpoch ? formatDistanceToNow(expense.updatedAtEpoch, { addSuffix: true }) : 'N/A' }
+        </span>
       );
     }
     case 'actions': {
       return (
-        <Stack direction="row" justifyContent="center" alignItems="center">
+        <Stack direction="row" justifyContent="start" alignItems="center">
           <IconButton edge="end" aria-label="edit" size="small" onClick={ handleTitleCellMenuAction('editExpense') } title="Edit"
-              disabled={ false ? true : false }>
+            disabled={ false ? true : false }>
             <EditIcon fontSize='small' />
           </IconButton>
           <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('deleteExpense') } title="Delete"
-              disabled={ false ? true : false } >
+            disabled={ false ? true : false } >
             <DeleteIcon fontSize='small' />
           </IconButton>
         </Stack>

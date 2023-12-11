@@ -9,10 +9,17 @@ export interface StickyToolbarProps {
 function StickyToolbar({ children }: StickyToolbarProps) {
   const { isMobile } = useScreenSize();
   return (
-    <AppToolbar toolbarProps={ {
-      position: "sticky",
-      sx: { top: isMobile ? '56px' : '64px', backdropFilter: 'blur(6px)', backgroundColor: '#f2f2f236' }
-    } }>
+    <AppToolbar
+      toolbarProps={ {
+        position: "sticky",
+        sx: {
+          top: isMobile ? '56px' : '64px',
+          backdropFilter: 'blur(6px)',
+          backgroundColor: '#f2f2f236',
+          borderBottom: '1px solid #bab9bd'
+        }
+      } }
+    >
 
       { children }
 
