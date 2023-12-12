@@ -27,8 +27,6 @@ import { getLineColorByAccountName } from "~/api/utils/utils.server";
 import Box from "@mui/material/Box";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 
-
-
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
 }
@@ -115,9 +113,6 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
   // calculate gains for each expense
   accountsData.forEach((account: AccountWithPreCalculateExpenses, index: number) => {
     result.push(calculateGainRateForAccount(account));
-    if (account.expenses.length > 0) {
-      total += account.expenses[0].amount;
-    }
   });
 
   const shownAccountAndColorData: DashboardShownAccountAndColor[] = result.map((account: AccountWithExpenses, index) => {
@@ -126,6 +121,9 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
       color: getLineColorByAccountName(account.name, index)
     };
   });
+  total = result.reduce((acc, account) => {
+    return acc + account.totalAmount;
+  }, 0);
 
   return json({
     accountsData: result,

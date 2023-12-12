@@ -7,8 +7,9 @@ export function calculateGainRateForAccount(account: AccountWithPreCalculateExpe
   const expensesCopy: ExpenseWithoutAccount[] = [...account.expenses];
   const result: ExpenseDisplay[] = [];
 
-  const latest = expensesCopy[0]?.amount ?? 0;
-  const [latestInteger, latestDecimal] = splitNumberByDot(latest);
+  //const latest = expensesCopy[0]?.amount ?? 0;
+  const totalAmount: number = expensesCopy.reduce((acc, cur) => acc + cur.amount, 0);
+  const [totalAmountInteger, totalAmountDecimal] = splitNumberByDot(totalAmount);
 
   // 1, 3  3-1=2  2/1 = 2  which is 200%
   expensesCopy.reverse();
@@ -52,9 +53,9 @@ export function calculateGainRateForAccount(account: AccountWithPreCalculateExpe
 
   return {
     ...account,
-    totalAmount: latest,
-    totalAmountOfInteger: latestInteger,
-    totalAmountOfDecimal: latestDecimal,
+    totalAmount: totalAmount,
+    totalAmountOfInteger: totalAmountInteger,
+    totalAmountOfDecimal: totalAmountDecimal,
     expenses: expenseData,
     dashboardDisplayHasMore: account.expenseCount > account.expenses.length,
   };

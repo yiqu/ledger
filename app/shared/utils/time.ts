@@ -14,7 +14,7 @@ export function getInitFormValue(type: 'account' | 'expense' | null, account?: A
         amount: '',
         date: format(new Date(), 'yyyy-MM-dd HH:mm'),
         accountId: account?.id || '',
-        account: account
+        account: account ?? null,
       };
     }
     default: {

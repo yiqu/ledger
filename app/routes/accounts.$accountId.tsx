@@ -68,21 +68,23 @@ function AccountDetail() {
         </Stack >
       </TitleBarLayout>
 
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
-
-        <Stack direction="row" justifyContent="flex-end" alignItems="center" width="100%">
-          <Box mr={ 2 }>
-            <Typography variant="body2">
-              { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
-            </Typography>
-          </Box>
-          <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } shape="rounded" />
-        </Stack>
-      </Stack>
-
       {
         data.length === 0 ? (<NoResult />) : (
-          <ExpenseList expenses={ data } />
+          <>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
+
+              <Stack direction="row" justifyContent="flex-end" alignItems="center" width="100%">
+                <Box mr={ 2 }>
+                  <Typography variant="body2">
+                    { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
+                  </Typography>
+                </Box>
+                <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } shape="rounded" />
+              </Stack>
+            </Stack>
+            <ExpenseList expenses={ data } />
+          </>
+
         )
       }
 

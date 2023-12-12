@@ -8,11 +8,16 @@ import type { AccountWithExpenses } from "~/shared/models/account.model";
 
 function AccountColumn({ account }: { account: AccountWithExpenses }) {
   const nameWithoutParentheses = account.name.replace(/\(.*\)/, '').trim();
-
   return (
     <Stack direction="column" justifyContent="start" alignItems="center" width="100%" sx={ { bgcolor: 'background.paper', borderRadius: '20px', p: 1 } }>
-      <AccountHeader name={ account.name } total={ account.totalAmount } count={ account.expenseCount } accountId={ account.id }
-        totalInt={ account.totalAmountOfInteger } totalDecimal={ account.totalAmountOfDecimal } />
+      <AccountHeader
+        name={ account.name }
+        total={ account.totalAmount }
+        count={ account.expenseCount }
+        accountId={ account.id }
+        totalInt={ account.totalAmountOfInteger }
+        totalDecimal={ account.totalAmountOfDecimal }
+      />
 
       <Divider variant="fullWidth" flexItem sx={ { my: 2 } } />
 

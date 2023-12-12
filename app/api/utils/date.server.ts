@@ -1,7 +1,8 @@
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import format from "date-fns/format";
 
-export const convertDateDisplay = (date: string | Date | null, displayType?: 'full' | 'short' | 'fromNow' | 'shortAndNow' | 'longAndNow') => {
+export const convertDateDisplay = (date: string | Date | number | null,
+  displayType?: 'full' | 'short' | 'fromNow' | 'shortAndNow' | 'longAndNow') => {
 
   if (!date) {
     return {
@@ -12,12 +13,12 @@ export const convertDateDisplay = (date: string | Date | null, displayType?: 'fu
 
   const fullDate = format(new Date(date), 'MM/dd/yy HH:mm');
   const shortData = format(new Date(date), 'MM/dd/yy');
-  const fromNow = formatDistanceToNowStrict(new Date(date), {addSuffix: true});
+  const fromNow = formatDistanceToNowStrict(new Date(date), { addSuffix: true });
   const shortAndNow = `${shortData} (${fromNow})`;
   const longAndNow = `${fullDate} (${fromNow})`;
 
   return {
-    display: displayType === 'fromNow' ? fromNow : (displayType === 'full' ? (fullDate) : (displayType === 'short' ? shortData :  (displayType === 'shortAndNow' ? shortAndNow : longAndNow))),
+    display: displayType === 'fromNow' ? fromNow : (displayType === 'full' ? (fullDate) : (displayType === 'short' ? shortData : (displayType === 'shortAndNow' ? shortAndNow : longAndNow))),
     tooltip: `${date} - ${format(new Date(date), 'MM/dd/yy hh:mm bbb')} - ${longAndNow}`
   };
 
