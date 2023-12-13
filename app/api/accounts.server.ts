@@ -224,9 +224,6 @@ export async function getDashboardChartData(): Promise<DashboardChartData[]> {
     });
     return data;
   });
-  console.log('dashboardData: ', dashboardData)
-  console.log('dashboardDataKeys: ', dashboardDataKeys)
-  console.log('dashboardDataArray: ', dashboardDataArray)
 
   // sort by date
   const dashboardDataArraySorted = dashboardDataArray.toSorted((a: DashboardChartData, b: DashboardChartData) => {
