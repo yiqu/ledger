@@ -34,6 +34,7 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
   padding: drawerHeaderPadding,
   ...theme.mixins.toolbar,
+  minHeight: '48px !important' // forcing left nav header to be 48px to match main top nav height
 }));
 
 interface AppBarProps extends MuiAppBarProps {

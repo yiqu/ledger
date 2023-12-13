@@ -13,7 +13,7 @@ function StickyToolbar({ children }: StickyToolbarProps) {
       toolbarProps={ {
         position: "sticky",
         sx: {
-          top: isMobile ? '56px' : '64px',
+          top: isMobile ? '56px' : '48px',
           backdropFilter: 'blur(6px)',
           backgroundColor: '#f2f2f236',
           borderBottom: '1px solid #bab9bd'

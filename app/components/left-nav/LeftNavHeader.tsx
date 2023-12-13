@@ -35,7 +35,7 @@ function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
   }, [location.pathname]);
 
   return (
-    <DrawerHeader >
+    <DrawerHeader>
       <Link to={ "/" } style={ { color: '#000' } }>
         <Stack direction="row" sx={ { ...flexCenter } }>
           <Typography component="img" src={ displayLogo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>

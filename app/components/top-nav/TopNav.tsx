@@ -34,7 +34,7 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
   return (
     <React.Fragment>
       <AppBar position="fixed" open={ open } elevation={ 1 }>
-        <Toolbar>
+        <Toolbar variant="dense">
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
             <Stack direction="row" justifyContent="start" alignItems="center">
               <IconButton

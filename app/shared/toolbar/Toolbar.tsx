@@ -15,7 +15,6 @@ export default function AppToolbar({ toolbarProps, children }: ToolbarProps) {
         variant="dense"
         sx={ {
           color: (theme) => theme.palette.mode === 'light' ? '#000' : null,
-          pr: 0
         } }>
         { children }
       </Toolbar>

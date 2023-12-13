@@ -3,11 +3,11 @@ import { prisma } from "./database.server";
 import type { Prisma } from "@prisma/client";
 import { getDataSettingsByUserId } from "./settings.server";
 import { USER_ID } from "~/shared/utils/constants";
-import format from "date-fns/format";
 import type {
   Account, AccountAddable, AccountUpdateable, AccountWithPreCalculateExpenses,
   DashboardChartData
 } from "~/shared/models/account.model";
+import { getEpochFromSimpleDate } from "./utils/utils.server";
 
 export async function addAccount(item: AccountAddable) {
   try {
@@ -192,33 +192,45 @@ export async function getDashboardChartData(): Promise<DashboardChartData[]> {
     }
   });
 
-  // get all unique dates for all entries
-  const allAccountDataDateSet = new Set<string>();
-  allAccountData.forEach((account) => {
+  const dashboardData: { [dateString: string]: DashboardChartData } = {};
+  allAccountData.forEach((account, index) => {
     account.expenses.forEach((rec) => {
-      allAccountDataDateSet.add(format((rec.date), 'MM/dd/yyyy'));
+      const expenseDate: string = `${(new Date(rec.date).getMonth()) + 1}/${new Date(rec.date).getFullYear()}`;
+      const accountName = account.name;
+      if (dashboardData[expenseDate]) {
+        if (dashboardData[expenseDate][accountName] !== undefined && dashboardData[expenseDate][accountName] !== null) {
+          dashboardData[expenseDate][accountName] = (+(dashboardData[expenseDate][accountName]!) + rec.amount);
+          dashboardData[expenseDate][accountName] = Math.round(+(dashboardData[expenseDate][accountName]!) * 100) / 100;
+        } else {
+          dashboardData[expenseDate][accountName] = rec.amount;
+        }
+      } else {
+        dashboardData[expenseDate] = {
+          [accountName]: rec.amount,
+        };
+      }
     });
   });
 
-  const allAccountDataDateSetArray: string[] = Array.from(allAccountDataDateSet);
-  allAccountDataDateSetArray.sort((a, b) => new Date(b).getTime() < new Date(a).getTime() ? 1 : -1);
-
-  // create a data point for every date entry
-  const dashboardChartData: DashboardChartData[] = allAccountDataDateSetArray.map((dateString: string) => {
+  // convert to array
+  const dashboardDataKeys = Object.keys(dashboardData);
+  const dashboardDataArray: DashboardChartData[] = dashboardDataKeys.map((dateKey: string) => {
     const data: DashboardChartData = {
-      expenseDate: format(new Date(dateString), 'MM/dd/yyyy'),
+      expenseDate: dateKey,
       color: ''
     };
-
-    allAccountData.forEach((account, index) => {
-      const expense = account.expenses.find((rec) => format((rec.date), 'MM/dd/yyyy') === dateString);
-      data[account.name] = expense?.amount || null;
+    Object.keys(dashboardData[dateKey]).forEach((accountName) => {
+      data[accountName] = dashboardData[dateKey][accountName];
     });
-
     return data;
   });
 
-  return dashboardChartData;
+  // sort by date
+  const dashboardDataArraySorted = dashboardDataArray.toSorted((a: DashboardChartData, b: DashboardChartData) => {
+    return getEpochFromSimpleDate(b.expenseDate) - getEpochFromSimpleDate(a.expenseDate) ? -1 : 1;
+  });
+
+  return dashboardDataArraySorted;
 }
 
 export async function getShownAccounts(): Promise<Account[]> {

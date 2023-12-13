@@ -1,7 +1,7 @@
 import { badRequest } from "./request.server";
 
 export function handleError(err: any) {
-  return badRequest({message: err.message, ...err});
+  return badRequest({ message: err.message, ...err });
 }
 
 export function getRandomColor(): string {
@@ -22,32 +22,22 @@ export const getLineColorByAccountName = (accountName: string, index: number): s
   let color = '';
 
   switch (accountName) {
-    case 'Ascensus (RC)': {
-      color = '#cccc00';
+    case 'Haircuts': {
+      color = '#8884d8';
       break;
     }
-    case 'Paychex (CSG)': {
-      color = '#66ccff';
+    case 'Boba Tea': {
+      color = '#d2a679';
       break;
     }
-    case 'Ascensus (Omnyon)': {
-      color = '#005ce6';
-      break;
-    }
-    case 'Empower (Praxis)': {
-      color = '#e62e00';
-      break;
-    }
-    case 'Fidelity (GD)': {
-      color = '#368727';
+    case 'Eat Outs': {
+      color = '#66ffcc';
       break;
     }
     default: {
       color = colorList[index] ?? getRandomColor();
     }
-
   }
-
   return color;
 };
 
@@ -72,6 +62,12 @@ export const colorList = [
   '#808080' //gray
 ];
 
-function randomIntFromInterval(min: number, max: number) { // min and max included 
+export function randomIntFromInterval(min: number, max: number) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+
+export function getEpochFromSimpleDate(simpleDate: string | null | number): number {
+  const [month, year] = `${simpleDate}`.split('/');
+  return new Date(+year, +month - 1).getTime();
 }

@@ -26,6 +26,7 @@ import { calculateGainRateForAccount } from "~/api/utils/calculations.server";
 import { getLineColorByAccountName } from "~/api/utils/utils.server";
 import Box from "@mui/material/Box";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
+import Paper from "@mui/material/Paper";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -86,9 +87,13 @@ export default function Index() {
               </Stack>
             </TitleBarLayout>
 
-            { isChartShown && <Stack width="100%">
-              <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
-            </Stack> }
+            { isChartShown &&
+              (
+                <Paper sx={ { width: '100%', pb: 1, px: 1, pt: 3 } } elevation={ 0 }>
+                  <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
+                </Paper>
+              )
+            }
 
             <Dashboard accounts={ accountsData } />
 
