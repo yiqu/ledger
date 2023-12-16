@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import dollarLogo from '../../../public/images/dollar.png';
+import notesLogo from '../../../public/images/notes.png';
 import moneylogo from '../../../public/images/money.png';
 import { DrawerHeader } from '../layouts/LayoutComponents';
 import { useTheme } from '@mui/material/styles';
@@ -16,7 +16,7 @@ import { getRandomArbitrary } from '~/shared/utils/number.utils';
 import { APP_TITLE } from '~/constants/title';
 
 
-const LOGO_LIST = [dollarLogo, moneylogo];
+const LOGO_LIST = [notesLogo];
 
 function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
 
@@ -28,7 +28,7 @@ function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
     closeDrawerHandler(false);
   };
 
-  const [displayLogo, setDisplayLogo] = useState(dollarLogo);
+  const [displayLogo, setDisplayLogo] = useState(notesLogo);
 
   useEffect(() => {
     setDisplayLogo(LOGO_LIST[getRandomArbitrary(0, LOGO_LIST.length - 1)]);
@@ -38,7 +38,7 @@ function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
     <DrawerHeader>
       <Link to={ "/" } style={ { color: '#000' } }>
         <Stack direction="row" sx={ { ...flexCenter } }>
-          <Typography component="img" src={ displayLogo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>
+          <Typography component="img" src={ notesLogo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>
           <Typography variant='h6' fontFamily="Poppins"
             sx={ { color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'white' } }>{ leftNavTitle }</Typography>
         </Stack>
