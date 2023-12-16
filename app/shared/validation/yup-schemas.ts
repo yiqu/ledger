@@ -9,3 +9,7 @@ export const expenseSchema = object({
   date: date().required('Field is required.'),
   accountId: string().required('Field is required.')
 });
+
+export const expenseCommentSchema = object({
+  comment: string().trim().required('Field is required.').min(2, 'Comments has to be at least 2 characters.'),
+});

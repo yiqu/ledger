@@ -1,4 +1,5 @@
 import type { Account } from "./account.model";
+import type { ExpenseComment } from "./comment.model";
 import type { DateDisplayFormat } from "./general.model";
 
 export interface ExpenseAddable {
@@ -40,6 +41,9 @@ export interface Expense {
   updatedAtEpoch: number;
   accountId: string;
   account: Account;
+}
+export interface ExpenseWithComments extends Expense {
+  comments: ExpenseComment[];
 }
 
 export interface ExpenseWithoutAccount {

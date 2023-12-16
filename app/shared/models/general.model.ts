@@ -15,3 +15,7 @@ export interface DateDisplayFormat {
   display: string;
   tooltip: string;
 }
+
+export interface SuccessJsonObj {
+  success: boolean;
+}

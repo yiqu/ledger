@@ -24,15 +24,16 @@ model Account {
 }
 
 model Expense {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  id             String            @id @default(auto()) @map("_id") @db.ObjectId
   amount         Float
   date           Int
-  dateAdded      DateTime  @default(now())
-  updatedAt      DateTime? @updatedAt
+  dateAdded      DateTime          @default(now())
+  updatedAt      DateTime?         @updatedAt
   addedAtEpoch   Int
   updatedAtEpoch Int
-  account        Account   @relation(fields: [accountId], references: [id])
-  accountId      String    @db.ObjectId
+  account        Account           @relation(fields: [accountId], references: [id])
+  accountId      String            @db.ObjectId
+  comments       ExpenseComments[]
 }
 
 model DataSettings {
@@ -59,6 +60,15 @@ model User {
   dateAdded DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   accounts  Account[]
+}
+
+model ExpenseComments {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  comment   String
+  dateAdded DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  expense   Expense   @relation(fields: [expenseId], references: [id])
+  expenseId String    @db.ObjectId
 }
 
 enum DashboardChartType {

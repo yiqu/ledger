@@ -182,6 +182,24 @@ export async function getExpenseById(expenseId: string) {
   }
 }
 
+export async function getExpenseAndExpenseCommentsById(expenseId: string) {
+  try {
+    const res = await prisma.expense.findUnique({
+      where: {
+        id: expenseId
+      },
+      include: {
+        account: true,
+        comments: true
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getExpenseAndExpenseCommentsById(): ', JSON.stringify(error));
+    throw new Error(`Expense could not be retrieved. Code: ${error.code}`);
+  }
+}
+
 export async function editExpense(expense: ExpenseEditable) {
   try {
     const res = await prisma.expense.update({

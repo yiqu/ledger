@@ -9,11 +9,13 @@ import { handleError } from "~/api/utils/utils.server";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import NoResult from "~/components/no-result/NoResult";
-import { deleteExpense, getExpenseById } from "~/api/expenses.server";
-import type { Expense } from "~/shared/models/expense.model";
+import { deleteExpense, getExpenseAndExpenseCommentsById } from "~/api/expenses.server";
+import type { ExpenseWithComments } from "~/shared/models/expense.model";
 import { getAccounts } from "~/api/accounts.server";
 import { TitleNameDisplay } from "~/shared/components/Title";
 import format from "date-fns/format";
+import ExpenseCommentForm from "~/components/expense/ExpenseCommentForm";
+import ExpenseComments from "~/components/expense/ExpenseComments";
 
 
 export const meta: MetaFunction = (data) => {
@@ -118,6 +120,12 @@ function ExpenseDetail() {
         </Typography>
       </Stack>
 
+      <Stack direction="column" justifyContent="start" alignItems="start" border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px">
+        <ExpenseCommentForm expenseId={ expense.id } />
+        <ExpenseComments comments={ expense.comments } />
+      </Stack>
+
+
       <Outlet />
     </Stack>
   );
@@ -127,8 +135,8 @@ export default ExpenseDetail;
 
 export async function loader({ request, params, context }: LoaderFunctionArgs) {
   invariant(params.expenseId, "Expected params.expenseId to be defined");
-  let expense: Expense | null = await getExpenseById(params.expenseId);
   const accounts = await getAccounts();
+  const expense: ExpenseWithComments | null = await getExpenseAndExpenseCommentsById(params.expenseId);
   const payload = {
     expense,
     accounts
