@@ -10,7 +10,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import type { Expense } from '~/shared/models/expense.model';
 import format from "date-fns/format";
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 
 export const StyledHeaderCell = styled(TableCell)(() => ({
@@ -51,21 +50,21 @@ export function transformTableData(expense: Expense, columnId: typeof TABLE_COLU
     case 'date': {
       return (
         <span title={ format(expense.date, 'MM/dd/yy HH:mm') }>
-          { formatDistanceToNow(expense.date, { addSuffix: true }) }
+          { expense.date }
         </span>
       );
     }
     case 'dateAdded': {
       return (
         <span title={ format(expense.addedAtEpoch, 'MM/dd/yy HH:mm') }>
-          { formatDistanceToNow(expense.addedAtEpoch, { addSuffix: true }) }
+          { expense.addedAtEpoch }
         </span>
       );
     }
     case 'updatedAt': {
       return (
         <span title={ expense.updatedAtEpoch ? format(expense.addedAtEpoch, 'MM/dd/yy HH:mm') : 'N/A' }>
-          { expense.updatedAtEpoch ? formatDistanceToNow(expense.updatedAtEpoch, { addSuffix: true }) : 'N/A' }
+          { expense.updatedAtEpoch ? expense.updatedAtEpoch : 'N/A' }
         </span>
       );
     }

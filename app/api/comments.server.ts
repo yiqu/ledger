@@ -5,7 +5,7 @@ import type { Prisma } from "@prisma/client";
 import { runDelayTimer } from "./utils/utils.server";
 
 export async function getCommentsByExpenseId(expenseId: string) {
-  await runDelayTimer(1000);
+  await runDelayTimer(800);
 
   try {
     const res = await prisma.expenseComments.findMany({

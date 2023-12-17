@@ -29,12 +29,6 @@ export const meta: MetaFunction = (data) => {
   ];
 };
 
-// export const headers: HeadersFunction = ({
-//   loaderHeaders,
-// }) => ({
-//   "Cache-Control": 'public, no-cache, max-age=0',
-// });
-
 function ExpenseDetail() {
   const { expense, comments } = useLoaderData<typeof loader>();
 
