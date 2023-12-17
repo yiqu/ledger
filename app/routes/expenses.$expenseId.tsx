@@ -133,9 +133,12 @@ function ExpenseDetail() {
           <Await resolve={ comments }>
             { (comments) => {
               return (
-                <ClientOnly fallback={ <>Loading</> }>
-                  { () => <ExpenseComments comments={ comments } /> }
-                </ClientOnly>
+                // <ClientOnly fallback={ <>Loading</> }>
+                //   { () => <ExpenseComments comments={ comments } /> }
+                // </ClientOnly>
+                <div>
+                  Comment list
+                </div>
               );
             } }
           </Await>
