@@ -21,7 +21,10 @@ function ExpenseComments({ comments }: ExpenseCommentsProps) {
       {
         comments.map((comment: ExpenseCommentType) => {
           return (
-            <ExpenseCommentDisplay comment={ comment } key={ comment.id } />
+            // <ExpenseCommentDisplay comment={ comment } key={ comment.id } />
+            <div key={ comment.id }>
+              { comment.comment }
+            </div>
           );
         })
       }
