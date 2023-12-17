@@ -129,7 +129,7 @@ function ExpenseDetail() {
         width="100%" p={ 3 } borderRadius="25px" spacing={ 4 }>
         <ExpenseCommentForm expenseId={ expense.id } />
 
-        <Suspense fallback={ <ExpenseCommentsSkeleton /> }>
+        <Suspense fallback={ <>Loading</> }>
           <Await resolve={ comments }>
             { (comments) => {
               return (
