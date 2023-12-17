@@ -20,7 +20,7 @@
     "@fontsource/poppins": "^5.0.8",
     "@fontsource/roboto": "^5.0.8",
     "@hello-pangea/dnd": "^16.2.0",
-    "@hookform/resolvers": "~3.3.2",
+    "@hookform/resolvers": "~3.0.1",
     "@mui/icons-material": "^5.15.0",
     "@mui/material": "^5.15.0",
     "@mui/x-date-pickers": "^6.10.1",
