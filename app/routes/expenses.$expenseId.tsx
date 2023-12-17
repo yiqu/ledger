@@ -128,16 +128,13 @@ function ExpenseDetail() {
         width="100%" p={ 3 } borderRadius="25px" spacing={ 4 }>
         <ExpenseCommentForm expenseId={ expense.id } />
 
-        <Suspense fallback={ <>Loading</> }>
+        <Suspense fallback={ <ExpenseCommentsSkeleton /> }>
           <Await resolve={ comments }>
             { (comments) => {
               return (
-                // <ClientOnly fallback={ <>Loading</> }>
-                //   { () => <ExpenseComments comments={ comments } /> }
-                // </ClientOnly>
-                <div>
-                  Comment list
-                </div>
+                <ClientOnly fallback={ <>Loading</> }>
+                  { () => <ExpenseComments comments={ comments } /> }
+                </ClientOnly>
               );
             } }
           </Await>
