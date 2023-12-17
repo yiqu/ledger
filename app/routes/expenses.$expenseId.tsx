@@ -84,7 +84,7 @@ function ExpenseDetail() {
           </Typography>
           <Typography variant="body1" title={ `${expense.date}` }>
             {
-              `${new Date(expense.date)}`
+              expense.date
             }
           </Typography>
 
