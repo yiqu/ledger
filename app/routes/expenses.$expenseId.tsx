@@ -12,7 +12,6 @@ import { deleteExpense, getExpenseById } from "~/api/expenses.server";
 import type { Expense } from "~/shared/models/expense.model";
 import { getAccounts } from "~/api/accounts.server";
 import { TitleNameDisplay } from "~/shared/components/Title";
-import format from "date-fns/format";
 import ExpenseCommentForm from "~/components/expense/ExpenseCommentForm";
 import { getCommentsByExpenseId } from "~/api/comments.server";
 import type { ExpenseComment } from "~/shared/models/comment.model";
@@ -75,12 +74,12 @@ function ExpenseDetail() {
           Date:
           <Typography variant="body1" title={ `${expense.date}` }>
             {
-              format(expense.date, 'MM/dd/yyyy pp')
+              expense.date
             }
           </Typography>
           <Typography variant="body1" title={ `${expense.date}` }>
             {
-              format(expense.date, 'MM/dd/yyyy HH:mm')
+              expense.date
             }
           </Typography>
           <Typography variant="body1" title={ `${expense.date}` }>
@@ -98,7 +97,7 @@ function ExpenseDetail() {
           Added:
           <Typography variant="body1" title={ `${expense.addedAtEpoch}` }>
             {
-              format(expense.addedAtEpoch, 'MM/dd/yyyy HH:mm (pp)')
+              expense.addedAtEpoch
             }
           </Typography>
         </Typography>
@@ -107,7 +106,7 @@ function ExpenseDetail() {
           Last Updated:
           <Typography variant="body1" title={ `${expense.updatedAtEpoch}` }>
             {
-              expense.updatedAtEpoch ? format(expense.updatedAtEpoch, 'MM/dd/yyyy HH:mm (pp)') : 'N/A'
+              expense.updatedAtEpoch ? expense.updatedAtEpoch : 'N/A'
             }
           </Typography>
         </Typography>
