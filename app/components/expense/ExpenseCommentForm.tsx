@@ -37,8 +37,8 @@ function ExpenseCommentForm({ expenseId }: { expenseId: string }) {
           control={ control }
           label={ "Add a comment..." }
           multiline
-          rows={ 1 }
           fullWidth
+          maxRows={ 8 }
           clearField={ handleClearField }
           variant="standard"
         />

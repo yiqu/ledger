@@ -71,3 +71,7 @@ export function getEpochFromSimpleDate(simpleDate: string | null | number): numb
   const [month, year] = `${simpleDate}`.split('/');
   return new Date(+year, +month - 1).getTime();
 }
+
+export function runDelayTimer(time: number = 5000) {
+  return new Promise(resolve => setTimeout(resolve, time));
+}

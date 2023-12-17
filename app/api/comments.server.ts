@@ -2,12 +2,18 @@ import type { ExpenseComment, ExpenseCommentInput } from "~/shared/models/commen
 import { prisma } from "./database.server";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
+import { runDelayTimer } from "./utils/utils.server";
 
-export async function getCommentByExpenseId(expenseId: string) {
+export async function getCommentsByExpenseId(expenseId: string) {
+  await runDelayTimer(1000);
+
   try {
     const res = await prisma.expenseComments.findMany({
       where: {
         expenseId: expenseId
+      },
+      orderBy: {
+        dateAdded: 'desc'
       }
     });
     return res;

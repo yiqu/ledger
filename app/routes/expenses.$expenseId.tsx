@@ -5,18 +5,23 @@ import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
 import Typography from "@mui/material/Typography";
 import { handleError } from "~/api/utils/utils.server";
-//import { ClientOnly } from "remix-utils";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import NoResult from "~/components/no-result/NoResult";
-import { deleteExpense, getExpenseAndExpenseCommentsById } from "~/api/expenses.server";
-import type { ExpenseWithComments } from "~/shared/models/expense.model";
+import { deleteExpense, getExpenseById } from "~/api/expenses.server";
+import type { Expense } from "~/shared/models/expense.model";
 import { getAccounts } from "~/api/accounts.server";
 import { TitleNameDisplay } from "~/shared/components/Title";
 import format from "date-fns/format";
 import ExpenseCommentForm from "~/components/expense/ExpenseCommentForm";
+import { getCommentsByExpenseId } from "~/api/comments.server";
+import type { ExpenseComment } from "~/shared/models/comment.model";
+import { defer } from "@remix-run/node"; // or cloudflare/deno
+import { Await } from "@remix-run/react";
+import { Suspense } from "react";
+import ExpenseCommentsSkeleton from "~/components/expense/ExpenseCommentsSkeleton";
+import { ClientOnly } from "remix-utils/client-only";
 import ExpenseComments from "~/components/expense/ExpenseComments";
-
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -32,7 +37,7 @@ export const headers: HeadersFunction = ({
 });
 
 function ExpenseDetail() {
-  const { expense } = useLoaderData<typeof loader>();
+  const { expense, comments } = useLoaderData<typeof loader>();
 
   if (!expense) {
     return (
@@ -61,24 +66,24 @@ function ExpenseDetail() {
       <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
         <Typography variant="h6">
           ID:
-          <Typography variant="body2" title={ expense.id }>
+          <Typography variant="body1" title={ expense.id }>
             { expense.id }
           </Typography>
 
         </Typography>
         <Typography variant="h6">
           Date:
-          <Typography variant="body2" title={ `${expense.date}` }>
+          <Typography variant="body1" title={ `${expense.date}` }>
             {
               format(expense.date, 'MM/dd/yyyy pp')
             }
           </Typography>
-          <Typography variant="body2" title={ `${expense.date}` }>
+          <Typography variant="body1" title={ `${expense.date}` }>
             {
               format(expense.date, 'MM/dd/yyyy HH:mm')
             }
           </Typography>
-          <Typography variant="body2" title={ `${expense.date}` }>
+          <Typography variant="body1" title={ `${expense.date}` }>
             {
               `${new Date(expense.date)}`
             }
@@ -91,7 +96,7 @@ function ExpenseDetail() {
       <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
         <Typography variant="h6">
           Added:
-          <Typography variant="body2" title={ `${expense.addedAtEpoch}` }>
+          <Typography variant="body1" title={ `${expense.addedAtEpoch}` }>
             {
               format(expense.addedAtEpoch, 'MM/dd/yyyy HH:mm (pp)')
             }
@@ -100,7 +105,7 @@ function ExpenseDetail() {
 
         <Typography variant="h6">
           Last Updated:
-          <Typography variant="body2" title={ `${expense.updatedAtEpoch}` }>
+          <Typography variant="body1" title={ `${expense.updatedAtEpoch}` }>
             {
               expense.updatedAtEpoch ? format(expense.updatedAtEpoch, 'MM/dd/yyyy HH:mm (pp)') : 'N/A'
             }
@@ -120,11 +125,23 @@ function ExpenseDetail() {
         </Typography>
       </Stack>
 
-      <Stack direction="column" justifyContent="start" alignItems="start" border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px">
+      <Stack direction="column" justifyContent="start" alignItems="start" border={ `1px solid #ccc` }
+        width="100%" p={ 3 } borderRadius="25px" spacing={ 4 }>
         <ExpenseCommentForm expenseId={ expense.id } />
-        <ExpenseComments comments={ expense.comments } />
-      </Stack>
 
+        <Suspense fallback={ <ExpenseCommentsSkeleton /> }>
+          <Await resolve={ comments }>
+            { (comments) => {
+              return (
+                <ClientOnly fallback={ <>Loading</> }>
+                  { () => <ExpenseComments comments={ comments } /> }
+                </ClientOnly>
+              );
+            } }
+          </Await>
+        </Suspense>
+
+      </Stack>
 
       <Outlet />
     </Stack>
@@ -136,15 +153,17 @@ export default ExpenseDetail;
 export async function loader({ request, params, context }: LoaderFunctionArgs) {
   invariant(params.expenseId, "Expected params.expenseId to be defined");
   const accounts = await getAccounts();
-  const expense: ExpenseWithComments | null = await getExpenseAndExpenseCommentsById(params.expenseId);
-  const payload = {
+  const expense: Expense | null = await getExpenseById(params.expenseId);
+  const comments$: Promise<ExpenseComment[]> = getCommentsByExpenseId(params.expenseId);
+
+  return defer({
     expense,
-    accounts
-  };
-  return json(payload, {
+    accounts,
+    comments: comments$
+  }, {
     headers: {
       'Cache-Control': 'public, max-age=60',
-    },
+    }
   });
 }
 
