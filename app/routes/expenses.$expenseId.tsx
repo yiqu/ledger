@@ -1,4 +1,4 @@
-import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
@@ -29,11 +29,11 @@ export const meta: MetaFunction = (data) => {
   ];
 };
 
-export const headers: HeadersFunction = ({
-  loaderHeaders,
-}) => ({
-  "Cache-Control": 'public, no-cache, max-age=0',
-});
+// export const headers: HeadersFunction = ({
+//   loaderHeaders,
+// }) => ({
+//   "Cache-Control": 'public, no-cache, max-age=0',
+// });
 
 function ExpenseDetail() {
   const { expense, comments } = useLoaderData<typeof loader>();
@@ -159,10 +159,6 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
     expense,
     accounts,
     comments: comments$
-  }, {
-    headers: {
-      'Cache-Control': 'public, max-age=60',
-    }
   });
 }
 
