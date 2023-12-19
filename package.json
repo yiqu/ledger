@@ -31,6 +31,7 @@
     "@remix-run/react": "^2.4.0",
     "@uidotdev/usehooks": "^2.4.1",
     "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.2",
     "@vercel/remix": "^2.4.0",
     "date-fns": "^2.30.0",
     "immer": "^9.0.21",

@@ -33,7 +33,7 @@ import ActionLoaderErrorDisplay from "./components/error/ActionLoaderError";
 import OtherErrorDisplay from "./components/error/OtherError";
 import { Analytics } from '@vercel/analytics/react';
 import { userPrefCookie } from "./server/user-preference.server";
-
+import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [
@@ -68,6 +68,9 @@ function Document({ title, children }: { title?: string; children: React.ReactNo
         <LiveReload />
         { process.env.NODE_ENV === "production" && (
           <Analytics />
+        ) }
+        { process.env.NODE_ENV === "production" && (
+          <SpeedInsights />
         ) }
       </body>
     </html>
