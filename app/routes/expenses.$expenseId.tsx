@@ -21,6 +21,8 @@ import { Suspense } from "react";
 import ExpenseCommentsSkeleton from "~/components/expense/ExpenseCommentsSkeleton";
 import { ClientOnly } from "remix-utils/client-only";
 import ExpenseComments from "~/components/expense/ExpenseComments";
+import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
+import Divider from "@mui/material/Divider";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -50,91 +52,57 @@ function ExpenseDetail() {
         </Stack >
       </TitleBarLayout>
 
-      <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
-        <Typography variant="h5" className="montserrat" fontWeight="700">
-          ${ expense.amount.toLocaleString() }
-        </Typography>
-      </Stack>
+      <ContentPaperWrap>
+        <Stack width="100%" direction="row" justifyContent="start" alignItems="center" spacing={ 2 }>
 
-      <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
-        <Typography variant="h6">
-          ID:
-          <Typography variant="body1" title={ expense.id }>
-            { expense.id }
+          <Typography variant="h5" className="montserrat" fontWeight="700">
+            ${ expense.amount.toLocaleString() }
           </Typography>
+          <Divider orientation="vertical" flexItem variant="fullWidth" />
+          <table style={ { borderSpacing: '1rem' } }>
+            <tbody>
+              <tr>
+                <td>Expense Date:</td>
+                <td style={ { fontWeight: 500 } }>{ expense.dateFromNow?.display }</td>
+              </tr>
+              <tr>
+                <td>Added on:</td>
+                <td>{ expense.dateAddedFromNow?.display }</td>
+              </tr>
+              <tr>
+                <td>Updated on:</td>
+                <td>{ expense.updatedAtEpoch ? expense.updatedAtFromNow?.display : 'N/A' }</td>
+              </tr>
+              <tr>
+                <td> Account:</td>
+                <td><Link to={ `/accounts/${expense.account.id}` }>
+                  { expense.account.name }
+                </Link>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Stack>
+      </ContentPaperWrap>
 
-        </Typography>
-        <Typography variant="h6">
-          Date:
-          <Typography variant="body1" title={ `${expense.date}` }>
-            {
-              expense.date
-            }
-          </Typography>
-          <Typography variant="body1" title={ `${expense.date}` }>
-            {
-              expense.date
-            }
-          </Typography>
-          <Typography variant="body1" title={ `${expense.date}` }>
-            {
-              expense.date
-            }
-          </Typography>
+      <ContentPaperWrap>
+        <Stack direction="column" justifyContent="start" alignItems="start"
+          width="100%" spacing={ 4 }>
+          <ExpenseCommentForm expenseId={ expense.id } />
 
-        </Typography>
-
-      </Stack>
-
-      <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
-        <Typography variant="h6">
-          Added:
-          <Typography variant="body1" title={ `${expense.addedAtEpoch}` }>
-            {
-              expense.addedAtEpoch
-            }
-          </Typography>
-        </Typography>
-
-        <Typography variant="h6">
-          Last Updated:
-          <Typography variant="body1" title={ `${expense.updatedAtEpoch}` }>
-            {
-              expense.updatedAtEpoch ? expense.updatedAtEpoch : 'N/A'
-            }
-          </Typography>
-        </Typography>
-
-      </Stack>
-
-      <Stack border={ `1px solid #ccc` } width="100%" p={ 3 } borderRadius="25px" direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
-        <Typography variant="h6">
-          Account:
-          <div>
-            <Link to={ `/accounts/${expense.account.id}` }>
-              { expense.account.name }
-            </Link>
-          </div>
-        </Typography>
-      </Stack>
-
-      <Stack direction="column" justifyContent="start" alignItems="start" border={ `1px solid #ccc` }
-        width="100%" p={ 3 } borderRadius="25px" spacing={ 4 }>
-        <ExpenseCommentForm expenseId={ expense.id } />
-
-        <Suspense fallback={ <ExpenseCommentsSkeleton /> }>
-          <Await resolve={ comments }>
-            { (comments) => {
-              return (
-                <ClientOnly fallback={ <>Loading</> }>
-                  { () => <ExpenseComments comments={ comments } /> }
-                </ClientOnly>
-              );
-            } }
-          </Await>
-        </Suspense>
-
-      </Stack>
+          <Suspense fallback={ <ExpenseCommentsSkeleton /> }>
+            <Await resolve={ comments }>
+              { (comments) => {
+                return (
+                  <ClientOnly fallback={ <>Loading</> }>
+                    { () => <ExpenseComments comments={ comments } /> }
+                  </ClientOnly>
+                );
+              } }
+            </Await>
+          </Suspense>
+        </Stack>
+      </ContentPaperWrap>
 
       <Outlet />
     </Stack>

@@ -1,8 +1,11 @@
 import { prisma } from "./database.server";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
+import format from "date-fns/format";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import parseInt from "lodash/parseInt";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
+import { TIME_STAMP_FORMAT } from "~/shared/utils/constants";
 
 /**
  * Get all expenses paged
@@ -175,6 +178,26 @@ export async function getExpenseById(expenseId: string) {
         account: true
       }
     });
+
+    if (res) {
+      const expense: Expense = {
+        ...res,
+        dateFromNow: {
+          display: `${format(res.date, TIME_STAMP_FORMAT)} (${formatDistanceToNow(res.date, { addSuffix: true })})`,
+          tooltip: `${new Date(res.date).toLocaleString()}`
+        },
+        dateAddedFromNow: {
+          display: `${format(res.addedAtEpoch, TIME_STAMP_FORMAT)} (${formatDistanceToNow(res.addedAtEpoch, { addSuffix: true })})`,
+          tooltip: `${new Date(res.addedAtEpoch).toLocaleString()}`
+        },
+        updatedAtFromNow: {
+          display: `${format(res.updatedAtEpoch, TIME_STAMP_FORMAT)} (${formatDistanceToNow(res.updatedAtEpoch, { addSuffix: true })})`,
+          tooltip: `${new Date(res.updatedAtEpoch).toLocaleString()}`
+        },
+      };
+      return expense;
+    }
+
     return res;
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
     console.log('Server error at getExpenseById(): ', JSON.stringify(error));

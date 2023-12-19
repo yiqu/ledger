@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import LinearProgress from "@mui/material/LinearProgress";
 import TableContainer from "@mui/material/TableContainer";
-import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
@@ -18,6 +17,7 @@ import urlcat from "urlcat";
 import { useFetcherType } from "~/shared/hooks/useFetcherType";
 import { useNavigationType } from "~/shared/hooks/useNavigationType";
 import type { Expense } from "~/shared/models/expense.model";
+import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
 
 export interface ExpenseTableProps {
   expenses: Expense[];
@@ -52,7 +52,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
 
 
   return (
-    <Paper sx={ { width: '100%', p: 2, borderRadius: '20px' } } elevation={ 0 }>
+    <ContentPaperWrap>
       <Box height="5px" width="100%">
         { isApiLoading && <LinearProgress color={ isFetcherActionSubmission ? 'warning' : 'info' } /> }
       </Box>
@@ -109,7 +109,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
         </Table>
       </TableContainer>
 
-    </Paper>
+    </ContentPaperWrap>
   );
 }
 
