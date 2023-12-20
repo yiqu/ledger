@@ -6,8 +6,6 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import type { Expense } from "~/shared/models/expense.model";
-import format from "date-fns/format";
-
 
 function ExpenseDetail({ expense }: { expense: Expense }) {
 
@@ -15,7 +13,7 @@ function ExpenseDetail({ expense }: { expense: Expense }) {
     <Card elevation={ 0 }>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe">
+          <Avatar aria-label="account-avatar">
             { expense.account.name[0] }
           </Avatar>
         }
@@ -35,21 +33,21 @@ function ExpenseDetail({ expense }: { expense: Expense }) {
         <table>
           <tbody>
             <tr>
-              <td>Date:</td>
-              <td>
-                { format(expense.date, 'MM/dd/yyyy HH:mm (pp)') }
+              <td>Expense Date:</td>
+              <td title={ expense.dateFromNow?.tooltip }>
+                { expense.dateFromNow?.display }
               </td>
             </tr>
             <tr>
-              <td>Date added:</td>
-              <td>
-                { format(expense.addedAtEpoch, 'MM/dd/yyyy HH:mm (pp)') }
+              <td>Added:</td>
+              <td title={ expense.dateAddedFromNow?.tooltip }>
+                { expense.dateAddedFromNow?.display }
               </td>
             </tr>
             <tr>
               <td>Last Updated:</td>
-              <td>
-                { expense.updatedAtEpoch ? format(expense.updatedAtEpoch, 'MM/dd/yyyy HH:mm (pp)') : 'N/A' }
+              <td title={ expense.updatedAtEpoch ? expense.updatedAtFromNow?.tooltip : 'N/A' }>
+                { expense.updatedAtEpoch ? expense.updatedAtFromNow?.display : 'N/A' }
               </td>
             </tr>
             <tr>

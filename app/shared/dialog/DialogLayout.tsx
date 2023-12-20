@@ -1,4 +1,5 @@
 import Close from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
 import type { DialogProps } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -6,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 
 export interface DialogLayoutProps {
+  id?: string;
   open: boolean;
   title: React.ReactNode;
   maxWidth?: DialogProps['maxWidth'];
@@ -13,7 +15,7 @@ export interface DialogLayoutProps {
   children: React.ReactNode
 }
 
-function DialogLayout({ open, title, maxWidth="lg", onClose, children }: DialogLayoutProps) {
+function DialogLayout({ id, open, title, maxWidth = "lg", onClose, children }: DialogLayoutProps) {
 
   const handleClose = () => {
     onClose();
@@ -27,16 +29,19 @@ function DialogLayout({ open, title, maxWidth="lg", onClose, children }: DialogL
       open={ open }
       onClose={ handleClose }
       transitionDuration={ 0 }
+      id={ id ?? 'app-dialog' }
     >
-      <DialogTitle>
+      <DialogTitle sx={ { backgroundColor: 'primary.main', color: 'white' } }>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          { title}
-          <IconButton aria-label="delete" color="primary" onClick={ handleClose }>
+          <Typography variant="h5">
+            { title }
+          </Typography>
+          <IconButton aria-label="delete" sx={ { color: 'white' } } onClick={ handleClose }>
             <Close />
           </IconButton>
         </Stack>
       </DialogTitle>
-       
+
       { children }
     </Dialog>
   );

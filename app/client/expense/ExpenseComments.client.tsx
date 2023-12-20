@@ -7,7 +7,6 @@ interface ExpenseCommentsProps {
 }
 
 function ExpenseCommentsClient({ comments }: ExpenseCommentsProps) {
-  console.log('comments', comments);
   if (!comments || comments.length === 0) {
     return (
       <Typography variant="body1" component="div" sx={ { flexGrow: 1 } }>

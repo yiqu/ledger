@@ -6,6 +6,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import parseInt from "lodash/parseInt";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
 import { TIME_STAMP_FORMAT } from "~/shared/utils/constants";
+import { convertDateDisplay } from "./utils/date.server";
 
 /**
  * Get all expenses paged
@@ -137,6 +138,9 @@ export async function getExpensesByAccountId(accountId: string, page: number, fi
     const expenseWithDateFormatted: Expense[] = res.map((expense: Expense) => {
       return {
         ...expense,
+        dateAddedFromNow: convertDateDisplay(expense.dateAdded, 'fromNow'),
+        updatedAtFromNow: convertDateDisplay(expense.updatedAt, 'fromNow'),
+        dateFromNow: convertDateDisplay(expense.date, 'fromNowUnlessFarBack'),
       };
     });
 

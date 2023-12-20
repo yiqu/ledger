@@ -84,7 +84,6 @@ function AccountDetail() {
             </Stack>
             <ExpenseList expenses={ data } />
           </>
-
         )
       }
 

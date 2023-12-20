@@ -13,7 +13,7 @@ import { getParamsAsObject } from "~/shared/utils/url.utils";
 
 function Expenses() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data: expenses, totalCount, totalPages, pageSize, currentResultSetCount } = useRouteLoaderData("routes/expenses") as HttpResponsePaged<Expense[]>;
+  const { data, totalCount, totalPages, pageSize, currentResultSetCount } = useRouteLoaderData("routes/expenses") as HttpResponsePaged<Expense[]>;
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
@@ -38,7 +38,7 @@ function Expenses() {
         <Stack direction="row" justifyContent="flex-end" alignItems="center" width="100%">
           <Box mr={ 2 }>
             <Typography variant="body2">
-              { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + expenses.length} of ${currentResultSetCount}` }
+              { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
             </Typography>
           </Box>
           <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } color="standard" shape="rounded" />
@@ -47,8 +47,8 @@ function Expenses() {
       </Stack>
 
       {
-        expenses.length === 0 ? (<NoResult />) : (
-          <ExpenseTable expenses={ expenses } />
+        data.length === 0 ? (<NoResult />) : (
+          <ExpenseTable expenses={ data } />
         )
       }
     </>

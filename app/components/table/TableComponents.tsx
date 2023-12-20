@@ -1,15 +1,15 @@
 import TableCell from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-import { ellipsis } from '~/shared/utils/css.utils';
+import { ellipsis, ellipsisBlock } from '~/shared/utils/css.utils';
 import { GREY } from '~/theme/palette';
 import type { TABLE_COLUMNS } from '~/shared/utils/table';
-import { ExpenseName } from '../expense/Expense';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import type { Expense } from '~/shared/models/expense.model';
-import format from "date-fns/format";
+import Typography from '@mui/material/Typography';
+import { Link } from '@remix-run/react';
 
 
 export const StyledHeaderCell = styled(TableCell)(() => ({
@@ -29,6 +29,16 @@ export const StyledDataCell = styled(TableCell)(() => ({
   maxWidth: '22rem', // the max width data cells can have
 }));
 
+export function LinkableCellDisplay({ url, display }: { url: string, display: string }) {
+  return (
+    <Typography style={ { ...ellipsisBlock } } className='roboto'>
+      <Link to={ url }>
+        { display }
+      </Link>
+    </Typography>
+  );
+}
+
 export function transformTableData(expense: Expense, columnId: typeof TABLE_COLUMNS[number], onMenuClick: (actionId: 'editExpense' | 'deleteExpense') => void) {
   const handleTitleCellMenuAction = (actionId: 'editExpense' | 'deleteExpense') => () => {
     onMenuClick(actionId);
@@ -37,34 +47,32 @@ export function transformTableData(expense: Expense, columnId: typeof TABLE_COLU
   switch (columnId) {
     case 'account': {
       return (
-        <span
-          title={ `${expense.account.name}` }> { expense.account.name }
-        </span>
+        <LinkableCellDisplay url={ `/accounts/${expense.account.id}` } display={ expense.account.name } />
       );
     }
     case 'amount': {
       return (
-        <ExpenseName expense={ expense } />
+        <LinkableCellDisplay url={ `/expenses/${expense.id}` } display={ `$${expense.amount.toLocaleString()}` } />
       );
     }
     case 'date': {
       return (
-        <span title={ format(expense.date, 'MM/dd/yy HH:mm') }>
-          { expense.date }
+        <span title={ expense.dateFromNow?.tooltip }>
+          { expense.dateFromNow?.display }
         </span>
       );
     }
     case 'dateAdded': {
       return (
-        <span title={ format(expense.addedAtEpoch, 'MM/dd/yy HH:mm') }>
-          { expense.addedAtEpoch }
+        <span title={ expense.dateAddedFromNow?.tooltip }>
+          { expense.dateAddedFromNow?.display }
         </span>
       );
     }
     case 'updatedAt': {
       return (
-        <span title={ expense.updatedAtEpoch ? format(expense.addedAtEpoch, 'MM/dd/yy HH:mm') : 'N/A' }>
-          { expense.updatedAtEpoch ? expense.updatedAtEpoch : 'N/A' }
+        <span title={ expense.updatedAtEpoch ? expense.updatedAtFromNow?.tooltip : 'N/A' }>
+          { expense.updatedAtEpoch ? expense.updatedAtFromNow?.display : 'N/A' }
         </span>
       );
     }

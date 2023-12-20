@@ -7,20 +7,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ellipsisBlock } from '~/shared/utils/css.utils';
 import Stack from '@mui/material/Stack';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link, useNavigate, useFetcher, useLocation } from '@remix-run/react';
+import { useNavigate, useFetcher, useLocation } from '@remix-run/react';
 import { useFetcherType } from '~/shared/hooks/useFetcherType';
 import CircularProgress from "@mui/material/CircularProgress";
-import type { TypographyProps } from "@mui/material/Typography";
-import Typography from "@mui/material/Typography";
 import PageviewIcon from '@mui/icons-material/Pageview';
 import { useState } from 'react';
 import DialogLayout from '~/shared/dialog/DialogLayout';
 import ExpenseDetail from './ExpenseDetail';
-import Box from '@mui/material/Box';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 //@ts-ignore
 import urlcat from 'urlcat';
 import type { Expense as IExpense } from '~/shared/models/expense.model';
+import { LinkableCellDisplay } from '../table/TableComponents';
+import DialogContent from "@mui/material/DialogContent";
 
 function Expense({ expense }: { expense: IExpense }) {
   const navigate = useNavigate();
@@ -41,11 +40,10 @@ function Expense({ expense }: { expense: IExpense }) {
     } else if (actionId === 'deleteExpense') {
       const proceed = confirm(`Are you sure you want to delete this item?`);
       if (!proceed) return;
-
       const url = urlcat('', '/expenses/:expenseId', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
       deleteFetcher.submit({ id: expense.id }, { method: 'DELETE', action: url, preventScrollReset: true });
     } else if (actionId === 'details') {
-      setShowExpenseDetail(true);
+      navigate(`expense/${expense.id}/details`);
     }
   };
 
@@ -79,7 +77,7 @@ function Expense({ expense }: { expense: IExpense }) {
         <ListItemText
           primary={
             <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 }>
-              <ExpenseName expense={ expense } props={ { fontWeight: 500 } } />
+              <LinkableCellDisplay url={ `/expenses/${expense.id}` } display={ `$${expense.amount.toLocaleString()}` } />
               { isApiLoading && <CircularProgress size="12px" /> }
             </Stack>
           }
@@ -90,9 +88,9 @@ function Expense({ expense }: { expense: IExpense }) {
       </ListItem>
 
       <DialogLayout open={ showExpenseDetail } onClose={ handleCloseDetail } title={ `Expense Detail` } maxWidth="xs">
-        <Box p={ 2 }>
+        <DialogContent>
           <ExpenseDetail expense={ expense } />
-        </Box>
+        </DialogContent>
       </DialogLayout>
     </>
   );
@@ -100,20 +98,10 @@ function Expense({ expense }: { expense: IExpense }) {
 
 export default Expense;
 
-export function ExpenseName({ expense, props }: { expense: IExpense, props?: TypographyProps }) {
-  return (
-    <Typography style={ { ...ellipsisBlock } } className='montserrat' { ...props } >
-      <Link to={ `/expenses/${expense.id}` }>
-        ${ expense.amount.toLocaleString() }
-      </Link>
-    </Typography>
-  );
-}
-
 function ExpenseSubText({ expense }: { expense: IExpense }) {
   return (
-    <span style={ { ...ellipsisBlock, fontSize: '13px', height: '18.5px' } } title={ `${expense.date}` }>
-      { expense.date }
+    <span style={ { ...ellipsisBlock, fontSize: '13px', height: '18.5px' } } title={ `${expense.dateFromNow?.tooltip}` }>
+      { expense.dateFromNow?.display }
     </span>
   );
 }

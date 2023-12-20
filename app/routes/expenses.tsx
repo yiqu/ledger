@@ -102,11 +102,12 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
       ...rec,
       dateAddedFromNow: convertDateDisplay(rec.dateAdded, 'fromNow'),
       updatedAtFromNow: convertDateDisplay(rec.updatedAt, 'fromNow'),
+      dateFromNow: convertDateDisplay(rec.date, 'fromNowUnlessFarBack'),
     };
   });
   return json({
     ...response,
-    expenses: expenses,
+    data: expenses
   });
 }
 
