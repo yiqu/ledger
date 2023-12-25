@@ -11,42 +11,35 @@ import { useNavigate, useFetcher, useLocation } from '@remix-run/react';
 import { useFetcherType } from '~/shared/hooks/useFetcherType';
 import CircularProgress from "@mui/material/CircularProgress";
 import PageviewIcon from '@mui/icons-material/Pageview';
-import { useState } from 'react';
-import DialogLayout from '~/shared/dialog/DialogLayout';
-import ExpenseDetail from './ExpenseDetail';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 //@ts-ignore
 import urlcat from 'urlcat';
 import type { Expense as IExpense } from '~/shared/models/expense.model';
 import { LinkableCellDisplay } from '../table/TableComponents';
-import DialogContent from "@mui/material/DialogContent";
+import type { ExpenseRowAction } from '~/shared/constants/actions';
+import { ExpenseRowActionEnum } from '~/shared/constants/actions';
 
 function Expense({ expense }: { expense: IExpense }) {
   const navigate = useNavigate();
   const deleteFetcher = useFetcher();
   const { isFetcherActionSubmission, isFetcherActionReload, isFetcherActionRedirect } = useFetcherType(deleteFetcher as any);
   const isApiLoading = isFetcherActionSubmission || isFetcherActionReload || isFetcherActionRedirect;
-  const [showExpenseDetail, setShowExpenseDetail] = useState<boolean>(false);
   const { pathname, search } = useLocation();
 
-  const handleCloseDetail = () => {
-    setShowExpenseDetail(false);
-  };
 
-  const handleActionClick = (actionId: 'editExpense' | 'deleteExpense' | 'details') => () => {
+  const handleActionClick = (actionId: ExpenseRowAction) => () => {
     if (actionId === 'editExpense') {
-      const url = urlcat('', '/expenses/:expenseId/edit', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
+      const url = urlcat('', `/expenses/:expenseId/${ExpenseRowActionEnum.EditExpense}`, { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
       navigate(url);
     } else if (actionId === 'deleteExpense') {
       const proceed = confirm(`Are you sure you want to delete this item?`);
       if (!proceed) return;
       const url = urlcat('', '/expenses/:expenseId', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });
       deleteFetcher.submit({ id: expense.id }, { method: 'DELETE', action: url, preventScrollReset: true });
-    } else if (actionId === 'details') {
-      navigate(`expense/${expense.id}/details`);
+    } else if (actionId === 'detailsExpense') {
+      navigate(`expense/${expense.id}/${ExpenseRowActionEnum.DetailsExpense}`);
     }
   };
-
 
   return (
     <>
@@ -54,7 +47,7 @@ function Expense({ expense }: { expense: IExpense }) {
         sx={ { pr: '100px', opacity: isApiLoading ? 0.5 : 1 } }
         secondaryAction={
           <Stack direction="row" justifyContent="end" alignItems="center">
-            <IconButton edge="end" aria-label="details" size="small" onClick={ handleActionClick('details') } title="See details"
+            <IconButton edge="end" aria-label="details" size="small" onClick={ handleActionClick('detailsExpense') } title="See details"
               disabled={ isApiLoading ? true : false } >
               <PageviewIcon />
             </IconButton>
@@ -86,12 +79,6 @@ function Expense({ expense }: { expense: IExpense }) {
           }
         />
       </ListItem>
-
-      <DialogLayout open={ showExpenseDetail } onClose={ handleCloseDetail } title={ `Expense Detail` } maxWidth="xs">
-        <DialogContent>
-          <ExpenseDetail expense={ expense } />
-        </DialogContent>
-      </DialogLayout>
     </>
   );
 }

@@ -2,7 +2,7 @@ import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import { startCase } from "lodash";
+import startCase from "lodash/startCase";
 import DialogLayout from "~/shared/dialog/DialogLayout";
 import { Form, useActionData, useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import { useForm } from "react-hook-form";

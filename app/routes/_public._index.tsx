@@ -18,7 +18,7 @@ import type { SettingsAllData } from "~/shared/models/settings";
 import type { DashboardChartType } from "@prisma/client";
 // @ts-ignore
 import urlcat from 'urlcat';
-import type { AccountWithExpenses, AccountWithPreCalculateExpenses, DashboardChartData, DashboardExpensesData, DashboardShownAccountAndColor } from "~/shared/models/account.model";
+import type { AccountWithExpenses, AccountWithPreCalculateExpenses, DashboardChartData, DashboardExpensesData, DashboardShownAccountAndColor, DashboardYearOption } from "~/shared/models/account.model";
 import AccountNavBar from "~/components/navbar/AccountNavBar";
 import { TitleNameDisplay } from "~/shared/components/Title";
 import { getDashboardChartData, getShownAccountAndExpenses } from "~/api/accounts.server";
@@ -27,6 +27,10 @@ import { getLineColorByAccountName } from "~/api/utils/utils.server";
 import Box from "@mui/material/Box";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import Paper from "@mui/material/Paper";
+import { getFirstAndLastExpenseDatesByShownAccounts } from "~/api/expenses.server";
+import getYear from "date-fns/getYear";
+import { useCallback } from "react";
+import DashboardChartYearSelect from "~/components/chart/DashboardChartYearSelect";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -49,7 +53,8 @@ export const headers: HeadersFunction = ({
 export default function Index() {
   const { isMobile } = useScreenSize();
   const navigate = useNavigate();
-  const { accountsData, chartData, isChartShown, shownAccountAndColorData, chartType, total }: DashboardExpensesData = useLoaderData<typeof loader>();
+  const { accountsData, chartData, isChartShown, shownAccountAndColorData, chartType, total, yearOptions }: DashboardExpensesData =
+    useLoaderData<typeof loader>();
 
   const handleAddNewExpense = () => {
     const url = urlcat('/add', '', { type: 'expense', redirectUrl: '/', actionUrl: '/data' });
@@ -64,6 +69,10 @@ export default function Index() {
       }
     }
   };
+
+  const handleOnYearSelectChange = useCallback((selection: string) => {
+    console.log(selection)
+  }, []);
 
   return (
     <Stack direction="column" width="100%">
@@ -89,7 +98,8 @@ export default function Index() {
 
             { isChartShown &&
               (
-                <Paper sx={ { width: '100%', pb: 1, px: 1, pt: 3 } } elevation={ 0 }>
+                <Paper sx={ { width: '100%', py: 2, px: 1 } } elevation={ 0 }>
+                  <DashboardChartYearSelect initValue={ undefined } options={ yearOptions } onSelectChange={ handleOnYearSelectChange } />
                   <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
                 </Paper>
               )
@@ -109,6 +119,19 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
   const accountsData = await getShownAccountAndExpenses() as AccountWithPreCalculateExpenses[];
   const chartData: DashboardChartData[] = await getDashboardChartData();
   const userSettings: SettingsAllData | null = await getDataSettingsByUserId(USER_ID);
+  const firstAndLastExpenseDates = await getFirstAndLastExpenseDatesByShownAccounts();
+
+  let yearOptions: DashboardYearOption[] = [];
+  if (firstAndLastExpenseDates.firstDate && firstAndLastExpenseDates.lastDate) {
+    const firstYear: number = getYear(firstAndLastExpenseDates.firstDate);
+    const endYear: number = getYear(firstAndLastExpenseDates.lastDate);
+    const range: number = endYear - firstYear;
+    for (let i = 0; i <= range; i++) {
+      yearOptions.push({
+        id: `${firstYear + i}`,
+      });
+    }
+  }
 
   let result: AccountWithExpenses[] = [];
   const shouldShowChart: boolean = !!userSettings?.showDashboardChart;
@@ -136,7 +159,8 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
     chartData: chartData,
     shownAccountAndColorData: shownAccountAndColorData,
     chartType: chartType,
-    total: total
+    total: total,
+    yearOptions: yearOptions
   });
 }
 

@@ -81,6 +81,35 @@ export async function getExpensesPaged(page: number, filterString: string | null
   }
 }
 
+export async function getFirstAndLastExpenseDatesByShownAccounts() {
+  try {
+    const res = await prisma.expense.findMany({
+      orderBy: {
+        date: 'asc'
+      },
+      select: {
+        date: true
+      },
+      where: {
+        account: {
+          shown: true
+        }
+      }
+    });
+
+    const firstDate = res.length > 0 ? res[0].date : null;
+    const lastDate = res.length > 0 ? res[res.length - 1].date : null;
+
+    return {
+      firstDate: firstDate,
+      lastDate: lastDate
+    };
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getFirstAndLastExpenseDates(): ', JSON.stringify(error));
+    throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
+  }
+}
+
 export async function addExpense(expense: ExpenseAddable) {
   try {
     const res = await prisma.expense.create({

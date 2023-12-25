@@ -60,6 +60,11 @@ export interface DashboardExpensesData {
   chartData: DashboardChartData[];
   shownAccountAndColorData: DashboardShownAccountAndColor[];
   total: number;
+  yearOptions: DashboardYearOption[];
+}
+
+export interface DashboardYearOption {
+  id: string;
 }
 
 export interface DashboardShownAccountAndColor {
