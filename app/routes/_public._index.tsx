@@ -29,7 +29,6 @@ import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import Paper from "@mui/material/Paper";
 import { getFirstAndLastExpenseDatesByShownAccounts } from "~/api/expenses.server";
 import getYear from "date-fns/getYear";
-import { useCallback } from "react";
 import DashboardChartYearSelect from "~/components/chart/DashboardChartYearSelect";
 
 export function links() {
@@ -70,10 +69,6 @@ export default function Index() {
     }
   };
 
-  const handleOnYearSelectChange = useCallback((selection: string) => {
-    console.log(selection)
-  }, []);
-
   return (
     <Stack direction="column" width="100%">
       <StickyToolbar>
@@ -99,7 +94,7 @@ export default function Index() {
             { isChartShown &&
               (
                 <Paper sx={ { width: '100%', py: 2, px: 1 } } elevation={ 0 }>
-                  <DashboardChartYearSelect initValue={ undefined } options={ yearOptions } onSelectChange={ handleOnYearSelectChange } />
+                  <DashboardChartYearSelect options={ yearOptions } />
                   <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
                 </Paper>
               )
