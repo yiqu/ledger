@@ -93,7 +93,7 @@ export default function Index() {
 
             { isChartShown &&
               (
-                <Paper sx={ { width: '100%', py: 2, px: 1 } } elevation={ 0 }>
+                <Paper sx={ { width: '100%', py: 2, px: 1, borderRadius: '20px', bgcolor: "#FDFAF6" } } elevation={ 0 }>
                   <DashboardChartYearSelect options={ yearOptions } />
                   <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
                 </Paper>
@@ -111,8 +111,10 @@ export default function Index() {
 }
 
 export async function loader({ request, params, context }: LoaderFunctionArgs): Promise<TypedResponse<DashboardExpensesData>> {
+  const url = new URL(request.url);
+  const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? getYear(new Date()).toString();
   const accountsData = await getShownAccountAndExpenses() as AccountWithPreCalculateExpenses[];
-  const chartData: DashboardChartData[] = await getDashboardChartData();
+  const chartData: DashboardChartData[] = await getDashboardChartData(selectedViewYear);
   const userSettings: SettingsAllData | null = await getDataSettingsByUserId(USER_ID);
   const firstAndLastExpenseDates = await getFirstAndLastExpenseDatesByShownAccounts();
 
@@ -128,7 +130,7 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
     }
   }
 
-  let result: AccountWithExpenses[] = [];
+  const result: AccountWithExpenses[] = [];
   const shouldShowChart: boolean = !!userSettings?.showDashboardChart;
   const chartType: DashboardChartType = userSettings?.dashboardChartType ?? 'bar';
   let total: number = 0;

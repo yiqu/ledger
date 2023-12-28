@@ -9,7 +9,7 @@ import type { AccountWithExpenses } from "~/shared/models/account.model";
 function AccountColumn({ account }: { account: AccountWithExpenses }) {
   const nameWithoutParentheses = account.name.replace(/\(.*\)/, '').trim();
   return (
-    <Stack direction="column" justifyContent="start" alignItems="center" width="100%" sx={ { bgcolor: 'background.paper', borderRadius: '20px', p: 1 } }>
+    <Stack direction="column" justifyContent="start" alignItems="center" width="100%" sx={ { bgcolor: 'background.paper', borderRadius: '20px', p: 0.5 } }>
       <AccountHeader
         name={ account.name }
         total={ account.totalAmount }

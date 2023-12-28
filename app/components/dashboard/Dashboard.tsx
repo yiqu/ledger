@@ -12,7 +12,7 @@ function Dashboard({ accounts }: { accounts: AccountWithExpenses[] }) {
   }
 
   return (
-    <Grid container spacing={ 2 } xs={ 12 }>
+    <Grid container spacing={ 0 } xs={ 12 } columnGap={ 2 }>
       {
         accounts.map((account: AccountWithExpenses) => {
           return (

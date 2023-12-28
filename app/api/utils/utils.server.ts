@@ -23,15 +23,15 @@ export const getLineColorByAccountName = (accountName: string, index: number): s
 
   switch (accountName) {
     case 'Haircuts': {
-      color = '#8884d8';
+      color = '#342EAD';
       break;
     }
     case 'Boba Tea': {
-      color = '#d2a679';
+      color = '#EA6227';
       break;
     }
     case 'Eat Outs': {
-      color = '#66ffcc';
+      color = '#59886B';
       break;
     }
     default: {
@@ -69,7 +69,7 @@ export function randomIntFromInterval(min: number, max: number) { // min and max
 
 export function getEpochFromSimpleDate(simpleDate: string | null | number): number {
   const [month, year] = `${simpleDate}`.split('/');
-  return new Date(+year, +month - 1).getTime();
+  return new Date(+year, (+month) - 1).getTime();
 }
 
 export function runDelayTimer(time: number = 5000) {

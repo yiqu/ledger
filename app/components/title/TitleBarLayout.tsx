@@ -6,9 +6,7 @@ function TitleBarLayout({ children }: { children: ReactNode }) {
   return (
     <Paper sx={ { width: '100%', p: 1.5 } } elevation={ 1 }>
       <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
-        {
-          children
-        }
+        { children }
       </Stack>
     </Paper>
   );

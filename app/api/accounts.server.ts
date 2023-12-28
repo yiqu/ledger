@@ -174,7 +174,10 @@ export async function getShownAccountAndExpenses(): Promise<AccountWithPreCalcul
   }
 }
 
-export async function getDashboardChartData(): Promise<DashboardChartData[]> {
+export async function getDashboardChartData(year: string): Promise<DashboardChartData[]> {
+  const yearStartInEpoch: number = new Date(+year, 0, 1).getTime();
+  const yearEndInEpoch: number = new Date(+year, 11, 31).getTime();
+
   // Get all account data 
   const allAccountData = await prisma.account.findMany({
     where: {
@@ -188,6 +191,12 @@ export async function getDashboardChartData(): Promise<DashboardChartData[]> {
         orderBy: {
           date: 'desc'
         },
+        where: {
+          date: {
+            gte: yearStartInEpoch,
+            lte: yearEndInEpoch
+          }
+        }
       }
     }
   });
@@ -213,10 +222,13 @@ export async function getDashboardChartData(): Promise<DashboardChartData[]> {
   });
 
   // convert to array
-  const dashboardDataKeys = Object.keys(dashboardData);
-  const dashboardDataArray: DashboardChartData[] = dashboardDataKeys.map((dateKey: string) => {
+  const expenseDateString: string[] = Object.keys(dashboardData); // format: M/YYYY
+  const allMonthsDateString = [...Array(12).keys()].map((month) => `${month + 1}/${year}`);
+
+  const dashboardDataArray: DashboardChartData[] = expenseDateString.map((dateKey: string) => {
     const data: DashboardChartData = {
       expenseDate: dateKey,
+      expenseDateInEpoch: getEpochFromSimpleDate(dateKey),
       color: ''
     };
     Object.keys(dashboardData[dateKey]).forEach((accountName) => {
@@ -225,9 +237,20 @@ export async function getDashboardChartData(): Promise<DashboardChartData[]> {
     return data;
   });
 
+  // fill in missing months
+  allMonthsDateString.forEach((month) => {
+    if (!dashboardDataArray.find((data) => data.expenseDate === month)) {
+      dashboardDataArray.push({
+        expenseDate: month,
+        expenseDateInEpoch: getEpochFromSimpleDate(month),
+        color: ''
+      });
+    }
+  });
+
   // sort by date
   const dashboardDataArraySorted = dashboardDataArray.toSorted((a: DashboardChartData, b: DashboardChartData) => {
-    return getEpochFromSimpleDate(b.expenseDate) - getEpochFromSimpleDate(a.expenseDate) ? -1 : 1;
+    return (a.expenseDateInEpoch ?? 0) > (b.expenseDateInEpoch ?? 0) ? 1 : -1;
   });
 
   return dashboardDataArraySorted;
