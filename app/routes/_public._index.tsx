@@ -52,7 +52,7 @@ export const headers: HeadersFunction = ({
 export default function Index() {
   const { isMobile } = useScreenSize();
   const navigate = useNavigate();
-  const { accountsData, chartData, isChartShown, shownAccountAndColorData, chartType, total, yearOptions }: DashboardExpensesData =
+  const { accountsData, chartData, isChartShown, shownAccountAndColorData, chartType, total }: DashboardExpensesData =
     useLoaderData<typeof loader>();
 
   const handleAddNewExpense = () => {
@@ -94,7 +94,7 @@ export default function Index() {
             { isChartShown &&
               (
                 <Paper sx={ { width: '100%', py: 2, px: 1, borderRadius: '20px', bgcolor: "#FDFAF6" } } elevation={ 0 }>
-                  <DashboardChartYearSelect options={ yearOptions } />
+                  <DashboardChartYearSelect />
                   <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
                 </Paper>
               )

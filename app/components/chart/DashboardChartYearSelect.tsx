@@ -2,27 +2,33 @@ import FormControl from "@mui/material/FormControl";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import type { DashboardYearOption } from "~/shared/models/account.model";
+import type { DashboardExpensesData, DashboardYearOption } from "~/shared/models/account.model";
 import Stack from "@mui/material/Stack";
-import { useNavigate, useSearchParams } from "@remix-run/react";
+import { useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
 // @ts-ignore
 import urlcat from 'urlcat';
 import Typography from "@mui/material/Typography";
 import getYear from "date-fns/getYear";
-interface DashboardChartYearSelectProps {
-  options: DashboardYearOption[];
-}
+import { memo, useEffect, useState } from "react";
+import type { loader } from "~/routes/_public._index";
 
-function DashboardChartYearSelect({ options }: DashboardChartYearSelectProps) {
+const currentYear: number = getYear(new Date());
+const defaultYearOption: DashboardYearOption = { id: `${currentYear}` };
+
+function DashboardChartYearSelect() {
   const [searchParams,] = useSearchParams();
   const navigate = useNavigate();
-  const currentYear = getYear(new Date());
-  const chartViewYear = searchParams.get('chartViewYear');
-  const initOption = chartViewYear ? { id: chartViewYear } : { id: `${currentYear}` };
+  const chartViewYearSearchParam = searchParams.get('chartViewYear');
+  const { yearOptions }: DashboardExpensesData = useLoaderData<typeof loader>();
+  const [viewYear, setViewYear] = useState<DashboardYearOption>(defaultYearOption);
 
   const handleSelectionChange = (e: SelectChangeEvent<string>) => {
     navigate(urlcat('/', '', { chartViewYear: e.target.value }));
   };
+
+  useEffect(() => {
+    setViewYear({ id: chartViewYearSearchParam ?? `${currentYear}` });
+  }, [chartViewYearSearchParam]);
 
   return (
     <Stack direction="row" justifyContent="center" alignItems="center" mb={ 2 } width="100%" spacing={ 1 }>
@@ -30,7 +36,7 @@ function DashboardChartYearSelect({ options }: DashboardChartYearSelectProps) {
       <FormControl sx={ { minWidth: '6rem' } }>
         <Select
           id="chart-year-select"
-          value={ initOption ? initOption.id : '' }
+          value={ viewYear.id }
           onChange={ handleSelectionChange }
           variant="standard"
           size="small"
@@ -43,7 +49,7 @@ function DashboardChartYearSelect({ options }: DashboardChartYearSelectProps) {
           } }
         >
           {
-            options.map((option: DashboardYearOption) => {
+            yearOptions.map((option: DashboardYearOption) => {
               return <MenuItem key={ option.id } value={ option.id }>{ option.id }</MenuItem>;
             })
           }
@@ -52,5 +58,5 @@ function DashboardChartYearSelect({ options }: DashboardChartYearSelectProps) {
     </Stack>
   );
 }
-
-export default DashboardChartYearSelect;
+const MemoizedChartYearSelect = memo(DashboardChartYearSelect);
+export default MemoizedChartYearSelect;
