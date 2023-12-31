@@ -23,7 +23,8 @@ module.exports = {
     "is-regexp",
   ],
   future: {
-    v3_fetcherPersist: true
+    v3_fetcherPersist: true,
+    v3_relativeSplatPath: true
   }
   // future: {
   //   v2_dev: true,
