@@ -22,6 +22,9 @@ module.exports = {
     "convert-hrtime",
     "is-regexp",
   ],
+  future: {
+    v3_fetcherPersist: true
+  }
   // future: {
   //   v2_dev: true,
   //   v2_errorBoundary: true,
