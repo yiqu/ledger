@@ -17,7 +17,7 @@ function ExpenseComments({ comments }: ExpenseCommentsProps) {
   }
 
   return (
-    <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 2 }>
+    <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 3 }>
       {
         comments.map((comment: ExpenseCommentType) => {
           return (

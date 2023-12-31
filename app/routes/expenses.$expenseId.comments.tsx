@@ -15,8 +15,8 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
   };
 
   try {
-    await addExpenseComment(comment);
-    return json({ success: true });
+    const response = await addExpenseComment(comment);
+    return json({ success: true, timestamp: `${Date.now()}`, result: response });
   } catch (err: any) {
     return handleError({ message: err.message, error: true });
   }

@@ -68,8 +68,9 @@ a.active:hover {
   height: 100%;
 }
 
-pre, code{
-  white-space:normal;
+pre,
+code {
+  white-space: normal;
 }
 
 .infinite-scroll-component__outerdiv {
@@ -82,4 +83,8 @@ pre, code{
 
 .scrollbar-stable {
   scrollbar-gutter: stable;
+}
+
+fieldset {
+  border: 0 none;
 }

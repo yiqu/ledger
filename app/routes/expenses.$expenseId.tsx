@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Link, Outlet, useFetchers, useLoaderData } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
 import Typography from "@mui/material/Typography";
@@ -23,6 +23,8 @@ import { ClientOnly } from "remix-utils/client-only";
 import ExpenseComments from "~/components/expense/ExpenseComments";
 import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
 import Divider from "@mui/material/Divider";
+import { expenseCommentFormFetcherId } from "~/shared/constants/fetcher-ids";
+import LinearProgress from "@mui/material/LinearProgress";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -33,6 +35,8 @@ export const meta: MetaFunction = (data) => {
 
 function ExpenseDetail() {
   const { expense, comments } = useLoaderData<typeof loader>();
+  const fetchers = useFetchers();
+  const commentFetcher = fetchers.find((fetcher) => fetcher.key === expenseCommentFormFetcherId);
 
   if (!expense) {
     return (
@@ -86,8 +90,14 @@ function ExpenseDetail() {
       </ContentPaperWrap>
 
       <ContentPaperWrap>
-        <Stack direction="column" justifyContent="start" alignItems="start"
-          width="100%" spacing={ 4 }>
+        <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 2 }>
+          { (commentFetcher && commentFetcher.state !== 'idle') &&
+            (
+              <LinearProgress variant="indeterminate" color={ commentFetcher.state === 'submitting' ? 'info' : 'success' }
+                sx={ { width: '100%', mt: '-15px !important', borderRadius: '16px', height: '3px' } }
+              />
+            )
+          }
           <ExpenseCommentForm expenseId={ expense.id } />
 
           <Suspense fallback={ <ExpenseCommentsSkeleton /> }>
@@ -140,5 +150,5 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
     }
   }
 
-  return json({ success: true });
+  return json({ success: true, timestamp: `${Date.now()}` });
 }

@@ -16,6 +16,8 @@ export interface DateDisplayFormat {
   tooltip: string;
 }
 
-export interface SuccessJsonObj {
+export interface SuccessJsonObj<T> {
   success: boolean;
+  timestamp: string;
+  result: T;
 }

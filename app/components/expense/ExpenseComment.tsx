@@ -4,8 +4,7 @@ import type { ExpenseComment } from "~/shared/models/comment.model";
 import PersonIcon from '@mui/icons-material/Person';
 import { blueGrey, grey } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
-import format from "date-fns/format";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import Moment from "react-moment";
 
 function ExpenseCommentDisplay({ comment }: { comment: ExpenseComment }) {
 
@@ -19,12 +18,8 @@ function ExpenseCommentDisplay({ comment }: { comment: ExpenseComment }) {
           <Typography variant="body1" fontSize="12px" fontWeight={ 500 } color={ grey[800] }>
             @kq
           </Typography>
-          <Typography variant="body1" fontSize="12px" fontWeight={ 500 } color={ grey[600] } title={ `${comment.dateAdded}` }>
-            { formatDistanceToNow(new Date(comment.dateAdded), { addSuffix: true }) }
-          </Typography>
-          <Typography variant="body1" fontSize="12px" fontWeight={ 500 } color={ grey[600] } title={ `${comment.dateAdded}` }>
-            ({ format(new Date(comment.dateAdded), 'MM/dd/yyyy h:mm aaaa') })
-          </Typography>
+          <Moment fromNow date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
+          <Moment format="MM/DD/yyyy h:mm a" date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
         </Stack>
         <Typography fontSize="14px" fontWeight={ 400 }>
           { comment.comment }

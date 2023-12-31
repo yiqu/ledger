@@ -3,7 +3,7 @@ import type { Components, Theme } from "@mui/material/styles";
 export const MyComponents: Components<Omit<Theme, "components">> | undefined = {
   MuiButton: {
     defaultProps: {
-      disableRipple: true,
+      disableElevation: true
     },
     styleOverrides: {
       root: {
