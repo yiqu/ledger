@@ -12,7 +12,7 @@ import getYear from "date-fns/getYear";
 import { memo, useEffect, useState } from "react";
 import type { loader } from "~/routes/_public._index";
 
-const currentYear: number = new Date().getFullYear();
+const currentYear: number = 2024;
 const defaultYearOption: DashboardYearOption = { id: `${currentYear}` };
 
 function DashboardChartYearSelect() {
@@ -22,6 +22,7 @@ function DashboardChartYearSelect() {
   const { yearOptions }: DashboardExpensesData = useLoaderData<typeof loader>();
   const [viewYear, setViewYear] = useState<DashboardYearOption>(defaultYearOption);
 
+  console.log(new Date().getFullYear())
   console.log(currentYear)
   console.log(defaultYearOption)
 

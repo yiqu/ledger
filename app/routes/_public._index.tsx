@@ -94,7 +94,7 @@ export default function Index() {
             { isChartShown &&
               (
                 <Paper sx={ { width: '100%', py: 2, px: 1, borderRadius: '20px', bgcolor: "#FDFAF6" } } elevation={ 0 }>
-                  {/* <DashboardChartYearSelect /> */ }
+                  <DashboardChartYearSelect />
                   <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
                 </Paper>
               )
