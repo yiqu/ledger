@@ -114,6 +114,7 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
   const url = new URL(request.url);
   const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? new Date().getFullYear().toString();
   console.log('selectedViewYear', selectedViewYear);
+  console.log('new date', new Date().getFullYear().toString())
 
   const accountsData = await getShownAccountAndExpenses() as AccountWithPreCalculateExpenses[];
   const chartData: DashboardChartData[] = await getDashboardChartData(selectedViewYear);
