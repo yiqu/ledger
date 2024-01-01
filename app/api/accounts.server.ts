@@ -176,7 +176,7 @@ export async function getShownAccountAndExpenses(): Promise<AccountWithPreCalcul
 
 export async function getDashboardChartData(year: string): Promise<DashboardChartData[]> {
   const yearStartInEpoch: number = new Date(+year, 0, 1).getTime();
-  const yearEndInEpoch: number = new Date(+year, 11, 31).getTime();
+  const yearEndInEpoch: number = new Date(+year, 11, 31).getTime() + 86400000; // add 1 day to include the last day of the year
 
   // Get all account data 
   const allAccountData = await prisma.account.findMany({

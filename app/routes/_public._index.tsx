@@ -3,7 +3,7 @@ import type { HeadersFunction, TypedResponse } from "@remix-run/node";
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
-import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError } from "@remix-run/react";
+import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError, useSearchParams } from "@remix-run/react";
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import Dashboard from "~/components/dashboard/Dashboard";
@@ -51,11 +51,12 @@ export const headers: HeadersFunction = ({
 export default function Index() {
   const { isMobile } = useScreenSize();
   const navigate = useNavigate();
+  const [searchParams,] = useSearchParams();
   const { accountsData, chartData, isChartShown, shownAccountAndColorData, chartType, total }: DashboardExpensesData =
     useLoaderData<typeof loader>();
 
   const handleAddNewExpense = () => {
-    const url = urlcat('/add', '', { type: 'expense', redirectUrl: '/', actionUrl: '/data' });
+    const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/?${searchParams.toString()}`, actionUrl: '/data' });
     navigate(url);
   };
 
@@ -129,6 +130,8 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
       });
     }
   }
+  const currentYear: number = new Date().getUTCFullYear();
+  yearOptions.push({ id: `${currentYear}` });
 
   const result: AccountWithExpenses[] = [];
   const shouldShowChart: boolean = !!userSettings?.showDashboardChart;
