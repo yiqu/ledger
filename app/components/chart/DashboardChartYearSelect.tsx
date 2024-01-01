@@ -12,8 +12,7 @@ import getYear from "date-fns/getYear";
 import { memo, useEffect, useState } from "react";
 import type { loader } from "~/routes/_public._index";
 
-// const currentYear: number = new Date().getFullYear();
-const currentYear: number = 2023;
+const currentYear: number = new Date().getFullYear();
 const defaultYearOption: DashboardYearOption = { id: `${currentYear}` };
 
 function DashboardChartYearSelect() {
