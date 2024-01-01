@@ -8,11 +8,10 @@ import { useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
 // @ts-ignore
 import urlcat from 'urlcat';
 import Typography from "@mui/material/Typography";
-import getYear from "date-fns/getYear";
 import { memo, useEffect, useState } from "react";
 import type { loader } from "~/routes/_public._index";
 
-const currentYear: number = 2024;
+const currentYear: number = new Date().getUTCFullYear();
 const defaultYearOption: DashboardYearOption = { id: `${currentYear}` };
 
 function DashboardChartYearSelect() {
@@ -21,10 +20,6 @@ function DashboardChartYearSelect() {
   const chartViewYearSearchParam = searchParams.get('chartViewYear');
   const { yearOptions }: DashboardExpensesData = useLoaderData<typeof loader>();
   const [viewYear, setViewYear] = useState<DashboardYearOption>(defaultYearOption);
-
-  console.log(new Date().getFullYear())
-  console.log(currentYear)
-  console.log(defaultYearOption)
 
   const handleSelectionChange = (e: SelectChangeEvent<string>) => {
     navigate(urlcat('/', '', { chartViewYear: e.target.value }));

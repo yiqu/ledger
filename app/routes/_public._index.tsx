@@ -28,7 +28,6 @@ import Box from "@mui/material/Box";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import Paper from "@mui/material/Paper";
 import { getFirstAndLastExpenseDatesByShownAccounts } from "~/api/expenses.server";
-import getYear from "date-fns/getYear";
 import DashboardChartYearSelect from "~/components/chart/DashboardChartYearSelect";
 
 export function links() {
@@ -112,10 +111,7 @@ export default function Index() {
 
 export async function loader({ request, params, context }: LoaderFunctionArgs): Promise<TypedResponse<DashboardExpensesData>> {
   const url = new URL(request.url);
-  const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? new Date().getFullYear().toString();
-  console.log('selectedViewYear', selectedViewYear);
-  console.log('new date', new Date().getFullYear().toString())
-  console.log(new Date())
+  const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? new Date().getUTCFullYear().toString();
 
   const accountsData = await getShownAccountAndExpenses() as AccountWithPreCalculateExpenses[];
   const chartData: DashboardChartData[] = await getDashboardChartData(selectedViewYear);
