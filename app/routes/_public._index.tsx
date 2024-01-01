@@ -94,7 +94,7 @@ export default function Index() {
             { isChartShown &&
               (
                 <Paper sx={ { width: '100%', py: 2, px: 1, borderRadius: '20px', bgcolor: "#FDFAF6" } } elevation={ 0 }>
-                  {/* <DashboardChartYearSelect /> */ }
+                  <DashboardChartYearSelect />
                   <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
                 </Paper>
               )
@@ -112,7 +112,7 @@ export default function Index() {
 
 export async function loader({ request, params, context }: LoaderFunctionArgs): Promise<TypedResponse<DashboardExpensesData>> {
   const url = new URL(request.url);
-  const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? new Date().getFullYear().toString();
+  const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? '2023';
   console.log('selectedViewYear', selectedViewYear);
   console.log('new date', new Date().getFullYear().toString())
 
