@@ -15,8 +15,8 @@ export async function isValidStringCount(text: string, count: number = 1) {
 export async function validateExpenseToAdd(expense: ExpenseAddable | ExpenseEditable) {
   const schema = object().shape({
     amount: number().required("Dollar amount field is required.").min(0, `Amount has to be greater than 0.`),
-    date: number().required("Epoch date field is required."),
-    accountId: string().required("Account id is required."),
+    date: number().required("Date field is required."),
+    accountId: string().required("Account is required."),
   });
   return await schema.validate(expense);
 }

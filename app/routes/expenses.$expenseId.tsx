@@ -24,7 +24,7 @@ import ExpenseComments from "~/components/expense/ExpenseComments";
 import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
 import Divider from "@mui/material/Divider";
 import { expenseCommentFormFetcherId } from "~/shared/constants/fetcher-ids";
-import LinearProgress from "@mui/material/LinearProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -53,6 +53,13 @@ function ExpenseDetail() {
           <TitleNameDisplay name={ 'Expense Info' } />
         </Stack>
         <Stack direction="row" justifyContent="end" alignItems="center">
+          { (commentFetcher && commentFetcher.state !== 'idle') &&
+            (
+              <CircularProgress variant="indeterminate" color={ commentFetcher.state === 'submitting' ? 'info' : 'success' }
+                size={ 20 }
+              />
+            )
+          }
         </Stack >
       </TitleBarLayout>
 
@@ -91,13 +98,7 @@ function ExpenseDetail() {
 
       <ContentPaperWrap>
         <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 2 }>
-          { (commentFetcher && commentFetcher.state !== 'idle') &&
-            (
-              <LinearProgress variant="indeterminate" color={ commentFetcher.state === 'submitting' ? 'info' : 'success' }
-                sx={ { width: '100%', mt: '-15px !important', borderRadius: '16px', height: '3px' } }
-              />
-            )
-          }
+
           <ExpenseCommentForm expenseId={ expense.id } />
 
           <Suspense fallback={ <ExpenseCommentsSkeleton /> }>

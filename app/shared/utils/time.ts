@@ -6,7 +6,7 @@ export function getInitFormValue(type: 'account' | 'expense' | null, account?: A
     case 'account': {
       return {
         name: '',
-        shown: true
+        shown: false
       };
     }
     case 'expense': {

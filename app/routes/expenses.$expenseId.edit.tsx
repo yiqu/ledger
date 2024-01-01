@@ -40,7 +40,7 @@ function ExpenseEdit() {
   const isApiLoading = isActionSubmission || isActionRedirect;
 
   const navigate = useNavigate();
-  const { control, reset, setValue, formState } = useForm<ExpenseAddable>({
+  const { control, reset, setValue } = useForm<ExpenseAddable>({
     defaultValues: {
       amount: expenseData.amount,
       account: accountFromId,
@@ -49,7 +49,7 @@ function ExpenseEdit() {
       date: expenseData.date,
     },
     resolver: yupResolver(expenseSchema),
-    mode: "onChange"
+    mode: "onSubmit"
   });
 
   const handleClearField = useCallback((name: any) => {
@@ -82,7 +82,7 @@ function ExpenseEdit() {
               <Button type="reset" onClick={ handleOnReset } disabled={ isApiLoading }>
                 Reset
               </Button>
-              <Button type="submit" disabled={ !formState.isValid || isApiLoading }>
+              <Button type="submit" disabled={ isApiLoading }>
                 { isApiLoading ? "Submitting..." : "Submit" }
               </Button>
             </DialogActions>
@@ -111,11 +111,12 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
   const redirectUrl = url.searchParams.get('redirectUrl') as string;
   invariant(expenseId, "Expected expenseId in params to be defined");
 
+  const amount = (body.get('amount') as string).trim() === '' ? -1 : +(body.get('amount') as string);
   const expense: ExpenseEditable = {
     id: expenseId,
     accountId: body.get('accountId') as string,
-    date: new Date(body.get('date') as string).getTime(),
-    amount: +(body.get('amount') as string),
+    date: new Date(body.get('dateStringForInput') as string).getTime(),
+    amount: amount,
     updatedAtEpoch: Date.now(),
   };
 

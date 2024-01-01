@@ -11,6 +11,7 @@ import type { SuccessJsonObj } from "~/shared/models/general.model";
 import { useEffect, type KeyboardEvent } from "react";
 import { useFetcherType } from "~/shared/hooks/useFetcherType";
 import { expenseCommentFormFetcherId } from "~/shared/constants/fetcher-ids";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function ExpenseCommentForm({ expenseId }: { expenseId: string }) {
   const fetcher = useFetcher<SuccessJsonObj<ExpenseComment>>({
@@ -57,40 +58,46 @@ function ExpenseCommentForm({ expenseId }: { expenseId: string }) {
     }
   };
 
-  return (
-    <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 2 }>
-      <fetcher.Form method="post" action={ `/expenses/${expenseId}/comments` } style={ { width: '100%' } }>
-        <fieldset disabled={ isApiLoading }>
-          <HFTextField
-            name="comment"
-            control={ control }
-            label={ "Add a comment..." }
-            multiline
-            fullWidth
-            maxRows={ 8 }
-            clearField={ handleClearField }
-            variant="standard"
-            onKeyDown={ handleKeyDown }
-            id="expense-add-comment-input"
-            key={ `${fetcher.data?.result?.id}` }
-          />
-          <Stack direction="row" justifyContent="flex-end" alignItems="center" mt={ 1 } spacing={ 2 }>
+  if (isApiLoading) {
+    return (
+      <Stack direction="row" justifyContent="center" alignItems="center" width="100%" height={ '67px' }>
+        <CircularProgress size={ 30 } />
+      </Stack>
+    );
+  }
 
-            { formState.isDirty && (
-              <>
-                <Button type="reset" variant="text" color="inherit" size="small" onClick={ handleCancelComment }>
-                  Cancel
-                </Button>
-                <Button type="submit" variant="contained" disabled={ isApiLoading }
-                  color="primary" size="small" startIcon={ <SendIcon /> }>
-                  Add
-                </Button>
-              </>
-            ) }
-          </Stack>
-        </fieldset>
-      </fetcher.Form>
-    </Stack>
+  return (
+    <fetcher.Form method="post" action={ `/expenses/${expenseId}/comments` } style={ { width: '100%' } }>
+      <fieldset disabled={ isApiLoading }>
+        <HFTextField
+          name="comment"
+          control={ control }
+          label={ "Add a comment..." }
+          multiline
+          fullWidth
+          maxRows={ 8 }
+          clearField={ handleClearField }
+          variant="standard"
+          onKeyDown={ handleKeyDown }
+          id="expense-add-comment-input"
+          key={ `${fetcher.data?.result?.id}` }
+        />
+        <Stack direction="row" justifyContent="flex-end" alignItems="center" mt={ 1 } spacing={ 2 }>
+
+          { formState.isDirty && (
+            <>
+              <Button type="reset" variant="text" color="inherit" size="small" onClick={ handleCancelComment }>
+                Cancel
+              </Button>
+              <Button type="submit" variant="contained" disabled={ isApiLoading }
+                color="primary" size="small" startIcon={ <SendIcon /> }>
+                Add
+              </Button>
+            </>
+          ) }
+        </Stack>
+      </fieldset>
+    </fetcher.Form>
   );
 }
 

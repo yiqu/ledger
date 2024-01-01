@@ -41,6 +41,7 @@ function ExpensesLanding() {
       </TitleBarLayout>
 
       <Expenses />
+
     </Stack>
   );
 }

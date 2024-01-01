@@ -84,7 +84,7 @@ export default Account;
 
 function AccountNameDisplay({ account }: { account: IAccount }) {
   return (
-    <Typography style={ { ...ellipsisBlock } } variant='body2' fontWeight={ 500 }>
+    <Typography style={ { ...ellipsisBlock } } fontSize='14px' fontWeight={ 400 }>
       <Link to={ `${account.id}` } >
         { account.name }
       </Link>
