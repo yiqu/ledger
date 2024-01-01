@@ -22,6 +22,9 @@ function DashboardChartYearSelect() {
   const { yearOptions }: DashboardExpensesData = useLoaderData<typeof loader>();
   const [viewYear, setViewYear] = useState<DashboardYearOption>(defaultYearOption);
 
+  console.log(currentYear)
+  console.log(defaultYearOption)
+
   const handleSelectionChange = (e: SelectChangeEvent<string>) => {
     navigate(urlcat('/', '', { chartViewYear: e.target.value }));
   };
