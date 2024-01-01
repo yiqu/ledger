@@ -112,7 +112,7 @@ export default function Index() {
 
 export async function loader({ request, params, context }: LoaderFunctionArgs): Promise<TypedResponse<DashboardExpensesData>> {
   const url = new URL(request.url);
-  const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? getYear(new Date()).toString();
+  const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? new Date().getFullYear().toString();
   console.log('selectedViewYear', selectedViewYear);
 
   const accountsData = await getShownAccountAndExpenses() as AccountWithPreCalculateExpenses[];
@@ -122,8 +122,8 @@ export async function loader({ request, params, context }: LoaderFunctionArgs): 
 
   let yearOptions: DashboardYearOption[] = [];
   if (firstAndLastExpenseDates.firstDate && firstAndLastExpenseDates.lastDate) {
-    const firstYear: number = getYear(firstAndLastExpenseDates.firstDate);
-    const endYear: number = getYear(firstAndLastExpenseDates.lastDate);
+    const firstYear: number = new Date(firstAndLastExpenseDates.firstDate).getFullYear();
+    const endYear: number = new Date(firstAndLastExpenseDates.lastDate).getFullYear();
     const range: number = endYear - firstYear;
     for (let i = 0; i <= range; i++) {
       yearOptions.push({
