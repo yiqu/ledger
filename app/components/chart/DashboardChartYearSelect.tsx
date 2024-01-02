@@ -8,26 +8,22 @@ import { useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
 // @ts-ignore
 import urlcat from 'urlcat';
 import Typography from "@mui/material/Typography";
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 import type { loader } from "~/routes/_public._index";
 
 const currentYear: number = new Date().getUTCFullYear();
-const defaultYearOption: DashboardYearOption = { id: `${currentYear}` };
 
 function DashboardChartYearSelect() {
   const [searchParams,] = useSearchParams();
   const navigate = useNavigate();
-  const chartViewYearSearchParam = searchParams.get('chartViewYear');
   const { yearOptions }: DashboardExpensesData = useLoaderData<typeof loader>();
-  const [viewYear, setViewYear] = useState<DashboardYearOption>(defaultYearOption);
+
+  const chartViewYearSearchParam = searchParams.get('chartViewYear');
+  const yearSelectValue = chartViewYearSearchParam ?? `${currentYear}`;
 
   const handleSelectionChange = (e: SelectChangeEvent<string>) => {
     navigate(urlcat('/', '', { chartViewYear: e.target.value }));
   };
-
-  useEffect(() => {
-    setViewYear({ id: chartViewYearSearchParam ?? `${currentYear}` });
-  }, [chartViewYearSearchParam]);
 
   return (
     <Stack direction="row" justifyContent="center" alignItems="center" mb={ 2 } width="100%" spacing={ 1 }>
@@ -35,7 +31,7 @@ function DashboardChartYearSelect() {
       <FormControl sx={ { minWidth: '6rem' } }>
         <Select
           id="chart-year-select"
-          value={ viewYear.id }
+          value={ yearSelectValue }
           onChange={ handleSelectionChange }
           variant="standard"
           size="small"

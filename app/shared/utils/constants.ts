@@ -16,3 +16,5 @@ export const PAGE_LIMIT_50 = 50;
 export const PAGE_COUNT = 1;
 
 export const TIME_STAMP_FORMAT = 'M-d-yy h:mm bbb';
+
+export const DASHBOARD_CHART_BG_COLOR = '#FDFAF6';

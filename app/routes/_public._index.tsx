@@ -13,7 +13,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import TitleBarLayout from "~/components/title/TitleBarLayout";
 import DashboardChart from "~/components/chart/DashboardChart";
 import { getDataSettingsByUserId } from "~/api/settings.server";
-import { USER_ID } from "~/shared/utils/constants";
+import { DASHBOARD_CHART_BG_COLOR, USER_ID } from "~/shared/utils/constants";
 import type { SettingsAllData } from "~/shared/models/settings";
 import type { DashboardChartType } from "@prisma/client";
 // @ts-ignore
@@ -91,14 +91,12 @@ export default function Index() {
               </Stack>
             </TitleBarLayout>
 
-            { isChartShown &&
-              (
-                <Paper sx={ { width: '100%', py: 2, px: 1, borderRadius: '20px', bgcolor: "#FDFAF6" } } elevation={ 0 }>
-                  <DashboardChartYearSelect />
-                  <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
-                </Paper>
-              )
-            }
+            { isChartShown && (
+              <Paper sx={ { width: '100%', py: 2, px: 1, borderRadius: '20px', bgcolor: DASHBOARD_CHART_BG_COLOR } } elevation={ 0 }>
+                <DashboardChartYearSelect />
+                <DashboardChart chartData={ chartData } shownAccountNames={ shownAccountAndColorData } chartType={ chartType } />
+              </Paper>
+            ) }
 
             <Dashboard accounts={ accountsData } />
 
@@ -112,49 +110,52 @@ export default function Index() {
 
 export async function loader({ request, params, context }: LoaderFunctionArgs): Promise<TypedResponse<DashboardExpensesData>> {
   const url = new URL(request.url);
+  // get the year from the url query params, if doesnt exist, use current year
   const selectedViewYear: string = url.searchParams.get('chartViewYear') ?? new Date().getUTCFullYear().toString();
 
+  // get all accounts and expenses
   const accountsData = await getShownAccountAndExpenses() as AccountWithPreCalculateExpenses[];
+  const accountsWithExpenses: AccountWithExpenses[] = accountsData.map((account: AccountWithPreCalculateExpenses) => {
+    return calculateGainRateForAccount(account);
+  });
   const chartData: DashboardChartData[] = await getDashboardChartData(selectedViewYear);
-  const userSettings: SettingsAllData | null = await getDataSettingsByUserId(USER_ID);
-  const firstAndLastExpenseDates = await getFirstAndLastExpenseDatesByShownAccounts();
 
-  let yearOptions: DashboardYearOption[] = [];
+  // get user settings
+  const userSettings: SettingsAllData | null = await getDataSettingsByUserId(USER_ID);
+  const shouldShowChart: boolean = !!userSettings?.showDashboardChart;
+  const chartType: DashboardChartType = userSettings?.dashboardChartType ?? 'bar';
+
+  // get the oldest and most recent expense in year from expenses that are 'shown'
+  // used to generate the chart year selection options dropdown
+  const firstAndLastExpenseDates = await getFirstAndLastExpenseDatesByShownAccounts();
+  const yearOptionsSet: Set<number> = new Set();
   if (firstAndLastExpenseDates.firstDate && firstAndLastExpenseDates.lastDate) {
     const firstYear: number = new Date(firstAndLastExpenseDates.firstDate).getFullYear();
     const endYear: number = new Date(firstAndLastExpenseDates.lastDate).getFullYear();
     const range: number = endYear - firstYear;
     for (let i = 0; i <= range; i++) {
-      yearOptions.push({
-        id: `${firstYear + i}`,
-      });
+      yearOptionsSet.add(firstYear + i);
     }
   }
   const currentYear: number = new Date().getUTCFullYear();
-  yearOptions.push({ id: `${currentYear}` });
-
-  const result: AccountWithExpenses[] = [];
-  const shouldShowChart: boolean = !!userSettings?.showDashboardChart;
-  const chartType: DashboardChartType = userSettings?.dashboardChartType ?? 'bar';
-  let total: number = 0;
-
-  // calculate gains for each expense
-  accountsData.forEach((account: AccountWithPreCalculateExpenses, index: number) => {
-    result.push(calculateGainRateForAccount(account));
+  yearOptionsSet.add(currentYear);
+  const yearOptions: DashboardYearOption[] = Array.from(yearOptionsSet).map((year: number) => {
+    return { id: `${year}` };
   });
 
-  const shownAccountAndColorData: DashboardShownAccountAndColor[] = result.map((account: AccountWithExpenses, index) => {
+  const shownAccountAndColorData: DashboardShownAccountAndColor[] = accountsWithExpenses.map((account: AccountWithExpenses, index) => {
     return {
       name: account.name,
       color: getLineColorByAccountName(account.name, index)
     };
   });
-  total = result.reduce((acc, account) => {
+
+  const total = accountsWithExpenses.reduce((acc, account) => {
     return acc + account.totalAmount;
   }, 0);
 
   return json({
-    accountsData: result,
+    accountsData: accountsWithExpenses,
     isChartShown: shouldShowChart,
     chartData: chartData,
     shownAccountAndColorData: shownAccountAndColorData,
