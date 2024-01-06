@@ -64,7 +64,8 @@ function AddNew() {
       dataToSave = {
         ...payload,
         accountId: (payload as ExpenseAddable).account?.id ?? '',
-        addAnotherAfterSubmit
+        addAnotherAfterSubmit,
+        date: new Date((payload as ExpenseAddable).date).getTime()
       };
     } else if (entityType === 'account') {
       dataToSave = {
@@ -183,7 +184,7 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
     const shouldRedirect = (body.get('addAnotherAfterSubmit') === 'false');
     const expense: ExpenseAddable = {
       accountId: body.get('accountId') as string,
-      date: new Date(body.get('date') as string).getTime(),
+      date: +(body.get('date') as string),
       amount: +(body.get('amount') as string),
       addedAtEpoch: Date.now(),
       updatedAtEpoch: 0,
