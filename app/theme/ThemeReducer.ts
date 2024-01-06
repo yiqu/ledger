@@ -1,9 +1,8 @@
-import type { PaletteMode } from '@mui/material';
 import * as  fromCartActions from './ThemeActions';
 import produce from 'immer';
 
 interface ThemeReducerState {
-  theme: PaletteMode;
+  theme: any;
 }
 
 export const themeInitialState: ThemeReducerState = {
@@ -14,7 +13,7 @@ export const themeReducer = (state: ThemeReducerState, action: any): ThemeReduce
   if (action.type === fromCartActions.TOGGLE_THEME) {
 
     const nextState: ThemeReducerState = produce(state, (draft) => {
-      let nextTheme: PaletteMode = 'light';
+      let nextTheme: any = 'light';
       if (state.theme === 'dark') {
         nextTheme = 'light';
       } else {

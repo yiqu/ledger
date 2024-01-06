@@ -4,15 +4,22 @@ import { grey } from "@mui/material/colors";
 import { Link } from "@remix-run/react";
 import Currency from "~/shared/components/Currency";
 import type { ExpenseDisplay as IExpenseDisplay } from "~/shared/models/expense.model";
+import { ClientOnly } from "remix-utils/client-only";
+import Moment from "react-moment";
 
 function ExpenseDisplay({ expense }: { expense: IExpenseDisplay }) {
 
   return (
     <Stack direction="row" justifyContent="space-between" alignItems="start" width="100%" mb={ 1 } py={ 1 } px={ 2 } className={ `${expense.bgColorClassName} expense-box` }>
       <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 0.5 }>
-        <Typography title={ `${expense.dateFromNowDisplay?.tooltip}` } color={ grey[600] }>
-          { expense.dateFromNowDisplay?.display }
-        </Typography>
+        <ClientOnly fallback={ <span style={ { color: grey[600] } }>Loading</span> }>
+          { () => {
+            return (
+              <Moment date={ expense.date } fromNow style={ { color: grey[600] } } />
+            );
+          } }
+        </ClientOnly>
+
         <Typography fontFamily="Montserrat" title={ `${expense.amount}` } letterSpacing="0.5px" component="div">
           <Link to={ `/expenses/${expense.id}` }>
             <Currency integer={ expense.amountOfInteger } decimal={ expense.amountOfDecimal } extraStyles={ { fontWeight: 400, fontSize: ('17px') } } />

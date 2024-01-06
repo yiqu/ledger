@@ -2,7 +2,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import format from "date-fns/format";
 import Moment from 'react-moment';
 
-function DateDisplay({ date, displayType }: { date: string | Date | null, displayType?: 'full' | 'short' | 'fromNow' | 'shortAndNow' | 'longAndNow' }) {
+function DateDisplay({ date, displayType }: { date: string | Date | number | null, displayType?: 'full' | 'short' | 'fromNow' | 'shortAndNow' | 'longAndNow' }) {
 
   if (!date) {
     return <>{ new Date() }</>;
