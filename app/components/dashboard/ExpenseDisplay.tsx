@@ -38,7 +38,7 @@ function ExpenseDisplay({ expense }: { expense: IExpenseDisplay }) {
         <ClientOnly fallback={ <span style={ { color: grey[600] } }>Loading</span> }>
           { () => {
             return (
-              <Moment date={ expense.date } style={ { color: grey[600] } } format="MM/dd/yy hh:mm a" />
+              <Moment date={ expense.date } style={ { color: grey[600] } } format="MM/DD/YY hh:mm a" />
             );
           } }
         </ClientOnly>
