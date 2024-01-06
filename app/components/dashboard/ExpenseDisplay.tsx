@@ -35,9 +35,14 @@ function ExpenseDisplay({ expense }: { expense: IExpenseDisplay }) {
       </Stack>
 
       <Stack direction="column" justifyContent="start" alignItems="end">
-        { true && <Typography title={ `${expense.dateFullDisplay?.tooltip}` } color={ grey[600] }>
-          { expense.dateFullDisplay?.display }
-        </Typography> }
+        <ClientOnly fallback={ <span style={ { color: grey[600] } }>Loading</span> }>
+          { () => {
+            return (
+              <Moment date={ expense.date } style={ { color: grey[600] } } format="MM/dd/yy hh:mm a" />
+            );
+          } }
+        </ClientOnly>
+
         <Typography className={ expense.textColorClassName } fontSize="17px" fontWeight={ 500 }>
           { expense.gainPercentage > 0 ? '+' : (expense.gainPercentage === 0 ? '' : '-') }{ `${(Math.round(Math.abs(expense.gainPercentage) * 10) / 10).toLocaleString()}` }%
         </Typography>

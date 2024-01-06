@@ -65,11 +65,12 @@ export interface ExpenseDisplay {
   date: number;
   dateFromNowDisplay?: { display: string; tooltip: string };
   dateFullDisplay?: { display: string; tooltip: string };
-  dateAdded: string | Date;
-  updatedAt: string | null | Date;
   addedAtEpoch: number;
   updatedAtEpoch: number;
   accountId: string;
+  // prisma defaulted values
+  dateAdded: string | Date;
+  updatedAt: string | null | Date;
 
   gainAmount: number;
   gainAmountOfInteger: number;
