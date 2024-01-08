@@ -1,19 +1,62 @@
-import { useRouteLoaderData } from "@remix-run/react";
+import { useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import type { Account } from "~/shared/models/account.model";
 import AccountList from "./AccountList";
 import Empty from "../no-result/Empty";
+import NoResult from "../no-result/NoResult";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Pagination from "@mui/material/Pagination";
+import SearchInput from "../data/SearchInput";
+import { getParamsAsObject } from "~/shared/utils/url.utils";
+import type { HttpResponsePaged } from "~/shared/models/http.model";
+
 
 function Accounts() {
-  const accounts = useRouteLoaderData("routes/accounts") as Account[];
+  const nav = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { data, totalCount, totalPages, pageSize, currentResultSetCount } = useRouteLoaderData("routes/accounts") as HttpResponsePaged<Account[]>;
+  const searchParamPage: string | null = searchParams.get('page');
+  const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
-  if (accounts.length < 1) {
+  const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
+    // Get current params in the URL and keep them
+    setSearchParams((params: URLSearchParams) => {
+      const currentParams = getParamsAsObject(params);
+      return { ...currentParams, page: `${value - 1}` };
+    });
+  };
+
+  const handleOnSearchClear = () => {
+    nav('/accounts');
+  };
+
+  if (totalCount < 1) {
     return (
-      <Empty type='account' />
+      <Empty type='expense' />
     );
   }
 
   return (
-    <AccountList accounts={ accounts } />
+    <>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
+        <SearchInput onClearInput={ handleOnSearchClear } />
+        <Stack direction="row" justifyContent="flex-end" alignItems="center" width="100%">
+          <Box mr={ 2 }>
+            <Typography variant="body2">
+              { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
+            </Typography>
+          </Box>
+          <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } color="standard" shape="rounded" />
+        </Stack>
+      </Stack>
+
+      {
+        data.length === 0 ? (<NoResult />) : (
+          <AccountList accounts={ data } />
+        )
+      }
+    </>
   );
 }
 

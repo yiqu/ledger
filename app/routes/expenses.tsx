@@ -2,7 +2,7 @@ import { json, type LoaderFunctionArgs } from "@remix-run/node";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
-import { Outlet, useFetcher, useLocation, useNavigate, useParams } from "@remix-run/react";
+import { Outlet, useFetcher, useLocation, useNavigate, useParams, useSearchParams } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 //@ts-ignore
@@ -16,19 +16,21 @@ import { getExpensesPaged } from "~/api/expenses.server";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 
 function Expenses() {
+  const [searchParams] = useSearchParams();
   const { isMobile } = useScreenSize();
   const navigate = useNavigate();
   const { expenseId } = useParams();
   const deleteFetcher = useFetcher();
   const { pathname } = useLocation();
+  const extraSearchParams = searchParams.size > 0 ? `?${searchParams.toString()}` : '';
 
   const handleAddNewAccount = () => {
-    const url = urlcat('/add', '', { type: 'account', redirectUrl: '/expenses' });
+    const url = urlcat('/add', '', { type: 'account', redirectUrl: `/accounts${extraSearchParams}` });
     navigate(url);
   };
 
   const handleAddNewExpense = () => {
-    const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/expenses`, accountId: `` });
+    const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/expenses${extraSearchParams}` });
     navigate(url);
   };
 

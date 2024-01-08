@@ -8,6 +8,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import type { Account } from "~/shared/models/account.model";
 import { TitleNameDisplay } from "~/shared/components/Title";
 import AccountsDisplay from "~/components/account/Accounts";
+import type { HttpResponsePaged } from "~/shared/models/http.model";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -24,7 +25,7 @@ export const headers: HeadersFunction = ({
 
 
 function Accounts() {
-  const accounts = useRouteLoaderData("routes/accounts") as Account[];
+  const { totalCount } = useRouteLoaderData("routes/accounts") as HttpResponsePaged<Account[]>;
 
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" width="100%" spacing={ 3 }>
@@ -35,11 +36,12 @@ function Accounts() {
         </Stack>
 
         <Typography variant="h5" fontFamily="Poppins">
-          Total: { accounts.length }
+          Total: { totalCount }
         </Typography>
       </TitleBarLayout>
 
       <AccountsDisplay />
+
     </Stack>
   );
 }

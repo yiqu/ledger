@@ -8,11 +8,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
-import { Form, useNavigate, useSearchParams } from "@remix-run/react";
+import { Form, useSearchParams } from "@remix-run/react";
 
-function SearchInput() {
+
+function SearchInput({ onClearInput }: { onClearInput: () => void }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const nav = useNavigate();
   const searchParam: string | null = searchParams.get('q');
   const [searchInput, setSearchInput] = useState<string>(searchParam ?? '');
 
@@ -27,7 +27,7 @@ function SearchInput() {
   };
 
   const handleSearchInputClear = () => {
-    nav('/expenses');
+    onClearInput();
   };
 
   const handleSubmit = (e: SyntheticEvent) => {

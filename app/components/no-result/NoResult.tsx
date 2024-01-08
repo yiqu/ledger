@@ -17,7 +17,7 @@ function NoResult() {
       <Typography component="img" src={ searchParam ? noresultquerylogo : noresultlogo } sx={ { height: '5rem' } } alt="logo"></Typography>
 
       <Typography variant="h4" fontFamily="Poppins">
-        { notFoundText }.
+        { notFoundText }
       </Typography>
     </Stack>
   );

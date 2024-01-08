@@ -2,15 +2,17 @@ import { json } from "@remix-run/node";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
-import { Outlet, useLocation, useNavigate, useParams, useSubmit } from "@remix-run/react";
+import { Outlet, useLocation, useNavigate, useParams, useSearchParams, useSubmit } from "@remix-run/react";
 //@ts-ignore
 import urlcat from 'urlcat';
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import type { HeadersFunction } from "@remix-run/node";
+import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
 import AccountNavBar from "~/components/navbar/AccountNavBar";
-import { getAccounts } from "~/api/accounts.server";
+import { getAccountsPaged } from "~/api/accounts.server";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
+import type { Account } from "~/shared/models/account.model";
+import type { HttpResponsePaged } from "~/shared/models/http.model";
 
 
 export const headers: HeadersFunction = ({
@@ -20,19 +22,21 @@ export const headers: HeadersFunction = ({
 });
 
 function Accounts() {
-  const { isMobile } = useScreenSize();
   const navigate = useNavigate();
-  const { accountId } = useParams();
   const submit = useSubmit();
+  const [searchParams] = useSearchParams();
+  const { isMobile } = useScreenSize();
+  const { accountId } = useParams();
   const { pathname } = useLocation();
+  const extraSearchParams = searchParams.size > 0 ? `?${searchParams.toString()}` : '';
 
   const handleAddNewAccount = () => {
-    const url = urlcat('/add', '', { type: 'account', redirectUrl: '/accounts' });
+    const url = urlcat('/add', '', { type: 'account', redirectUrl: `/accounts${extraSearchParams}` });
     navigate(url);
   };
 
   const handleAddNewExpense = () => {
-    const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/accounts/${accountId ?? ''}`, accountId: `${accountId ?? ''}` });
+    const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/accounts/${accountId ?? ''}${extraSearchParams}`, accountId: accountId });
     navigate(url);
   };
 
@@ -88,8 +92,13 @@ function Accounts() {
 
 export default Accounts;
 
-export async function loader() {
-  const result = await getAccounts();
+export async function loader({ request, params, context }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  const pageParam = url.searchParams.get('page') as string | null;
+  const filterParam: string | null = url.searchParams.get('q');
+  const page: number = pageParam ? (parseInt(pageParam) ? (parseInt(pageParam) < 0 ? 0 : parseInt(pageParam)) : 0) : 0;
+
+  const result: HttpResponsePaged<Account[]> = await getAccountsPaged(page, filterParam);
   return json(result);
 }
 

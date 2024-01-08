@@ -7,11 +7,12 @@ import Pagination from "@mui/material/Pagination";
 import SearchInput from "../data/SearchInput";
 import NoResult from "../no-result/NoResult";
 import ExpenseTable from "./ExpenseTable";
-import { useRouteLoaderData, useSearchParams } from "@remix-run/react";
+import { useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { getParamsAsObject } from "~/shared/utils/url.utils";
 
 function Expenses() {
+  const nav = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data, totalCount, totalPages, pageSize, currentResultSetCount } = useRouteLoaderData("routes/expenses") as HttpResponsePaged<Expense[]>;
   const searchParamPage: string | null = searchParams.get('page');
@@ -25,6 +26,10 @@ function Expenses() {
     });
   };
 
+  const handleOnSearchClear = () => {
+    nav('/expenses');
+  };
+
   if (totalCount < 1) {
     return (
       <Empty type='expense' />
@@ -34,7 +39,7 @@ function Expenses() {
   return (
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
-        <SearchInput />
+        <SearchInput onClearInput={ handleOnSearchClear } />
         <Stack direction="row" justifyContent="flex-end" alignItems="center" width="100%">
           <Box mr={ 2 }>
             <Typography variant="body2">
@@ -43,7 +48,6 @@ function Expenses() {
           </Box>
           <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } color="standard" shape="rounded" />
         </Stack>
-
       </Stack>
 
       {

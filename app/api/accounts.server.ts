@@ -48,6 +48,56 @@ export async function getAccounts() {
   }
 }
 
+export async function getAccountsPaged(page: number, filterString: string | null) {
+  const pageSize = 25;
+  const offset = page * pageSize;
+  const totalCount: number = await prisma.account.count();
+  const filter = (filterString !== null) ? filterString.trim() : '';
+
+  try {
+    const res = await prisma.account.findMany({
+      orderBy: {
+        name: 'asc'
+      },
+      skip: offset,
+      take: pageSize,
+      where: {
+        name: {
+          contains: filter,
+          mode: 'insensitive'
+        }
+      },
+      include: {
+        _count: {
+          select: { expenses: true }
+        }
+      }
+    });
+
+    const currentResultSetCount: number = await prisma.account.count({
+      where: {
+        name: {
+          contains: filter,
+          mode: 'insensitive'
+        }
+      }
+    });
+
+    const totalPages: number = Math.ceil(currentResultSetCount / pageSize);
+
+    return {
+      data: res,
+      totalPages: totalPages,
+      totalCount: totalCount,
+      currentResultSetCount: currentResultSetCount,
+      pageSize: pageSize
+    };
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getAccountsPaged(): ', JSON.stringify(error));
+    throw new Error(`Accounts could not be retrieved. Code: ${error.code}`);
+  }
+}
+
 export async function getAccount(accountId: string) {
   try {
     const res = await prisma.account.findUnique({
