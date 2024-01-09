@@ -23,7 +23,9 @@ import { editExpense } from "~/api/expenses.server";
 import type { Account, ExpenseAndAccounts } from "~/shared/models/account.model";
 import { expenseSchema } from "~/shared/validation/yup-schemas";
 import ExpenseEditFormFields from "~/components/expense/ExpenseEditFormFields";
-
+import SaveIcon from '@mui/icons-material/Save';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import CloseIcon from '@mui/icons-material/Close';
 
 function ExpenseEdit() {
   const expenseData = useRouteLoaderData<ExpenseAndAccounts>('routes/expenses.$expenseId')?.expense as Expense | null;
@@ -78,25 +80,31 @@ function ExpenseEdit() {
 
             <ExpenseEditFormFields control={ control } onClearField={ handleClearField } accountList={ accountData } />
 
+            {/* This is hidden, only used for to submit to the server */ }
+            <HFTextField
+              type="hidden"
+              name="accountId"
+              control={ control }
+              label={ "Account" }
+              sx={ { display: 'none', mt: '0px' } }
+            />
             <DialogActions sx={ { width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } }>
-              <Button type="reset" onClick={ handleOnReset } disabled={ isApiLoading }>
-                Reset
-              </Button>
-              <Button type="submit" disabled={ isApiLoading }>
-                { isApiLoading ? "Submitting..." : "Submit" }
-              </Button>
+              <Stack>
+                <Button onClick={ handleClose } variant="text" startIcon={ <CloseIcon /> }>
+                  Cancel
+                </Button>
+              </Stack>
+              <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={ 1 }>
+                <Button type="reset" onClick={ handleOnReset } disabled={ isApiLoading } variant="text" startIcon={ <RestartAltIcon /> }>
+                  Reset
+                </Button>
+                <Button type="submit" disabled={ isApiLoading } startIcon={ <SaveIcon /> } variant="outlined">
+                  { isApiLoading ? "Submiting" : "Submit" }
+                </Button>
+              </Stack>
             </DialogActions>
           </Stack>
         </DialogContent>
-
-        {/* This is hidden, only used for to submit to the server */ }
-        <HFTextField
-          type="hidden"
-          name="accountId"
-          control={ control }
-          label={ "Account" }
-          sx={ { display: 'none' } }
-        />
       </Form>
     </DialogLayout>
   );

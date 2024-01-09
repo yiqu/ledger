@@ -34,7 +34,7 @@ function HFTextField({ name, label, control, clearField, ...props }: FieldProps)
         formState,
       }) => {
         return (
-          <FormControl fullWidth={ props.fullWidth } size={ props.size ?? 'medium' } >
+          <FormControl fullWidth={ props.fullWidth } size={ props.size ?? 'medium' } sx={ { ...props.sx } }>
             <TextField id={ name } label={ label } { ...props } { ...field } error={ !!(error) } helperText={ undefined } autoComplete="off"
               InputProps={ {
                 endAdornment: (field.value && <InputAdornment position="end" >
