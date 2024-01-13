@@ -51,3 +51,9 @@ export interface HttpResponsePaged<T> {
   currentResultSetCount: number;
 }
 
+export interface DeleteFetcher {
+  message: string;
+  status: number;
+  error: boolean;
+  showToast: boolean;
+}

@@ -10,7 +10,6 @@ import { getMyTheme } from '~/theme/AppTheme';
 import ThemeContext from '~/theme/ThemeContext';
 import Grid from '@mui/material/Unstable_Grid2';
 import { GREY } from '~/theme/palette';
-import { Toaster } from 'react-hot-toast';
 import LeftNavHeader from '../left-nav/LeftNavHeader';
 import TopNav from '../top-nav/TopNav';
 import LeftNav from '../left-nav/LeftNav';
@@ -19,6 +18,7 @@ import { useNavigationType } from '~/shared/hooks/useNavigationType';
 import { useLoaderData } from "@remix-run/react";
 import { useFetcher } from "@remix-run/react";
 import type { loader } from '~/root';
+import CustomToaster from '~/shared/components/CustomToaster';
 
 
 function Layout({ child }: { child: React.ReactNode }) {
@@ -70,21 +70,7 @@ function Layout({ child }: { child: React.ReactNode }) {
           </Grid>
 
         </Box>
-        <Toaster
-          position="top-center"
-          containerClassName="app-toast-container"
-          containerStyle={ {} }
-          toastOptions={ {
-            className: 'app-toast',
-            duration: 5000,
-            success: {
-              duration: 8000,
-            },
-            error: {
-              duration: 10000
-            }
-          } }
-        />
+        <CustomToaster />
         {/* <Tooltip id="tooltip" variant='dark' style={ { zIndex: 1300 } } /> */ }
       </Box>
     </ThemeProvider>

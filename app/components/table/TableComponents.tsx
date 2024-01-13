@@ -10,6 +10,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import type { Expense } from '~/shared/models/expense.model';
 import Typography from '@mui/material/Typography';
 import { Link } from '@remix-run/react';
+import { memo } from 'react';
+import CircularProgress from "@mui/material/CircularProgress";
 
 
 export const StyledHeaderCell = styled(TableCell)(() => ({
@@ -31,7 +33,7 @@ export const StyledDataCell = styled(TableCell)(() => ({
 
 export function LinkableCellDisplay({ url, display }: { url: string, display: string }) {
   return (
-    <Typography style={ { ...ellipsisBlock } } className='roboto'>
+    <Typography style={ { ...ellipsisBlock } } className='roboto' title={ display }>
       <Link to={ url }>
         { display }
       </Link>
@@ -39,15 +41,25 @@ export function LinkableCellDisplay({ url, display }: { url: string, display: st
   );
 }
 
-export function transformTableData(expense: Expense, columnId: typeof TABLE_COLUMNS[number], onMenuClick: (actionId: 'editExpense' | 'deleteExpense') => void) {
+interface TableCellDisplayProps {
+  expense: Expense;
+  columnId: typeof TABLE_COLUMNS[number];
+  onMenuClick: (actionId: 'editExpense' | 'deleteExpense', expense: Expense) => void;
+  isDeleting: boolean;
+}
+
+function TableCellDisplay({ expense, columnId, onMenuClick, isDeleting }: TableCellDisplayProps) {
   const handleTitleCellMenuAction = (actionId: 'editExpense' | 'deleteExpense') => () => {
-    onMenuClick(actionId);
+    onMenuClick(actionId, expense);
   };
 
   switch (columnId) {
     case 'account': {
       return (
-        <LinkableCellDisplay url={ `/accounts/${expense.account.id}` } display={ expense.account.name } />
+        <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 }>
+          <LinkableCellDisplay url={ `/accounts/${expense.account.id}` } display={ expense.account.name } />
+          { isDeleting && (<CircularProgress size={ 12 } />) }
+        </Stack>
       );
     }
     case 'amount': {
@@ -80,11 +92,11 @@ export function transformTableData(expense: Expense, columnId: typeof TABLE_COLU
       return (
         <Stack direction="row" justifyContent="start" alignItems="center">
           <IconButton edge="end" aria-label="edit" size="small" onClick={ handleTitleCellMenuAction('editExpense') } title="Edit"
-            disabled={ false ? true : false }>
+            disabled={ isDeleting }>
             <EditIcon fontSize='small' />
           </IconButton>
           <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('deleteExpense') } title="Delete"
-            disabled={ false ? true : false } >
+            disabled={ isDeleting } >
             <DeleteIcon fontSize='small' />
           </IconButton>
         </Stack>
@@ -95,3 +107,5 @@ export function transformTableData(expense: Expense, columnId: typeof TABLE_COLU
     }
   }
 }
+
+export const TableCellDisplayMemoized = memo(TableCellDisplay);
