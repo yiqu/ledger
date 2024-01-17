@@ -1,8 +1,6 @@
 import { useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import type { Account } from "~/shared/models/account.model";
-import AccountList from "./AccountList";
 import Empty from "../no-result/Empty";
-import NoResult from "../no-result/NoResult";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -10,6 +8,7 @@ import Pagination from "@mui/material/Pagination";
 import SearchInput from "../data/SearchInput";
 import { getParamsAsObject } from "~/shared/utils/url.utils";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
+import AccountsTable from "./AccountsTable";
 
 
 function Accounts() {
@@ -51,11 +50,7 @@ function Accounts() {
         </Stack>
       </Stack>
 
-      {
-        data.length === 0 ? (<NoResult />) : (
-          <AccountList accounts={ data } />
-        )
-      }
+      <AccountsTable accounts={ data } />
     </>
   );
 }

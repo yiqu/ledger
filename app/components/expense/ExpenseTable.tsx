@@ -6,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import TableBody from "@mui/material/TableBody";
-import { ellipsis, stickyDataCellClass } from "~/shared/utils/css.utils";
+import { ellipsis } from "~/shared/utils/css.utils";
 import { TABLE_COLUMNS, transformColumnName } from "~/shared/utils/table";
 import { StyledDataCell, StyledHeaderCell, TableCellDisplayMemoized } from "../table/TableComponents";
 import { useLocation, useNavigate } from "@remix-run/react";
@@ -18,6 +18,7 @@ import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
 import { useCallback, useEffect } from "react";
 import toast from "react-hot-toast";
 import type { DeleteFetcher } from "~/shared/models/http.model";
+import NoResult from "../no-result/NoResult";
 
 export interface ExpenseTableProps {
   expenses: Expense[];
@@ -58,10 +59,16 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
     }
   }, [deleteFetcher, navigate, pathname, search]);
 
+  if (expenses.length < 1) {
+    return (
+      <NoResult />
+    );
+  }
+
   return (
     <ContentPaperWrap>
       <TableContainer sx={ { overflowX: 'hidden', '&:hover': { overflowX: 'auto' } } }>
-        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: 'fixed' } }>
+        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: 'auto' } }>
           <TableHead>
             <TableRow>
               {
@@ -101,7 +108,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
                       TABLE_COLUMNS.map((col, index) => {
                         return (
                           <StyledDataCell key={ `${expense.id}${index}` }
-                            style={ col === 'account' ? { ...stickyDataCellClass as any } : {} }
+                          // style={ col === 'account' ? { ...stickyDataCellClass as any } : {} }
                           >
                             <TableCellDisplayMemoized
                               expense={ expense }

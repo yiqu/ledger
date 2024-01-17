@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import SearchInput from "../data/SearchInput";
-import NoResult from "../no-result/NoResult";
 import ExpenseTable from "./ExpenseTable";
 import { useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
@@ -50,11 +49,7 @@ function Expenses() {
         </Stack>
       </Stack>
 
-      {
-        data.length === 0 ? (<NoResult />) : (
-          <ExpenseTable expenses={ data } />
-        )
-      }
+      <ExpenseTable expenses={ data } />
     </>
   );
 }
