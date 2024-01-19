@@ -35,7 +35,7 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
         break;
       }
       case 'delete': {
-        const proceed = confirm(`Are you sure you want to delete this item?`);
+        const proceed = confirm(`Are you sure you want to delete this account?`);
         if (!proceed) return;
 
         deleteFetcher.submit({ id: data.id }, { method: 'DELETE', action: `/accounts/${data.id}`, preventScrollReset: true });
