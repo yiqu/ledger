@@ -13,6 +13,7 @@ import { getAccountsPaged } from "~/api/accounts.server";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import type { Account } from "~/shared/models/account.model";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
+import { convertDateDisplay } from "~/api/utils/date.server";
 
 
 export const headers: HeadersFunction = ({
@@ -98,8 +99,19 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const filterParam: string | null = url.searchParams.get('q');
   const page: number = pageParam ? (parseInt(pageParam) ? (parseInt(pageParam) < 0 ? 0 : parseInt(pageParam)) : 0) : 0;
 
-  const result: HttpResponsePaged<Account[]> = await getAccountsPaged(page, filterParam);
-  return json(result);
+  const response: HttpResponsePaged<Account[]> = await getAccountsPaged(page, filterParam);
+  const accounts = response.data.map((account: Account) => {
+    return {
+      ...account,
+      dateAddedFromNow: convertDateDisplay(account.dateAdded, 'fromNow'),
+      updatedAtFromNow: convertDateDisplay(account.updatedAt, 'fromNow')
+    };
+  });
+
+  return json({
+    ...response,
+    data: accounts
+  });
 }
 
 export const shouldRevalidate: ShouldRevalidateFunction = (payload) => {

@@ -14,9 +14,10 @@ interface TableCellDisplayProps {
   columnId: typeof ACCOUNTS_TABLE_COLUMNS[number];
   onMenuClick: (actionId: 'edit' | 'delete', payload: Account) => void;
   isDeleting: boolean;
+  isNewlyCreated: boolean;
 }
 
-function TableCellDisplay({ data, columnId, onMenuClick, isDeleting }: TableCellDisplayProps) {
+function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCreated }: TableCellDisplayProps) {
   const handleTitleCellMenuAction = (actionId: 'edit' | 'delete') => () => {
     onMenuClick(actionId, data);
   };
@@ -26,6 +27,7 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting }: TableCell
       return (
         <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 }>
           <LinkableCellDisplay url={ `/accounts/${data.id}` } display={ data.name } />
+          { isNewlyCreated && (<Chip label="New" size="small" color="info" />) }
           { isDeleting && (<CircularProgress size={ 12 } />) }
         </Stack>
       );
@@ -48,6 +50,13 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting }: TableCell
       return (
         <span title={ data.updatedAtEpoch ? data.updatedAtFromNow?.tooltip : 'N/A' }>
           { data.updatedAtEpoch ? data.updatedAtFromNow?.display : 'N/A' }
+        </span>
+      );
+    }
+    case 'expensesCount': {
+      return (
+        <span title={ `${data._count?.expenses}` }>
+          { `${data._count?.expenses ?? 'N/A'}` }
         </span>
       );
     }

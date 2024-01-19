@@ -116,12 +116,14 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
 export async function action({ request, context, params }: ActionFunctionArgs) {
   const body = await request.formData();
   const accountId = body.get('id') as string | null;
+  const url = new URL(request.url);
+  const redirectUrl = url.searchParams.get('redirectUrl') as string;
   invariant(accountId, "Expected account id in body to be defined");
 
   if (request.method === 'DELETE') {
     try {
       await deleteAccount(accountId);
-      return redirect('/accounts');
+      return redirect(`${redirectUrl}`);
     } catch (err: any) {
       return handleError({ message: err.message, error: true, showToast: true });
     }

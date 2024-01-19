@@ -32,7 +32,7 @@ export const transformColumnName = (colId: string) => {
       break;
     }
     case "shown": {
-      result = 'Shown';
+      result = 'Shown On Dashboard';
       break;
     }
     default: {

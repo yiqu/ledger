@@ -32,7 +32,7 @@ function Accounts() {
 
   if (totalCount < 1) {
     return (
-      <Empty type='expense' />
+      <Empty type='account' />
     );
   }
 

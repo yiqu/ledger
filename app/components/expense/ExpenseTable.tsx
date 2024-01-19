@@ -49,7 +49,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
         break;
       }
       case 'deleteExpense': {
-        const proceed = confirm(`Are you sure you want to delete this item?`);
+        const proceed = confirm(`Are you sure you want to delete this expense?`);
         if (!proceed) return;
 
         const url = urlcat('', '/expenses/:expenseId', { expenseId: expense.id, redirectUrl: `${pathname}${search}` });

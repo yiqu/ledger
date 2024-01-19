@@ -13,19 +13,30 @@ import { ellipsis } from "~/shared/utils/css.utils";
 import { ACCOUNTS_TABLE_COLUMNS, transformColumnName } from "~/shared/utils/table";
 import { StyledHeaderCell, StyledDataCell } from "../table/TableComponents";
 import { TableCellDisplayMemoized } from "../table/AccountTableCellDisplay";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 //@ts-ignore
 import urlcat from "urlcat";
+import type { DeleteFetcher } from "~/shared/models/http.model";
+import toast from "react-hot-toast";
 
 
 function AccountsTable({ accounts }: { accounts: Account[] }) {
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
-  const deleteFetcher = useFetcher();
+  const deleteFetcher = useFetcher<DeleteFetcher>();
   const searchParams = new URLSearchParams(search);
   const newlyAddedAccountId = searchParams.get('addedAccountId');
   const deleteId: string = deleteFetcher.formData?.get('id')?.toString() || '';
+
+  useEffect(() => {
+    if (deleteFetcher.state === 'idle' && deleteFetcher.data?.showToast) {
+      toast.error(deleteFetcher.data.message);
+    }
+    return (() => {
+      toast.remove();
+    });
+  }, [deleteFetcher.state, deleteFetcher.data?.showToast, deleteFetcher.data?.message]);
 
   const handleCellMenuAction = useCallback((action: 'edit' | 'delete', data: Account) => {
     switch (action) {
@@ -38,10 +49,11 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
         const proceed = confirm(`Are you sure you want to delete this account?`);
         if (!proceed) return;
 
-        deleteFetcher.submit({ id: data.id }, { method: 'DELETE', action: `/accounts/${data.id}`, preventScrollReset: true });
+        const url = urlcat('', '/accounts/:accountId', { accountId: data.id, redirectUrl: `${pathname}${search}` });
+        deleteFetcher.submit({ id: data.id }, { method: 'DELETE', action: url, preventScrollReset: true });
       }
     }
-  }, [deleteFetcher, navigate, pathname]);
+  }, [deleteFetcher, navigate, pathname, search]);
 
   if (accounts.length < 1) {
     return (
@@ -79,7 +91,7 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
           <TableBody>
             {
               accounts.map((account: Account, rindex: number) => {
-                const isWorking: boolean = false;
+                const isWorking: boolean = deleteId === account.id;
                 return (
                   <TableRow
                     key={ account.id }
@@ -95,6 +107,7 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
                               columnId={ col }
                               onMenuClick={ handleCellMenuAction }
                               isDeleting={ deleteId === account.id }
+                              isNewlyCreated={ newlyAddedAccountId === account.id }
                             />
                           </StyledDataCell>
                         );

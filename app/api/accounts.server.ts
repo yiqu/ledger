@@ -56,8 +56,11 @@ export async function getAccountsPaged(page: number, filterString: string | null
 
   try {
     const res = await prisma.account.findMany({
+      // order by expenses count
       orderBy: {
-        name: 'asc'
+        expenses: {
+          _count: 'desc'
+        }
       },
       skip: offset,
       take: pageSize,

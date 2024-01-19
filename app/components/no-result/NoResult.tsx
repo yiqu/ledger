@@ -9,7 +9,7 @@ function NoResult() {
   const [searchParams] = useSearchParams();
   const searchParam: string | null = searchParams.get('q');
 
-  const notFoundText = searchParam ? `No messages matched your search: '${searchParam}'` : 'No result found';
+  const notFoundText = searchParam ? `No results matched your search: '${searchParam}'` : 'No results found';
 
   return (
     <Stack direction="column" justifyContent="start" alignItems="center" width="100%" spacing={ 3 }>
