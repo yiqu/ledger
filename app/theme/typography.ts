@@ -1,7 +1,7 @@
 import type { Palette } from "@mui/material/styles";
 import type { TypographyOptions } from "@mui/material/styles/createTypography";
 
-export const MyTypography: TypographyOptions | ((palette: Palette) => TypographyOptions) | undefined  = {
+export const MyTypography: TypographyOptions | ((palette: Palette) => TypographyOptions) | undefined = {
   fontFamily: 'Roboto',
   subtitle1: {
     fontWeight: 300
@@ -10,7 +10,6 @@ export const MyTypography: TypographyOptions | ((palette: Palette) => Typography
     fontWeight: 500,
     fontSize: '12.5px',
     textTransform: 'capitalize'
-
   },
   body1: {
     fontSize: '14px'
@@ -30,5 +29,5 @@ export const MyTypography: TypographyOptions | ((palette: Palette) => Typography
 };
 
 export const ELLIPIS_STYLE = {
-  whiteSpace: 'nowrap', overflow:'hidden', textOverflow:'ellipsis'
+  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
 };

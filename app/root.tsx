@@ -27,6 +27,7 @@ import '@fontsource/montserrat/500.css';
 import '@fontsource/montserrat/600.css';
 import '@fontsource/montserrat/700.css';
 import indexStyles from '~/styles/index.css';
+import leftNavLogoStyles from '~/styles/left-nav-logo.css';
 import 'react-tooltip/dist/react-tooltip.css';
 import styles from "~/styles/mui-alert.css";
 import ActionLoaderErrorDisplay from "./components/error/ActionLoaderError";
@@ -39,7 +40,8 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [
     { rel: "stylesheet", href: cssBundleHref },
     { rel: "stylesheet", href: styles },
-    { rel: "stylesheet", href: indexStyles }
+    { rel: "stylesheet", href: indexStyles },
+    { rel: "stylesheet", href: leftNavLogoStyles }
   ] : []),
 ];
 

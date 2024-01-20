@@ -2,7 +2,7 @@ import TableCell from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import { ellipsis, ellipsisBlock } from '~/shared/utils/css.utils';
 import { GREY } from '~/theme/palette';
-import type { TABLE_COLUMNS } from '~/shared/utils/table';
+import type { EXPENSES_TABLE_COLUMNS } from '~/shared/utils/table';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -43,7 +43,7 @@ export function LinkableCellDisplay({ url, display }: { url: string, display: st
 
 interface TableCellDisplayProps {
   expense: Expense;
-  columnId: typeof TABLE_COLUMNS[number];
+  columnId: typeof EXPENSES_TABLE_COLUMNS[number];
   onMenuClick: (actionId: 'editExpense' | 'deleteExpense', expense: Expense) => void;
   isDeleting: boolean;
 }
@@ -85,6 +85,13 @@ function TableCellDisplay({ expense, columnId, onMenuClick, isDeleting }: TableC
       return (
         <span title={ expense.updatedAtEpoch ? expense.updatedAtFromNow?.tooltip : 'N/A' }>
           { expense.updatedAtEpoch ? expense.updatedAtFromNow?.display : 'N/A' }
+        </span>
+      );
+    }
+    case 'commentsCount': {
+      return (
+        <span title={ `${expense._count?.comments ?? 'N/A'}` }>
+          { expense._count?.comments.toLocaleString() ?? 'N/A' }
         </span>
       );
     }

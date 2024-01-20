@@ -22,10 +22,14 @@ export async function getExpensesPaged(page: number, filterString: string | null
   const filterParsedNumber: number = parseInt(filter.replaceAll(",", ""));
   const filterAsNumber: number | undefined = filterParsedNumber ? (filter.includes(",") ? +(filter.replaceAll(",", "")) : +filter) : undefined;
 
+  // also include comments count
   try {
     const res = await prisma.expense.findMany({
       include: {
-        account: true
+        account: true,
+        _count: {
+          select: { comments: true }
+        }
       },
       orderBy: {
         date: 'desc'

@@ -1,6 +1,6 @@
 import startCase from "lodash/startCase";
 
-export const TABLE_COLUMNS = ['account', 'amount', 'date', 'dateAdded', 'updatedAt', 'actions'] as const;
+export const EXPENSES_TABLE_COLUMNS = ['account', 'amount', 'date', 'dateAdded', 'updatedAt', 'commentsCount', 'actions'] as const;
 
 export const ACCOUNTS_TABLE_COLUMNS = ['name', 'shown', 'dateAdded', 'updatedAt', "expensesCount", "actions"] as const;
 
@@ -33,6 +33,10 @@ export const transformColumnName = (colId: string) => {
     }
     case "shown": {
       result = 'Shown On Dashboard';
+      break;
+    }
+    case "commentsCount": {
+      result = 'Comments';
       break;
     }
     default: {

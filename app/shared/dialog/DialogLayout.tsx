@@ -31,7 +31,7 @@ function DialogLayout({ id, open, title, maxWidth = "lg", onClose, children }: D
       transitionDuration={ 0 }
       id={ id ?? 'app-dialog' }
     >
-      <DialogTitle sx={ { backgroundColor: 'primary.main', color: 'white' } }>
+      <DialogTitle sx={ { backgroundColor: 'primary.main', color: 'white', py: '10px' } }>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Typography variant="h5">
             { title }

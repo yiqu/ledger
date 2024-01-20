@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import TableBody from "@mui/material/TableBody";
 import { ellipsis } from "~/shared/utils/css.utils";
-import { TABLE_COLUMNS, transformColumnName } from "~/shared/utils/table";
+import { EXPENSES_TABLE_COLUMNS, transformColumnName } from "~/shared/utils/table";
 import { StyledDataCell, StyledHeaderCell, TableCellDisplayMemoized } from "../table/TableComponents";
 import { useLocation, useNavigate } from "@remix-run/react";
 import { useFetcher } from '@remix-run/react';
@@ -72,7 +72,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
           <TableHead>
             <TableRow>
               {
-                TABLE_COLUMNS.map((col, index, array) => {
+                EXPENSES_TABLE_COLUMNS.map((col, index, array) => {
                   return (
                     <StyledHeaderCell
                       key={ col }
@@ -105,7 +105,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
                     sx={ { opacity: isWorking ? 0.5 : 1 } }
                   >
                     {
-                      TABLE_COLUMNS.map((col, index) => {
+                      EXPENSES_TABLE_COLUMNS.map((col, index) => {
                         return (
                           <StyledDataCell key={ `${expense.id}${index}` }
                           // style={ col === 'account' ? { ...stickyDataCellClass as any } : {} }

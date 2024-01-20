@@ -15,11 +15,14 @@ function ExpenseCommentDisplay({ comment }: { comment: ExpenseComment }) {
       </Avatar>
       <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 0.5 }>
         <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 0.5 }>
-          <Typography variant="body1" fontSize="12px" fontWeight={ 500 } color={ grey[800] }>
+          <Typography variant="body1" fontSize="12px" fontWeight={ 500 }>
             @kq
           </Typography>
+          <Typography variant="body1" fontSize="12px">
+            &#x2022;
+          </Typography>
           <Moment fromNow date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
-          <Moment format="MM/DD/yyyy h:mm a" date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
+          <Moment format="(MM/DD/yyyy h:mm a)" date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
         </Stack>
         <Typography fontSize="14px" fontWeight={ 400 }>
           { comment.comment }

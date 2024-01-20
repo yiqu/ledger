@@ -1,7 +1,6 @@
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import startCase from "lodash/startCase";
 import DialogLayout from "~/shared/dialog/DialogLayout";
 import { Form, useActionData, useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
@@ -22,6 +21,10 @@ import type { AccountAndExpense } from "~/shared/models/general.model";
 import type { AccountAddable } from "~/shared/models/account.model";
 import { accountSchema } from "~/shared/validation/yup-schemas";
 import { updateAccount } from "~/api/accounts.server";
+import ButtonReset from "~/shared/components/ResetButton";
+import ButtonSubmit from "~/shared/components/SubmitButton";
+import ButtonClose from "~/shared/components/CloseButton";
+import Divider from "@mui/material/Divider";
 
 function AccountDetailEdit() {
   const [searchParams] = useSearchParams();
@@ -67,18 +70,24 @@ function AccountDetailEdit() {
             <HFTextField name="name" label="Account Name" control={ control } variant="standard" type="text" helperText="Account name." fullWidth autoFocus
               clearField={ handleClearField } />
 
-            <HFSwitch name="shown" label="Show by default" control={ control } />
+            <HFSwitch name="shown" label="Show on Dashboard" control={ control } />
 
-            <DialogActions sx={ { width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } }>
-              <Button type="reset" onClick={ handleOnReset } disabled={ isActionSubmission }>
-                Reset
-              </Button>
-              <Button type="submit" disabled={ !formState.isValid || isActionSubmission }>
-                { isActionSubmission ? "Submitting..." : "Submit" }
-              </Button>
-            </DialogActions>
           </Stack>
         </DialogContent>
+        <Divider flexItem variant="fullWidth" />
+        <DialogActions sx={ { width: '100%' } }>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
+            <Stack direction="row" justifyContent="start" alignItems="center">
+              <ButtonClose onClick={ handleClose } />
+            </Stack>
+            <Stack direction="row" justifyContent="end" alignItems="center" spacing={ 2 }>
+              <ButtonReset type="reset" onClick={ handleOnReset } disabled={ isActionSubmission } />
+              <ButtonSubmit type="submit" disabled={ !formState.isValid || isActionSubmission }>
+                { isActionSubmission ? "Submitting..." : "Submit" }
+              </ButtonSubmit>
+            </Stack>
+          </Stack>
+        </DialogActions>
       </Form>
     </DialogLayout>
   );

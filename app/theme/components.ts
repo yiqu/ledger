@@ -3,12 +3,18 @@ import type { Components, Theme } from "@mui/material/styles";
 export const MyComponents: Components<Omit<Theme, "components">> | undefined = {
   MuiButton: {
     defaultProps: {
-      disableElevation: true
+      disableElevation: true,
+      size: 'small'
     },
     styleOverrides: {
       root: {
-        textTransform: 'none'
+        textTransform: 'none',
       }
+    }
+  },
+  MuiSwitch: {
+    defaultProps: {
+      size: 'small'
     }
   },
   MuiListItemButton: {
@@ -53,7 +59,8 @@ export const MyComponents: Components<Omit<Theme, "components">> | undefined = {
   },
   MuiInput: {
     defaultProps: {
-      spellCheck: false
+      spellCheck: false,
+      size: 'small'
     }
   }
 };

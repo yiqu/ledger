@@ -13,8 +13,6 @@ import { GREY } from '~/theme/palette';
 import LeftNavHeader from '../left-nav/LeftNavHeader';
 import TopNav from '../top-nav/TopNav';
 import LeftNav from '../left-nav/LeftNav';
-import LinearProgress from "@mui/material/LinearProgress";
-import { useNavigationType } from '~/shared/hooks/useNavigationType';
 import { useLoaderData } from "@remix-run/react";
 import { useFetcher } from "@remix-run/react";
 import type { loader } from '~/root';
@@ -23,8 +21,6 @@ import CustomToaster from '~/shared/components/CustomToaster';
 
 function Layout({ child }: { child: React.ReactNode }) {
   const themeContext = useContext(ThemeContext);
-  const { isNormalLoad, isActionReload, isActionRedirect, isReloading, isActionSubmission, isLoaderSubmission, isLoaderSubmissionRedirect } = useNavigationType();
-  const showProgress = isNormalLoad || isActionSubmission || isLoaderSubmission || isLoaderSubmissionRedirect || isReloading || isActionReload || isActionRedirect;
   const theme: Theme = useMemo(() => {
     return createTheme(getMyTheme(themeContext.currentTheme));
   }, [themeContext.currentTheme]);
@@ -50,10 +46,6 @@ function Layout({ child }: { child: React.ReactNode }) {
 
           <LeftNavHeader closeDrawerHandler={ handleDrawerClose } />
 
-          <Box width="100%" height="4px" marginTop="-4px">
-            { showProgress && <LinearProgress color="info" /> }
-          </Box>
-
           <Divider />
 
           <LeftNav open={ leftNavOpen } />
@@ -71,7 +63,6 @@ function Layout({ child }: { child: React.ReactNode }) {
 
         </Box>
         <CustomToaster />
-        {/* <Tooltip id="tooltip" variant='dark' style={ { zIndex: 1300 } } /> */ }
       </Box>
     </ThemeProvider>
 

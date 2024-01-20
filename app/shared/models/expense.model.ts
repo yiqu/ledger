@@ -41,6 +41,9 @@ export interface Expense {
   updatedAtEpoch: number;
   accountId: string;
   account: Account;
+  _count?: {
+    comments: number;
+  };
 }
 export interface ExpenseWithComments extends Expense {
   comments: ExpenseComment[];

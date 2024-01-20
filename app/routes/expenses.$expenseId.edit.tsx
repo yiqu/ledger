@@ -1,7 +1,6 @@
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import DialogLayout from "~/shared/dialog/DialogLayout";
 import { Form, useActionData, useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import { useForm } from "react-hook-form";
@@ -23,9 +22,9 @@ import { editExpense } from "~/api/expenses.server";
 import type { Account, ExpenseAndAccounts } from "~/shared/models/account.model";
 import { expenseSchema } from "~/shared/validation/yup-schemas";
 import ExpenseEditFormFields from "~/components/expense/ExpenseEditFormFields";
-import SaveIcon from '@mui/icons-material/Save';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import CloseIcon from '@mui/icons-material/Close';
+import ButtonClose from "~/shared/components/CloseButton";
+import ButtonReset from "~/shared/components/ResetButton";
+import ButtonSubmit from "~/shared/components/SubmitButton";
 
 function ExpenseEdit() {
   const expenseData = useRouteLoaderData<ExpenseAndAccounts>('routes/expenses.$expenseId')?.expense as Expense | null;
@@ -88,23 +87,21 @@ function ExpenseEdit() {
               label={ "Account" }
               sx={ { display: 'none', mt: '0px' } }
             />
-            <DialogActions sx={ { width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } }>
-              <Stack>
-                <Button onClick={ handleClose } variant="text" startIcon={ <CloseIcon /> }>
-                  Cancel
-                </Button>
-              </Stack>
-              <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={ 1 }>
-                <Button type="reset" onClick={ handleOnReset } disabled={ isApiLoading } variant="text" startIcon={ <RestartAltIcon /> }>
-                  Reset
-                </Button>
-                <Button type="submit" disabled={ isApiLoading } startIcon={ <SaveIcon /> } variant="outlined">
-                  { isApiLoading ? "Submiting" : "Submit" }
-                </Button>
-              </Stack>
-            </DialogActions>
           </Stack>
         </DialogContent>
+        <DialogActions sx={ { width: '100%' } }>
+          <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
+            <Stack direction="row" justifyContent="start" alignItems="center">
+              <ButtonClose onClick={ handleClose } />
+            </Stack>
+            <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={ 1 }>
+              <ButtonReset type="reset" onClick={ handleOnReset } disabled={ isApiLoading } />
+              <ButtonSubmit type="submit" disabled={ isApiLoading }>
+                { isActionSubmission ? "Submitting..." : "Submit" }
+              </ButtonSubmit>
+            </Stack>
+          </Stack>
+        </DialogActions>
       </Form>
     </DialogLayout>
   );

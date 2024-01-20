@@ -1,0 +1,61 @@
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadein {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein2 {
+  0% {
+    opacity: 0.6;
+  }
+
+  20% {
+    opacity: 0.55;
+  }
+
+  40% {
+    opacity: 0.5;
+  }
+
+  60% {
+    opacity: 0.45;
+  }
+
+  80% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
+}
+
+.fade-in-out-animate {
+  -webkit-animation: fadein2 1s ease-in alternate infinite;
+  -moz-animation: fadein2 1s ease-in alternate infinite;
+  animation: fadein2 1s ease-in alternate infinite;
+}

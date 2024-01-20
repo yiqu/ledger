@@ -10,7 +10,6 @@ import { useActionData } from "@remix-run/react";
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import DialogActions from "@mui/material/DialogActions";
-import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import { handleError } from "~/api/utils/utils.server";
 import { badRequest } from "~/api/utils/request.server";
@@ -29,6 +28,9 @@ import { addAccount, getAccounts } from "~/api/accounts.server";
 import { isValidStringCount, validateExpenseToAdd } from "~/api/utils/validations.server";
 import { addExpense } from "~/api/expenses.server";
 import { USER_ID } from "~/shared/utils/constants";
+import ButtonClose from "~/shared/components/CloseButton";
+import ButtonSubmit from "~/shared/components/SubmitButton";
+import ButtonReset from "~/shared/components/ResetButton";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -106,19 +108,24 @@ function AddNew() {
           <DialogContent>
             <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 2 } width="100%">
               { hasActionError && <Alert severity="error" sx={ { width: '100%' } }>{ actionData.message }</Alert> }
-
               <NewFormFields type={ entityType } control={ control } onClearField={ handleClearField } />
-
-              <DialogActions sx={ { width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' } }>
-                <Button type="reset" onClick={ handleOnReset } disabled={ isApiLoading }>
-                  Reset
-                </Button>
-                <Button type="submit" disabled={ isApiLoading }>
-                  { isApiLoading ? "Submitting..." : "Submit" }
-                </Button>
-              </DialogActions>
             </Stack>
           </DialogContent>
+          <DialogActions sx={ { width: '100%' } }>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
+              <Stack direction="row" justifyContent="start" alignItems="center">
+                <ButtonClose onClick={ handleClose } disabled={ isApiLoading } />
+              </Stack>
+              <Stack direction="row" justifyContent="end" alignItems="center" spacing={ 2 }>
+                <ButtonReset type="reset" onClick={ handleOnReset } disabled={ isApiLoading } />
+
+                <ButtonSubmit type="submit" disabled={ isApiLoading } variant="outlined">
+                  { isApiLoading ? "Submitting..." : "Submit" }
+                </ButtonSubmit>
+              </Stack>
+            </Stack>
+
+          </DialogActions>
         </Form>
       </DialogLayout>
     </>

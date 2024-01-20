@@ -24,7 +24,6 @@ function Expenses() {
       return { ...currentParams, page: `${value - 1}` };
     });
   };
-
   const handleOnSearchClear = () => {
     nav('/expenses');
   };
