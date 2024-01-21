@@ -62,5 +62,13 @@ export const MyComponents: Components<Omit<Theme, "components">> | undefined = {
       spellCheck: false,
       size: 'small'
     }
+  },
+  MuiTableCell: {
+    styleOverrides: {
+      root: {
+        paddingLeft: '4px',
+        paddingRight: '4px'
+      }
+    }
   }
 };

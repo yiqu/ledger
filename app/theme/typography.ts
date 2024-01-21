@@ -12,7 +12,8 @@ export const MyTypography: TypographyOptions | ((palette: Palette) => Typography
     textTransform: 'capitalize'
   },
   body1: {
-    fontSize: '14px'
+    fontSize: '14px',
+    color: '#000000de'
   },
   body2: {
     fontSize: '16px'

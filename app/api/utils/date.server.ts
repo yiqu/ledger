@@ -1,7 +1,7 @@
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import format from "date-fns/format";
 
-export const convertDateDisplay = (date: string | Date | number | null,
+export const convertDateDisplay = (date: string | Date | number | null | undefined,
   displayType?: 'full' | 'short' | 'fromNow' | 'shortAndNow' | 'longAndNow' | 'fromNowUnlessFarBack') => {
 
   if (!date) {
@@ -45,7 +45,7 @@ export const convertDateDisplay = (date: string | Date | number | null,
 
   return {
     display: result,
-    tooltip: `${format(new Date(date), 'MM/dd/yyyy HH:mm aa')} (${fromNow})`
+    tooltip: `${format(new Date(date), 'MM/dd/yyyy h:mm aa')} (${fromNow})`
   };
 
 };

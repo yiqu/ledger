@@ -40,7 +40,7 @@ function Accounts() {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
         <SearchInput onClearInput={ handleOnSearchClear } />
-        <Stack direction="row" justifyContent="flex-end" alignItems="center" width="100%">
+        <Stack direction="row" justifyContent="flex-end" alignItems="center">
           <Box mr={ 2 }>
             <Typography variant="body2">
               { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }

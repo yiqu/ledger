@@ -46,9 +46,10 @@ interface TableCellDisplayProps {
   columnId: typeof EXPENSES_TABLE_COLUMNS[number];
   onMenuClick: (actionId: 'editExpense' | 'deleteExpense', expense: Expense) => void;
   isDeleting: boolean;
+  index?: number;
 }
 
-function TableCellDisplay({ expense, columnId, onMenuClick, isDeleting }: TableCellDisplayProps) {
+function TableCellDisplay({ expense, columnId, onMenuClick, isDeleting, index }: TableCellDisplayProps) {
   const handleTitleCellMenuAction = (actionId: 'editExpense' | 'deleteExpense') => () => {
     onMenuClick(actionId, expense);
   };
@@ -98,11 +99,11 @@ function TableCellDisplay({ expense, columnId, onMenuClick, isDeleting }: TableC
     case 'actions': {
       return (
         <Stack direction="row" justifyContent="start" alignItems="center">
-          <IconButton edge="end" aria-label="edit" size="small" onClick={ handleTitleCellMenuAction('editExpense') } title="Edit"
+          <IconButton edge="end" aria-label="edit" size="small" onClick={ handleTitleCellMenuAction('editExpense') } title={ `Edit #${index ?? 'N/A'}` }
             disabled={ isDeleting }>
             <EditIcon fontSize='small' />
           </IconButton>
-          <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('deleteExpense') } title="Delete"
+          <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('deleteExpense') } title={ `Delete #${index ?? 'N/A'}` }
             disabled={ isDeleting } >
             <DeleteIcon fontSize='small' />
           </IconButton>

@@ -1,6 +1,6 @@
 import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
-import { Outlet, isRouteErrorResponse, useLoaderData, useRouteError, useSearchParams } from "@remix-run/react";
+import { Outlet, isRouteErrorResponse, useLoaderData, useNavigate, useRouteError, useSearchParams } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -9,7 +9,6 @@ import styles from "~/styles/mui-alert.css";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
 import { handleError } from "~/api/utils/utils.server";
-import NoResult from "~/components/no-result/NoResult";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
@@ -19,7 +18,14 @@ import { deleteAccount, getAccount } from "~/api/accounts.server";
 import type { Expense } from "~/shared/models/expense.model";
 import { getExpensesByAccountId } from "~/api/expenses.server";
 import { TitleNameDisplay } from "~/shared/components/Title";
-import ExpenseList from "~/components/expense/ExpenseList";
+import Grid from '@mui/material/Unstable_Grid2';
+import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
+import List from "@mui/material/List";
+import { convertDateDisplay } from "~/api/utils/date.server";
+import ReverseListItem from "~/shared/components/ReverseListItem";
+import ExpenseTable from "~/components/expense/ExpenseTable";
+import { EXPENSES_TABLE_COLUMNS } from "~/shared/utils/table";
+import SearchInput from "~/components/data/SearchInput";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -39,6 +45,7 @@ export const headers: HeadersFunction = ({
 });
 
 function AccountDetail() {
+  const nav = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { account, expenses: { currentResultSetCount, data, pageSize, totalCount, totalPages } } = useLoaderData<typeof loader>();
   invariant(account, "Expected account to be defined");
@@ -53,13 +60,17 @@ function AccountDetail() {
     });
   };
 
+  const handleOnSearchClear = () => {
+
+  };
+
   return (
     <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 3 }>
 
       <TitleBarLayout>
         <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 2 }>
           <AccountBalanceIcon />
-          <TitleNameDisplay name={ account.name } />
+          <TitleNameDisplay name={ account?.name ?? 'N/A' } />
         </Stack>
         <Stack direction="row" justifyContent="end" alignItems="center">
           <Typography variant="h5" fontFamily="Poppins">
@@ -68,24 +79,40 @@ function AccountDetail() {
         </Stack >
       </TitleBarLayout>
 
-      {
-        data.length === 0 ? (<NoResult />) : (
-          <>
-            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
+      <Box sx={ { flexGrow: 1, width: '100%' } }>
+        <Grid container columnSpacing={ 2 }>
+          <Grid xs={ 12 } md={ 4 }>
+            <ContentPaperWrap>
+              <Stack direction="column" justifyContent="start" alignItems="start">
+                <List sx={ { width: '100%' } }>
+                  <ReverseListItem primaryText={ "Account Name" } secondaryText={ account.name } />
+                  <ReverseListItem primaryText={ "Created" } secondaryText={ `${account.dateAddedFromNow.display}` } />
+                  <ReverseListItem primaryText={ "Last Edited" } secondaryText={ account.updatedAtFromNow.display } />
+                  <ReverseListItem primaryText={ "Shown On Dashboard" } secondaryText={ account.shown ? 'Yes' : 'No' } />
+                  <ReverseListItem primaryText={ "ID" } secondaryText={ `${account.id}` } />
+                </List>
+              </Stack>
+            </ContentPaperWrap>
+          </Grid>
 
-              <Stack direction="row" justifyContent="flex-end" alignItems="center" width="100%">
+          <Grid xs={ 12 } md={ 8 }>
+
+            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
+              <SearchInput onClearInput={ handleOnSearchClear } />
+              <Stack direction="row" justifyContent="flex-end" alignItems="center">
                 <Box mr={ 2 }>
                   <Typography variant="body2">
                     { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
                   </Typography>
                 </Box>
-                <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } shape="rounded" />
+                <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } color="standard" shape="rounded" />
               </Stack>
             </Stack>
-            <ExpenseList expenses={ data } />
-          </>
-        )
-      }
+
+            <ExpenseTable expenses={ data } isTableFixed={ true } columnIds={ EXPENSES_TABLE_COLUMNS.filter((c) => c !== 'account') } />
+          </Grid>
+        </Grid>
+      </Box>
 
       <Outlet />
 
@@ -107,7 +134,11 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const expenses: HttpResponsePaged<Expense[]> = await getExpensesByAccountId(params.accountId, page, filterParam);
 
   const result = {
-    account,
+    account: {
+      ...account,
+      dateAddedFromNow: convertDateDisplay(account?.dateAdded, 'longAndNow'),
+      updatedAtFromNow: convertDateDisplay(account?.updatedAt, 'longAndNow')
+    },
     expenses
   };
   return json(result);

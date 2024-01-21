@@ -20,11 +20,14 @@ import toast from "react-hot-toast";
 import type { DeleteFetcher } from "~/shared/models/http.model";
 import NoResult from "../no-result/NoResult";
 
+
 export interface ExpenseTableProps {
   expenses: Expense[];
+  isTableFixed?: boolean;
+  columnIds?: string[];
 }
 
-function ExpenseTable({ expenses }: ExpenseTableProps) {
+function ExpenseTable({ expenses, isTableFixed, columnIds = EXPENSES_TABLE_COLUMNS }: ExpenseTableProps) {
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const deleteFetcher = useFetcher<DeleteFetcher>();
@@ -67,12 +70,12 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
 
   return (
     <ContentPaperWrap>
-      <TableContainer sx={ { overflowX: 'hidden', '&:hover': { overflowX: 'auto' } } }>
-        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: 'auto' } }>
+      <TableContainer sx={ { overflowX: 'auto', '&:hover': { overflowX: 'auto' } } }>
+        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: isTableFixed ? 'fixed' : 'auto' } }>
           <TableHead>
             <TableRow>
               {
-                EXPENSES_TABLE_COLUMNS.map((col, index, array) => {
+                columnIds.map((col, index, array) => {
                   return (
                     <StyledHeaderCell
                       key={ col }
@@ -105,7 +108,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
                     sx={ { opacity: isWorking ? 0.5 : 1 } }
                   >
                     {
-                      EXPENSES_TABLE_COLUMNS.map((col, index) => {
+                      columnIds.map((col, index) => {
                         return (
                           <StyledDataCell key={ `${expense.id}${index}` }
                           // style={ col === 'account' ? { ...stickyDataCellClass as any } : {} }
@@ -115,6 +118,7 @@ function ExpenseTable({ expenses }: ExpenseTableProps) {
                               columnId={ col }
                               onMenuClick={ handleCellMenuAction }
                               isDeleting={ deleteId === expense.id }
+                              index={ rindex }
                             />
                           </StyledDataCell>
                         );

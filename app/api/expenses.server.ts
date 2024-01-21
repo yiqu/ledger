@@ -151,7 +151,10 @@ export async function getExpensesByAccountId(accountId: string, page: number, fi
         accountId: accountId
       },
       include: {
-        account: true
+        account: true,
+        _count: {
+          select: { comments: true }
+        }
       },
       orderBy: {
         date: 'desc'

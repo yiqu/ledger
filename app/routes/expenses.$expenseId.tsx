@@ -10,7 +10,6 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import NoResult from "~/components/no-result/NoResult";
 import { deleteExpense, getExpenseById } from "~/api/expenses.server";
 import type { Expense } from "~/shared/models/expense.model";
-import { getAccounts } from "~/api/accounts.server";
 import { TitleNameDisplay } from "~/shared/components/Title";
 import ExpenseCommentForm from "~/components/expense/ExpenseCommentForm";
 import { getCommentsByExpenseId } from "~/api/comments.server";
@@ -124,13 +123,11 @@ export default ExpenseDetail;
 
 export async function loader({ request, params, context }: LoaderFunctionArgs) {
   invariant(params.expenseId, "Expected params.expenseId to be defined");
-  const accounts = await getAccounts();
   const expense: Expense | null = await getExpenseById(params.expenseId);
   const comments$: Promise<ExpenseComment[]> = getCommentsByExpenseId(params.expenseId);
 
   return defer({
     expense,
-    accounts,
     comments: comments$
   });
 }

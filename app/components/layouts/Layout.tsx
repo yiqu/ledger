@@ -17,7 +17,7 @@ import { useLoaderData } from "@remix-run/react";
 import { useFetcher } from "@remix-run/react";
 import type { loader } from '~/root';
 import CustomToaster from '~/shared/components/CustomToaster';
-
+import bgNoise from '../../../public/images/bg-noise2.png';
 
 function Layout({ child }: { child: React.ReactNode }) {
   const themeContext = useContext(ThemeContext);
@@ -55,7 +55,13 @@ function Layout({ child }: { child: React.ReactNode }) {
         <Box component="main" sx={ { flexGrow: 1, bgcolor: (theme) => theme.palette.mode === 'light' ? GREY[100] : null } }>
           <DrawerHeader />
 
-          <Grid container sx={ { bgcolor: (theme) => theme.palette.mode === 'light' ? GREY[100] : null } } pb={ 5 }>
+          <Grid container
+            sx={ {
+              bgcolor: (theme) => theme.palette.mode === 'light' ? GREY[100] : null,
+              backgroundImage: `url(${bgNoise})`
+            } }
+            pb={ 5 }
+          >
 
             { child }
 
