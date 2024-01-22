@@ -13,7 +13,7 @@ export const MyTypography: TypographyOptions | ((palette: Palette) => Typography
   },
   body1: {
     fontSize: '14px',
-    color: '#000000de'
+    // color: '#000000de'
   },
   body2: {
     fontSize: '16px'
