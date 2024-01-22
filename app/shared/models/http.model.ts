@@ -49,6 +49,7 @@ export interface HttpResponsePaged<T> {
   totalCount: number;
   pageSize: number;
   currentResultSetCount: number;
+  filterParam?: string;
 }
 
 export interface DeleteFetcher {

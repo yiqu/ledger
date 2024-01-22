@@ -64,7 +64,9 @@ function ExpenseTable({ expenses, isTableFixed, columnIds = EXPENSES_TABLE_COLUM
 
   if (expenses.length < 1) {
     return (
-      <NoResult />
+      <Stack direction="column" justifyContent="center" alignItems="center" height="100%">
+        <NoResult type="expense" />
+      </Stack>
     );
   }
 

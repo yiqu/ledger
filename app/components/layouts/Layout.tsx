@@ -37,7 +37,7 @@ function Layout({ child }: { child: React.ReactNode }) {
 
   return (
     <ThemeProvider theme={ theme }>
-      <Box sx={ { display: 'flex', height: '100%' } }>
+      <Box sx={ { display: 'flex', height: '100%' } } id="content">
         <CssBaseline />
 
         <TopNav open={ leftNavOpen } onNavOpen={ handleDrawerOpen } />
@@ -52,15 +52,25 @@ function Layout({ child }: { child: React.ReactNode }) {
 
         </Drawer>
 
-        <Box component="main" sx={ { flexGrow: 1, bgcolor: (theme) => theme.palette.mode === 'light' ? GREY[100] : null } }>
-          <DrawerHeader />
+        <Box
+          id="main-content"
+          component="main"
+          sx={ {
+            flexGrow: 1,
+            bgcolor: (theme) => theme.palette.mode === 'light' ? GREY[100] : null,
+            backgroundImage: `url(${bgNoise})`
+          } }
+        >
+          <DrawerHeader id="main-content-header" />
 
-          <Grid container
+          <Grid
+            container
+            id="main-content-parent-grid"
             sx={ {
               bgcolor: (theme) => theme.palette.mode === 'light' ? GREY[100] : null,
               backgroundImage: `url(${bgNoise})`
             } }
-            pb={ 5 }
+            pb={ 2 }
           >
 
             { child }

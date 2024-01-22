@@ -9,25 +9,28 @@ import IconButton from "@mui/material/IconButton";
 import type { SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 import { Form, useSearchParams } from "@remix-run/react";
+interface SearchInputProps {
+  queryValue: string;
+}
 
-
-function SearchInput({ onClearInput }: { onClearInput: () => void }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchParam: string | null = searchParams.get('q');
-  const [searchInput, setSearchInput] = useState<string>(searchParam ?? '');
+function SearchInput({ queryValue }: SearchInputProps) {
+  const [, setSearchParams] = useSearchParams();
+  const [searchInput, setSearchInput] = useState<string>(queryValue || '');
 
   useEffect(() => {
-    if ((searchParam ?? '') === '') {
-      setSearchInput('');
-    }
-  }, [searchParam]);
+    setSearchInput(queryValue || '');
+  }, [queryValue]);
 
   const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
   };
 
   const handleSearchInputClear = () => {
-    onClearInput();
+    setSearchInput('');
+    setSearchParams((params: URLSearchParams) => {
+      params.delete('q');
+      return params;
+    });
   };
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -38,7 +41,7 @@ function SearchInput({ onClearInput }: { onClearInput: () => void }) {
   return (
     <Box flexBasis="50%">
       <Stack direction="row" justifyContent="start" alignItems="center" width="100%">
-        <Form onSubmit={ handleSubmit } style={ { width: '100%' } } >
+        <Form onSubmit={ handleSubmit } style={ { width: '100%' } } role="search" >
           <FormControl variant="standard" fullWidth>
             <Input
               id="search"

@@ -1,4 +1,4 @@
-import { useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
+import { useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import type { Account } from "~/shared/models/account.model";
 import Empty from "../no-result/Empty";
 import Stack from "@mui/material/Stack";
@@ -12,9 +12,8 @@ import AccountsTable from "./AccountsTable";
 
 
 function Accounts() {
-  const nav = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data, totalCount, totalPages, pageSize, currentResultSetCount } = useRouteLoaderData("routes/accounts") as HttpResponsePaged<Account[]>;
+  const { data, totalCount, totalPages, pageSize, currentResultSetCount, filterParam } = useRouteLoaderData("routes/accounts") as HttpResponsePaged<Account[]>;
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
@@ -26,10 +25,6 @@ function Accounts() {
     });
   };
 
-  const handleOnSearchClear = () => {
-    nav('/accounts');
-  };
-
   if (totalCount < 1) {
     return (
       <Empty type='account' />
@@ -39,7 +34,7 @@ function Accounts() {
   return (
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
-        <SearchInput onClearInput={ handleOnSearchClear } />
+        <SearchInput queryValue={ filterParam || '' } />
         <Stack direction="row" justifyContent="flex-end" alignItems="center">
           <Box mr={ 2 }>
             <Typography variant="body2">

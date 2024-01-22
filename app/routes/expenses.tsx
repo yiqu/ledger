@@ -109,7 +109,8 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   });
   return json({
     ...response,
-    data: expenses
+    data: expenses,
+    filterParam
   });
 }
 

@@ -144,11 +144,27 @@ export async function getExpensesByAccountId(accountId: string, page: number, fi
       accountId: accountId
     }
   });
+  const filter = (filterString !== null) ? filterString.trim() : '';
+  const filterParsedNumber: number = parseInt(filter.replaceAll(",", ""));
+  const filterAsNumber: number | undefined = filterParsedNumber ? (filter.includes(",") ? +(filter.replaceAll(",", "")) : +filter) : undefined;
 
   try {
     const res: Expense[] = await prisma.expense.findMany({
       where: {
-        accountId: accountId
+        accountId: accountId,
+        OR: [
+          {
+            account: {
+              name: {
+                contains: filter,
+                mode: 'insensitive',
+              }
+            }
+          },
+          {
+            amount: filterAsNumber
+          }
+        ]
       },
       include: {
         account: true,
@@ -165,7 +181,20 @@ export async function getExpensesByAccountId(accountId: string, page: number, fi
 
     const currentResultSetCount: number = await prisma.expense.count({
       where: {
-        accountId: accountId
+        accountId: accountId,
+        OR: [
+          {
+            account: {
+              name: {
+                contains: filter,
+                mode: 'insensitive',
+              }
+            }
+          },
+          {
+            amount: filterAsNumber
+          }
+        ]
       }
     });
 

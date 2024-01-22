@@ -1,6 +1,6 @@
 import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@remix-run/node";
-import { Outlet, isRouteErrorResponse, useLoaderData, useNavigate, useRouteError, useSearchParams } from "@remix-run/react";
+import { Outlet, isRouteErrorResponse, useLoaderData, useRouteError, useSearchParams } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
@@ -11,7 +11,6 @@ import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
 import { handleError } from "~/api/utils/utils.server";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
 import Box from "@mui/material/Box";
-import Pagination from "@mui/material/Pagination";
 import { getParamsAsObject } from "~/shared/utils/url.utils";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { deleteAccount, getAccount } from "~/api/accounts.server";
@@ -26,6 +25,7 @@ import ReverseListItem from "~/shared/components/ReverseListItem";
 import ExpenseTable from "~/components/expense/ExpenseTable";
 import { EXPENSES_TABLE_COLUMNS } from "~/shared/utils/table";
 import SearchInput from "~/components/data/SearchInput";
+import TablePagination from "~/shared/components/TablePagination";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -45,9 +45,8 @@ export const headers: HeadersFunction = ({
 });
 
 function AccountDetail() {
-  const nav = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { account, expenses: { currentResultSetCount, data, pageSize, totalCount, totalPages } } = useLoaderData<typeof loader>();
+  const { account, expenses: { currentResultSetCount, data, pageSize, totalCount, totalPages }, filterParam } = useLoaderData<typeof loader>();
   invariant(account, "Expected account to be defined");
 
   const searchParamPage: string | null = searchParams.get('page');
@@ -58,10 +57,6 @@ function AccountDetail() {
       const currentParams = getParamsAsObject(params);
       return { ...currentParams, page: `${value - 1}` };
     });
-  };
-
-  const handleOnSearchClear = () => {
-
   };
 
   return (
@@ -98,15 +93,15 @@ function AccountDetail() {
           <Grid xs={ 12 } md={ 8 }>
 
             <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
-              <SearchInput onClearInput={ handleOnSearchClear } />
-              <Stack direction="row" justifyContent="flex-end" alignItems="center">
-                <Box mr={ 2 }>
-                  <Typography variant="body2">
-                    { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
-                  </Typography>
-                </Box>
-                <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } color="standard" shape="rounded" />
-              </Stack>
+              <SearchInput queryValue={ filterParam || '' } />
+              <TablePagination
+                currentPage={ currentPage }
+                currentResultSetCount={ currentResultSetCount }
+                data={ data }
+                handlePageUpdate={ handlePageUpdate }
+                pageSize={ pageSize }
+                totalPages={ totalPages }
+              />
             </Stack>
 
             <ExpenseTable expenses={ data } isTableFixed={ true } columnIds={ EXPENSES_TABLE_COLUMNS.filter((c) => c !== 'account') } />
@@ -129,7 +124,6 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const pageParam = url.searchParams.get('page') as string | null;
   const filterParam: string | null = url.searchParams.get('q');
   const page: number = pageParam ? (parseInt(pageParam) ? (parseInt(pageParam) < 0 ? 0 : parseInt(pageParam)) : 0) : 0;
-
   const account = await getAccount(params.accountId);
   const expenses: HttpResponsePaged<Expense[]> = await getExpensesByAccountId(params.accountId, page, filterParam);
 
@@ -139,7 +133,8 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
       dateAddedFromNow: convertDateDisplay(account?.dateAdded, 'longAndNow'),
       updatedAtFromNow: convertDateDisplay(account?.updatedAt, 'longAndNow')
     },
-    expenses
+    expenses,
+    filterParam
   };
   return json(result);
 }

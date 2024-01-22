@@ -57,7 +57,9 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
 
   if (accounts.length < 1) {
     return (
-      <NoResult />
+      <Stack direction="column" justifyContent="center" alignItems="center" height="100%">
+        <NoResult type="account" />
+      </Stack>
     );
   }
 

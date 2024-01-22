@@ -6,14 +6,13 @@ import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import SearchInput from "../data/SearchInput";
 import ExpenseTable from "./ExpenseTable";
-import { useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
+import { useRouteLoaderData, useSearchParams } from "@remix-run/react";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { getParamsAsObject } from "~/shared/utils/url.utils";
 
 function Expenses() {
-  const nav = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data, totalCount, totalPages, pageSize, currentResultSetCount } = useRouteLoaderData("routes/expenses") as HttpResponsePaged<Expense[]>;
+  const { data, totalCount, totalPages, pageSize, currentResultSetCount, filterParam } = useRouteLoaderData("routes/expenses") as HttpResponsePaged<Expense[]>;
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
@@ -23,9 +22,6 @@ function Expenses() {
       const currentParams = getParamsAsObject(params);
       return { ...currentParams, page: `${value - 1}` };
     });
-  };
-  const handleOnSearchClear = () => {
-    nav('/expenses');
   };
 
   if (totalCount < 1) {
@@ -37,7 +33,7 @@ function Expenses() {
   return (
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
-        <SearchInput onClearInput={ handleOnSearchClear } />
+        <SearchInput queryValue={ filterParam || '' } />
         <Stack direction="row" justifyContent="flex-end" alignItems="center">
           <Box mr={ 2 }>
             <Typography variant="body2">

@@ -39,7 +39,9 @@ function ExpenseDetail() {
 
   if (!expense) {
     return (
-      <NoResult />
+      <Stack direction="column" justifyContent="center" alignItems="center" height="100%">
+        <NoResult type="expense" />
+      </Stack>
     );
   }
 
