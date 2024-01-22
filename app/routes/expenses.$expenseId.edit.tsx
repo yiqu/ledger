@@ -97,7 +97,7 @@ function ExpenseEdit() {
             <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={ 1 }>
               <ButtonReset type="reset" onClick={ handleOnReset } disabled={ isApiLoading } />
               <ButtonSubmit type="submit" disabled={ isApiLoading }>
-                { isActionSubmission ? "Submitting..." : "Submit" }
+                { isApiLoading ? "Submitting..." : "Submit" }
               </ButtonSubmit>
             </Stack>
           </Stack>

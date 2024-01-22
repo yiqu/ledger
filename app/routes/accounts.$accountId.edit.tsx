@@ -41,6 +41,7 @@ function AccountDetailEdit() {
     mode: "onChange"
   });
   const { isActionSubmission, isActionRedirect } = useNavigationType();
+  const isApiLoading = isActionSubmission || isActionRedirect;
   const redirectUrl: string = searchParams.get('redirectUrl') || '../';
 
   const handleClearField = useCallback((name: any) => {
@@ -60,7 +61,7 @@ function AccountDetailEdit() {
   return (
     <DialogLayout open={ true } onClose={ handleClose } title={ `Edit: ${startCase(account.name)}` } maxWidth="xs">
       <Box width="100%">
-        { (isActionSubmission || isActionRedirect) && <LinearProgress color={ isActionRedirect ? 'success' : 'warning' } /> }
+        { (isApiLoading) && <LinearProgress color={ isActionRedirect ? 'success' : 'warning' } /> }
       </Box>
       <Form method="PATCH">
         <DialogContent>
@@ -81,9 +82,9 @@ function AccountDetailEdit() {
               <ButtonClose onClick={ handleClose } />
             </Stack>
             <Stack direction="row" justifyContent="end" alignItems="center" spacing={ 2 }>
-              <ButtonReset type="reset" onClick={ handleOnReset } disabled={ isActionSubmission } />
-              <ButtonSubmit type="submit" disabled={ !formState.isValid || isActionSubmission }>
-                { isActionSubmission ? "Submitting..." : "Submit" }
+              <ButtonReset type="reset" onClick={ handleOnReset } disabled={ isApiLoading } />
+              <ButtonSubmit type="submit" disabled={ !formState.isValid || isApiLoading }>
+                { isApiLoading ? "Submitting..." : "Submit" }
               </ButtonSubmit>
             </Stack>
           </Stack>
