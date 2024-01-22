@@ -24,6 +24,7 @@ import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
 import Divider from "@mui/material/Divider";
 import { expenseCommentFormFetcherId } from "~/shared/constants/fetcher-ids";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getAccounts } from "~/api/accounts.server";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -125,11 +126,13 @@ export default ExpenseDetail;
 
 export async function loader({ request, params, context }: LoaderFunctionArgs) {
   invariant(params.expenseId, "Expected params.expenseId to be defined");
+  const accounts = await getAccounts();
   const expense: Expense | null = await getExpenseById(params.expenseId);
   const comments$: Promise<ExpenseComment[]> = getCommentsByExpenseId(params.expenseId);
 
   return defer({
     expense,
+    accounts,
     comments: comments$
   });
 }
