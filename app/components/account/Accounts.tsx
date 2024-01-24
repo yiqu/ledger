@@ -9,6 +9,8 @@ import SearchInput from "../data/SearchInput";
 import { getParamsAsObject } from "~/shared/utils/url.utils";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import AccountsTable from "./AccountsTable";
+import { ITEMS_PER_PAGE } from "~/shared/utils/constants";
+import Divider from "@mui/material/Divider";
 
 
 function Accounts() {
@@ -35,12 +37,19 @@ function Accounts() {
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
         <SearchInput queryValue={ filterParam || '' } />
-        <Stack direction="row" justifyContent="flex-end" alignItems="center">
-          <Box mr={ 2 }>
+        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={ 1 }>
+          <Box>
+            <Typography variant="body2">
+              { `Items/Page: ${ITEMS_PER_PAGE}` }
+            </Typography>
+          </Box>
+          <Divider flexItem orientation="vertical" />
+          <Box>
             <Typography variant="body2">
               { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
             </Typography>
           </Box>
+          <Divider flexItem orientation="vertical" />
           <Pagination count={ totalPages } showFirstButton showLastButton size="small" page={ currentPage + 1 } onChange={ handlePageUpdate } color="standard" shape="rounded" />
         </Stack>
       </Stack>

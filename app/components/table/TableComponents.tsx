@@ -46,7 +46,7 @@ interface TableCellDisplayProps {
   columnId: typeof EXPENSES_TABLE_COLUMNS[number];
   onMenuClick: (actionId: 'editExpense' | 'deleteExpense', expense: Expense) => void;
   isDeleting: boolean;
-  index?: number;
+  index: number;
 }
 
 function TableCellDisplay({ expense, columnId, onMenuClick, isDeleting, index }: TableCellDisplayProps) {
@@ -99,11 +99,11 @@ function TableCellDisplay({ expense, columnId, onMenuClick, isDeleting, index }:
     case 'actions': {
       return (
         <Stack direction="row" justifyContent="start" alignItems="center">
-          <IconButton edge="end" aria-label="edit" size="small" onClick={ handleTitleCellMenuAction('editExpense') } title={ `Edit #${index ?? 'N/A'}` }
+          <IconButton edge="end" aria-label="edit" size="small" onClick={ handleTitleCellMenuAction('editExpense') } title={ `Edit #${index + 1}` }
             disabled={ isDeleting }>
             <EditIcon fontSize='small' />
           </IconButton>
-          <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('deleteExpense') } title={ `Delete #${index ?? 'N/A'}` }
+          <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('deleteExpense') } title={ `Delete #${index + 1}` }
             disabled={ isDeleting } >
             <DeleteIcon fontSize='small' />
           </IconButton>

@@ -110,6 +110,7 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
                               onMenuClick={ handleCellMenuAction }
                               isDeleting={ deleteId === account.id }
                               isNewlyCreated={ newlyAddedAccountId === account.id }
+                              itemIndex={ rindex }
                             />
                           </StyledDataCell>
                         );

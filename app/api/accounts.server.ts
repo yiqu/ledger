@@ -2,7 +2,7 @@ import { prisma } from "./database.server";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
 import { getDataSettingsByUserId } from "./settings.server";
-import { USER_ID } from "~/shared/utils/constants";
+import { ITEMS_PER_PAGE, USER_ID } from "~/shared/utils/constants";
 import type {
   Account, AccountAddable, AccountUpdateable, AccountWithPreCalculateExpenses,
   DashboardChartData
@@ -49,7 +49,7 @@ export async function getAccounts() {
 }
 
 export async function getAccountsPaged(page: number, filterString: string | null) {
-  const pageSize = 25;
+  const pageSize = ITEMS_PER_PAGE;
   const offset = page * pageSize;
   const totalCount: number = await prisma.account.count();
   const filter = (filterString !== null) ? filterString.trim() : '';

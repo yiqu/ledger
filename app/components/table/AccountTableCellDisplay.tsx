@@ -15,9 +15,10 @@ interface TableCellDisplayProps {
   onMenuClick: (actionId: 'edit' | 'delete', payload: Account) => void;
   isDeleting: boolean;
   isNewlyCreated: boolean;
+  itemIndex: number;
 }
 
-function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCreated }: TableCellDisplayProps) {
+function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCreated, itemIndex }: TableCellDisplayProps) {
   const handleTitleCellMenuAction = (actionId: 'edit' | 'delete') => () => {
     onMenuClick(actionId, data);
   };
@@ -67,7 +68,7 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCrea
             disabled={ isDeleting }>
             <EditIcon fontSize='small' />
           </IconButton>
-          <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('delete') } title="Delete"
+          <IconButton edge="end" aria-label="delete" size="small" onClick={ handleTitleCellMenuAction('delete') } title={ `Delete #${itemIndex + 1}` }
             disabled={ isDeleting } >
             <DeleteIcon fontSize='small' />
           </IconButton>

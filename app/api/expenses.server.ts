@@ -5,7 +5,7 @@ import format from "date-fns/format";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import parseInt from "lodash/parseInt";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
-import { TIME_STAMP_FORMAT } from "~/shared/utils/constants";
+import { ITEMS_PER_PAGE, TIME_STAMP_FORMAT } from "~/shared/utils/constants";
 import { convertDateDisplay } from "./utils/date.server";
 
 /**
@@ -14,7 +14,7 @@ import { convertDateDisplay } from "./utils/date.server";
  * @returns 
  */
 export async function getExpensesPaged(page: number, filterString: string | null) {
-  const pageSize = 25;
+  const pageSize = ITEMS_PER_PAGE;
   const offset = page * pageSize;
   const totalCount: number = await prisma.expense.count();
   const filter = (filterString !== null) ? filterString.trim() : '';
@@ -137,7 +137,7 @@ export async function addExpense(expense: ExpenseAddable) {
 }
 
 export async function getExpensesByAccountId(accountId: string, page: number, filterString: string | null) {
-  const pageSize = 25;
+  const pageSize = ITEMS_PER_PAGE;
   const offset = page * pageSize;
   const totalCount: number = await prisma.expense.count({
     where: {

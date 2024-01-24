@@ -14,6 +14,7 @@ export const PAGE_LIMIT_30 = 30;
 export const PAGE_LIMIT_20 = 20;
 export const PAGE_LIMIT_50 = 50;
 export const PAGE_COUNT = 1;
+export const ITEMS_PER_PAGE = 50;
 
 export const TIME_STAMP_FORMAT = 'M-d-yy h:mm bbb';
 
