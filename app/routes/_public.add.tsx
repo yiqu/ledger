@@ -169,7 +169,7 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
     const accountName = body.get('name') as string;
     const accountShown = body.get('shown') as string;
     try {
-      await isValidStringCount(accountName, 5);
+      await isValidStringCount(accountName, 2);
     } catch (err: any) {
       return handleError({ message: err.message, error: true });
     }
