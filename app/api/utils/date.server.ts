@@ -1,10 +1,10 @@
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
 import formatInTimeZone from 'date-fns-tz/formatInTimeZone';
+import {
+  EST_TIME_ZONE, FULL_DATE_FORMAT_STRING, FULL_DATE_TOOLTIP_FORMAT_STRING,
+  SHORT_DATE_FORMAT_STRING
+} from "./utils.server";
 
-const EST_TIME_ZONE = 'America/New_York';
-const fullDateFormatString = 'MM/dd/yy h:mm aa';
-const fullDateTooltipFormatString = 'MM/dd/yyyy h:mm aa O';
-const shortDateFormatString = 'MM/dd/yy';
 
 export const convertDateDisplay = (date: string | Date | number | null | undefined,
   displayType?: 'full' | 'short' | 'fromNow' | 'shortAndNow' | 'longAndNow' | 'fromNowUnlessFarBack') => {
@@ -16,8 +16,8 @@ export const convertDateDisplay = (date: string | Date | number | null | undefin
     };
   }
 
-  const fullDate = formatInTimeZone(new Date(date), EST_TIME_ZONE, fullDateFormatString); //'Europe/Paris', 'yyyy-MM-dd HH:mm:ss zzz'
-  const shortDate = formatInTimeZone(new Date(date), EST_TIME_ZONE, shortDateFormatString);
+  const fullDate = formatInTimeZone(new Date(date), EST_TIME_ZONE, FULL_DATE_FORMAT_STRING);
+  const shortDate = formatInTimeZone(new Date(date), EST_TIME_ZONE, SHORT_DATE_FORMAT_STRING);
   const fromNow = formatDistanceToNowStrict(new Date(date), { addSuffix: true });
   const shortAndNow = `${shortDate} (${fromNow})`;
   const longAndNow = `${fullDate} (${fromNow})`;
@@ -50,7 +50,7 @@ export const convertDateDisplay = (date: string | Date | number | null | undefin
 
   return {
     display: result,
-    tooltip: `${formatInTimeZone(new Date(date), EST_TIME_ZONE, fullDateTooltipFormatString)} (${fromNow})`
+    tooltip: `${formatInTimeZone(new Date(date), EST_TIME_ZONE, FULL_DATE_TOOLTIP_FORMAT_STRING)} (${fromNow})`
   };
 
 };

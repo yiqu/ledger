@@ -1,11 +1,9 @@
 import { prisma } from "./database.server";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
-import format from "date-fns/format";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import parseInt from "lodash/parseInt";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
-import { ITEMS_PER_PAGE, TIME_STAMP_FORMAT } from "~/shared/utils/constants";
+import { ITEMS_PER_PAGE } from "~/shared/utils/constants";
 import { convertDateDisplay } from "./utils/date.server";
 
 /**
@@ -251,18 +249,9 @@ export async function getExpenseById(expenseId: string) {
     if (res) {
       const expense: Expense = {
         ...res,
-        dateFromNow: {
-          display: `${format(res.date, TIME_STAMP_FORMAT)} (${formatDistanceToNow(res.date, { addSuffix: true })})`,
-          tooltip: `${new Date(res.date).toLocaleString()}`
-        },
-        dateAddedFromNow: {
-          display: `${format(res.addedAtEpoch, TIME_STAMP_FORMAT)} (${formatDistanceToNow(res.addedAtEpoch, { addSuffix: true })})`,
-          tooltip: `${new Date(res.addedAtEpoch).toLocaleString()}`
-        },
-        updatedAtFromNow: {
-          display: `${format(res.updatedAtEpoch, TIME_STAMP_FORMAT)} (${formatDistanceToNow(res.updatedAtEpoch, { addSuffix: true })})`,
-          tooltip: `${new Date(res.updatedAtEpoch).toLocaleString()}`
-        },
+        dateFromNow: convertDateDisplay(res.date, 'longAndNow'),
+        dateAddedFromNow: convertDateDisplay(res.date, 'longAndNow'),
+        updatedAtFromNow: convertDateDisplay(res.date, 'longAndNow'),
       };
       return expense;
     }

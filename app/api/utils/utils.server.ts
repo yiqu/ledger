@@ -75,3 +75,8 @@ export function getEpochFromSimpleDate(simpleDate: string | null | number): numb
 export function runDelayTimer(time: number = 5000) {
   return new Promise(resolve => setTimeout(resolve, time));
 }
+
+export const EST_TIME_ZONE = 'America/New_York';
+export const FULL_DATE_FORMAT_STRING = 'MM/dd/yy h:mm aa';
+export const FULL_DATE_TOOLTIP_FORMAT_STRING = 'MM/dd/yyyy h:mm aa O';
+export const SHORT_DATE_FORMAT_STRING = 'MM/dd/yy';
