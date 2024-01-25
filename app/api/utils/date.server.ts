@@ -11,12 +11,12 @@ export const convertDateDisplay = (date: string | Date | number | null | undefin
     };
   }
 
-  const fullDate = format(new Date(date), 'MM/dd/yy h:mm bbb');
+  const fullDate = format(new Date(date), 'MM/dd/yy h:mm aaa O');
   const shortDate = format(new Date(date), 'MM/dd/yy');
   const fromNow = formatDistanceToNowStrict(new Date(date), { addSuffix: true });
   const shortAndNow = `${shortDate} (${fromNow})`;
   const longAndNow = `${fullDate} (${fromNow})`;
-  const fromNowUnlessFarBack = (Date.now() - (new Date(date).getTime()) > (7 * 24 * 60 * 60 * 1000) ? fullDate : fromNow);
+  const fromNowUnlessFarBack = (Date.now() - (new Date(date).getTime()) > (1 * 24 * 60 * 60 * 1000) ? fullDate : fromNow);
 
   let result = fullDate;
   switch (displayType) {
@@ -45,7 +45,7 @@ export const convertDateDisplay = (date: string | Date | number | null | undefin
 
   return {
     display: result,
-    tooltip: `${format(new Date(date), 'MM/dd/yyyy h:mm aa')} (${fromNow})`
+    tooltip: `${format(new Date(date), 'MM/dd/yyyy h:mm aa O')} (${fromNow})`
   };
 
 };
