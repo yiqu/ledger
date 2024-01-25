@@ -1,5 +1,10 @@
 import formatDistanceToNowStrict from "date-fns/formatDistanceToNowStrict";
-import format from "date-fns/format";
+import formatInTimeZone from 'date-fns-tz/formatInTimeZone';
+
+const EST_TIME_ZONE = 'America/New_York';
+const fullDateFormatString = 'MM/dd/yy h:mm aa';
+const fullDateTooltipFormatString = 'MM/dd/yyyy h:mm aa O';
+const shortDateFormatString = 'MM/dd/yy';
 
 export const convertDateDisplay = (date: string | Date | number | null | undefined,
   displayType?: 'full' | 'short' | 'fromNow' | 'shortAndNow' | 'longAndNow' | 'fromNowUnlessFarBack') => {
@@ -11,8 +16,8 @@ export const convertDateDisplay = (date: string | Date | number | null | undefin
     };
   }
 
-  const fullDate = format(new Date(date), 'MM/dd/yy h:mm aaa O');
-  const shortDate = format(new Date(date), 'MM/dd/yy');
+  const fullDate = formatInTimeZone(new Date(date), EST_TIME_ZONE, fullDateFormatString); //'Europe/Paris', 'yyyy-MM-dd HH:mm:ss zzz'
+  const shortDate = formatInTimeZone(new Date(date), EST_TIME_ZONE, shortDateFormatString);
   const fromNow = formatDistanceToNowStrict(new Date(date), { addSuffix: true });
   const shortAndNow = `${shortDate} (${fromNow})`;
   const longAndNow = `${fullDate} (${fromNow})`;
@@ -45,7 +50,7 @@ export const convertDateDisplay = (date: string | Date | number | null | undefin
 
   return {
     display: result,
-    tooltip: `${format(new Date(date), 'MM/dd/yyyy h:mm aa O')} (${fromNow})`
+    tooltip: `${formatInTimeZone(new Date(date), EST_TIME_ZONE, fullDateTooltipFormatString)} (${fromNow})`
   };
 
 };
