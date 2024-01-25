@@ -250,8 +250,8 @@ export async function getExpenseById(expenseId: string) {
       const expense: Expense = {
         ...res,
         dateFromNow: convertDateDisplay(res.date, 'longAndNow'),
-        dateAddedFromNow: convertDateDisplay(res.date, 'longAndNow'),
-        updatedAtFromNow: convertDateDisplay(res.date, 'longAndNow'),
+        dateAddedFromNow: convertDateDisplay(res.dateAdded, 'longAndNow'),
+        updatedAtFromNow: convertDateDisplay(res.updatedAt, 'longAndNow'),
       };
       return expense;
     }

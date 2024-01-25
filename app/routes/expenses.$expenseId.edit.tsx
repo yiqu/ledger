@@ -2,9 +2,10 @@ import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import DialogActions from "@mui/material/DialogActions";
 import DialogLayout from "~/shared/dialog/DialogLayout";
-import { Form, useActionData, useNavigate, useRouteLoaderData, useSearchParams } from "@remix-run/react";
+import { Form, useActionData, useNavigate, useParams, useRouteLoaderData, useSearchParams, useSubmit } from "@remix-run/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import type { BaseSyntheticEvent } from "react";
 import { useCallback } from "react";
 import invariant from "tiny-invariant";
 import type { ActionFunctionArgs } from "@remix-run/node";
@@ -27,6 +28,8 @@ import ButtonReset from "~/shared/components/ResetButton";
 import ButtonSubmit from "~/shared/components/SubmitButton";
 
 function ExpenseEdit() {
+  const { expenseId } = useParams();
+  const submit = useSubmit();
   const expenseData = useRouteLoaderData<ExpenseAndAccounts>('routes/expenses.$expenseId')?.expense as Expense | null;
   const accountData = useRouteLoaderData<ExpenseAndAccounts>('routes/expenses.$expenseId')?.accounts as Account[] | null;
   invariant(expenseData, "Expected expense to be defined");
@@ -39,9 +42,9 @@ function ExpenseEdit() {
   const actionData: any | undefined = useActionData<typeof action>();
   const hasActionError = actionData && !!actionData.error;
   const isApiLoading = isActionSubmission || isActionRedirect;
-
   const navigate = useNavigate();
-  const { control, reset, setValue } = useForm<ExpenseAddable>({
+
+  const { control, reset, setValue, handleSubmit } = useForm<ExpenseAddable>({
     defaultValues: {
       amount: expenseData.amount,
       account: accountFromId,
@@ -67,12 +70,28 @@ function ExpenseEdit() {
     reset();
   };
 
+  const handleEditSubmit = (payload: any, event?: BaseSyntheticEvent) => {
+    if (expenseId) {
+      let dataToSave: ExpenseEditable = {
+        id: expenseId,
+        amount: payload.amount,
+        accountId: payload.accountId,
+        date: new Date(payload.dateStringForInput).getTime(), // date need to be set here to reflect local browser time zone
+        updatedAtEpoch: Date.now(),
+      };
+
+      submit(dataToSave as any, {
+        method: 'PATCH',
+      });
+    }
+  };
+
   return (
     <DialogLayout open={ true } onClose={ handleClose } title={ `Edit Expense` } maxWidth="xs">
       <Box width="100%">
         { isApiLoading && <LinearProgress color={ isActionRedirect ? 'success' : 'warning' } /> }
       </Box>
-      <Form method="PATCH">
+      <Form onSubmit={ handleSubmit(handleEditSubmit) }>
         <DialogContent>
           <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 2 } width="100%">
             { hasActionError && <Alert severity="error" sx={ { width: '100%' } }>{ actionData.message }</Alert> }
@@ -111,7 +130,7 @@ export default ExpenseEdit;
 
 export async function action({ request, context, params }: ActionFunctionArgs) {
   const body = await request.formData();
-  const expenseId = params.expenseId;
+  const expenseId = body.get('id') as string;
   const url = new URL(request.url);
   const redirectUrl = url.searchParams.get('redirectUrl') as string;
   invariant(expenseId, "Expected expenseId in params to be defined");
@@ -120,9 +139,9 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
   const expense: ExpenseEditable = {
     id: expenseId,
     accountId: body.get('accountId') as string,
-    date: new Date(body.get('dateStringForInput') as string).getTime(),
+    date: +(body.get('date') as string),
     amount: amount,
-    updatedAtEpoch: Date.now(),
+    updatedAtEpoch: +(body.get('updatedAtEpoch') as string),
   };
 
   try {
