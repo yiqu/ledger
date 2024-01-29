@@ -116,6 +116,27 @@ function AccountNavBar({ accountId, onClickAction }: AccountNavBarProps) {
     );
   }
 
+  if (routePath === 'categories') {
+    return (
+      <Grid container xs={ 12 }>
+        <Grid xs={ 4 }>
+          <Stack direction="row" justifyContent="start" alignItems="center" width="100%" spacing={ 1 }>
+            <Button variant="text" startIcon={ <Add /> } onClick={ handleNavActionClick('addCategory') } >
+              Category
+            </Button>
+          </Stack>
+        </Grid>
+        <Grid xs={ 8 } xsOffset="auto" display="flex">
+          <Stack direction="row" justifyContent="end" alignItems="center" width="100%" spacing={ 2 } data-tooltip-id="fetch-information">
+            <Button variant="text" startIcon={ <SettingsIcon /> } onClick={ handleNavActionClick('settings') }>
+              Settings
+            </Button>
+          </Stack>
+        </Grid>
+      </Grid>
+    );
+  }
+
   return (
     <Grid container xs={ 12 }>
       <Grid xs={ 4 }>

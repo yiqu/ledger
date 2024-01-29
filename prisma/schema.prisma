@@ -11,16 +11,19 @@ datasource db {
 }
 
 model Account {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String    @unique
-  expenses       Expense[]
-  shown          Boolean   @default(true)
-  dateAdded      DateTime  @default(now())
-  updatedAt      DateTime? @updatedAt
-  dateAddedEpoch Int
-  updatedAtEpoch Int
-  User           User?     @relation(fields: [userId], references: [id])
-  userId         String?   @db.ObjectId
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  name            String            @unique
+  expenses        Expense[]
+  shown           Boolean           @default(true)
+  dateAdded       DateTime          @default(now())
+  updatedAt       DateTime?         @updatedAt
+  dateAddedEpoch  Int
+  updatedAtEpoch  Int
+  User            User?             @relation(fields: [userId], references: [id])
+  userId          String?           @db.ObjectId
+  category        Category?         @relation(fields: [categoryId], references: [id])
+  categoryId      String?           @db.ObjectId
+  AccountComments AccountComments[]
 }
 
 model Expense {
@@ -34,6 +37,17 @@ model Expense {
   account        Account           @relation(fields: [accountId], references: [id])
   accountId      String            @db.ObjectId
   comments       ExpenseComments[]
+}
+
+model Category {
+  id        String             @id @default(auto()) @map("_id") @db.ObjectId
+  name      String             @unique
+  shown     Boolean            @default(true)
+  disabled  Boolean            @default(false)
+  dateAdded DateTime           @default(now())
+  updatedAt DateTime?          @updatedAt
+  accounts  Account[]
+  comments  CategoryComments[]
 }
 
 model DataSettings {
@@ -69,6 +83,24 @@ model ExpenseComments {
   updatedAt DateTime? @updatedAt
   expense   Expense   @relation(fields: [expenseId], references: [id])
   expenseId String    @db.ObjectId
+}
+
+model CategoryComments {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  comment    String
+  dateAdded  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId String    @db.ObjectId
+}
+
+model AccountComments {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  comment   String
+  dateAdded DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  account   Account   @relation(fields: [accountId], references: [id])
+  accountId String    @db.ObjectId
 }
 
 enum DashboardChartType {

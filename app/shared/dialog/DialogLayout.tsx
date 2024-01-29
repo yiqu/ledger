@@ -43,6 +43,7 @@ function DialogLayout({ id, open, title, maxWidth = "lg", onClose, children }: D
       </DialogTitle>
 
       { children }
+
     </Dialog>
   );
 }

@@ -4,6 +4,10 @@ export const accountSchema = object({
   name: string().trim().required('Field is required.').min(2, 'Value has to be at least 2 characters.'),
 });
 
+export const categorySchema = object({
+  name: string().trim().required('Field is required.').min(1, 'Value has to be at least 1 characters.'),
+});
+
 export const expenseSchema = object({
   amount: number().required('Field is required.').min(0, 'Value has to be at least 2 characters.'),
   date: number().required('Field is required.'),

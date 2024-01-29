@@ -29,6 +29,7 @@ import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import Paper from "@mui/material/Paper";
 import { getFirstAndLastExpenseDatesByShownAccounts } from "~/api/expenses.server";
 import DashboardChartYearSelect from "~/components/chart/DashboardChartYearSelect";
+import { useCallback } from "react";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -55,19 +56,19 @@ export default function Index() {
   const { accountsData, chartData, isChartShown, shownAccountAndColorData, chartType, total }: DashboardExpensesData =
     useLoaderData<typeof loader>();
 
-  const handleAddNewExpense = () => {
+  const handleAddNewExpense = useCallback(() => {
     const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/?${searchParams.toString()}`, actionUrl: '/data' });
     navigate(url);
-  };
+  }, [navigate, searchParams]);
 
-  const handleActionClick = (actionId: string) => {
+  const handleActionClick = useCallback((actionId: string) => {
     switch (actionId) {
       case 'newExpense': {
         handleAddNewExpense();
         break;
       }
     }
-  };
+  }, [handleAddNewExpense]);
 
   return (
     <Stack direction="column" width="100%">

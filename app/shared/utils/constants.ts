@@ -5,6 +5,7 @@ export const TransformPageTitle: { [key: string]: string } = {
   '': 'Dashboard',
   'expenses': 'Expenses',
   'accounts': 'Accounts',
+  'categories': 'Categories',
   'about': 'About',
   'settings': 'Settings'
 };

@@ -9,7 +9,7 @@ import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBullet
 
 import InfoIconOutlined from '@mui/icons-material/InfoOutlined';
 import InfoIcon from '@mui/icons-material/Info';
-
+import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsIconOutlined from '@mui/icons-material/SettingsOutlined';
 
@@ -20,6 +20,7 @@ export const GET_LEFT_NAV_ITEMS = () => {
     new NavigationItem('Dashboard', 'dashboard', ['/'], <DashboardOutlinedIcon color='primary' />),
     new NavigationItem('Expenses', 'expenses', ['/', 'expenses'], <FormatListBulletedOutlinedIcon color='primary' />),
     new NavigationItem('Accounts', 'accounts', ['/', 'accounts'], <AccountBalanceIconOutlined color='primary' />),
+    new NavigationItem('Categories', 'categories', ['/', 'categories'], <CategoryOutlinedIcon color='primary' />),
     new NavigationItem('Settings', 'settings', ['/', 'settings'], <SettingsIconOutlined color='primary' />),
     new NavigationItem('About', 'about', ['/', 'about'], <InfoIconOutlined color='primary' />),
   ];

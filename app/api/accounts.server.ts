@@ -26,7 +26,6 @@ export async function addAccount(item: AccountAddable) {
     }
     throw new Error(`Account name ${item.name} could not be added. Code: ${error.code}`);
   }
-
 }
 
 export async function getAccounts() {

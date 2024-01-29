@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import noresultlogo from '../../../public/images/emptybox.png';
 import { Link, useLocation } from "@remix-run/react";
 
-function Empty({ type }: { type: 'account' | 'expense' }) {
+function Empty({ type }: { type: 'account' | 'expense' | 'categorie' }) {
 
   const { pathname, search } = useLocation();
 
