@@ -3,7 +3,8 @@
   "private": false,
   "sideEffects": false,
   "scripts": {
-    "build": "npx prisma generate && remix build",
+    "build": "npx prisma generate && npx prisma db push && remix build",
+    "build-old": "npx prisma generate && remix build",
     "dev2": "remix dev",
     "dev": "remix dev --manual",
     "start": "remix dev --manual",
