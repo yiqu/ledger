@@ -11,7 +11,8 @@
     "typecheck": "tsc",
     "lint": "eslint --fix app",
     "push-prisma": "npx prisma db push",
-    "update-prisma": "npx prisma generate"
+    "update-prisma": "npx prisma generate",
+    "vercel-build": "npx prisma generate && npx prisma db push && remix build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
