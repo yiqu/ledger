@@ -2,13 +2,14 @@ import { ITEMS_PER_PAGE } from "~/shared/utils/constants";
 import { prisma } from "./database.server";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { Prisma } from "@prisma/client";
-import type { CategoryAddable } from "~/shared/models/category.model";
+import type { CategoryAddable, CategoryEditable } from "~/shared/models/category.model";
 
 export async function addCategory(item: CategoryAddable) {
   try {
     const res = await prisma.category.create({
       data: {
-        ...item,
+        name: item.name,
+        shown: (item.shown !== undefined && item.shown !== null) ? Boolean(item.shown) : true,
       },
     });
     return res;
@@ -21,6 +22,44 @@ export async function addCategory(item: CategoryAddable) {
   }
 }
 
+export async function editCategory(item: CategoryEditable) {
+  const toEdit = {
+    name: item.name,
+    shown: (item.shown !== undefined && item.shown !== null) ? Boolean(item.shown) : true,
+  };
+
+  try {
+    const res = await prisma.category.update({
+      where: {
+        id: item.id
+      },
+      data: {
+        ...toEdit
+      },
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at EditCategory(): ', JSON.stringify(error));
+    if (error.code === 'P2002') {
+      throw new Error(`Category name '${item.name}' already exists.`);
+    }
+    throw new Error(`Category name ${item.name} could not be edited. Code: ${error.code}`);
+  }
+}
+
+export async function deleteCategory(id: string) {
+  try {
+    const res = await prisma.category.delete({
+      where: {
+        id: id
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at deleteCategory(): ', JSON.stringify(error));
+    throw new Error(`Category could not be deleted. Code: ${error.code}`);
+  }
+}
 
 export async function getCategoriesPaged(page: number, filterString: string | null) {
   const pageSize = ITEMS_PER_PAGE;

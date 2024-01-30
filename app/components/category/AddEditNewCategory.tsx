@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import HFTextField from "~/shared/hook-forms/TextField";
 import { useFetcherType } from "~/shared/hooks/useFetcherType";
 import type { CategoryAddable, CategoryEditable } from "~/shared/models/category.model";
+import HFSwitch from "~/shared/hook-forms/Switch";
 
 interface AddNewCategoryProps {
   open?: boolean;
@@ -29,9 +30,20 @@ function AddEditCategoryDialog({ open, initData, isEditMode, onClose }: AddNewCa
   const actionSuccess: boolean = !!(isFetcherDone && addFetcher.data && addFetcher.data.ok);
   const isApiLoading = isFetcherActionSubmission || isFetcherActionReload;
 
+  let initValues: CategoryAddable = {
+    name: initData?.name || '',
+    shown: initData?.shown
+  };
+
+  if (isEditMode) {
+    initValues = {
+      ...initData as CategoryEditable
+    } as CategoryEditable;
+  }
+
   const { control, reset, setValue, getValues } = useForm<CategoryAddable>({
     defaultValues: {
-      name: initData?.name || '',
+      ...initValues
     },
   });
 
@@ -60,12 +72,24 @@ function AddEditCategoryDialog({ open, initData, isEditMode, onClose }: AddNewCa
       <Box width="100%">
         { (isFetcherActionSubmission) && <LinearProgress color={ 'warning' } /> }
       </Box>
-      <addFetcher.Form method="post" >
+      <addFetcher.Form method="post" action={ isEditMode ? `/categories/edit` : `/categories/add` } >
         <DialogContent>
           <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 2 } width="100%">
             { hasActionError && <Alert severity="error" sx={ { width: '100%' } }>{ addFetcher.data?.message }</Alert> }
             <HFTextField name="name" label="Category name" control={ control } variant="standard" type="text" helperText="" fullWidth autoFocus
               clearField={ onClearField } />
+
+            <HFSwitch name="shown" label="Show on Dashboard" control={ control } />
+
+            {/* This is hidden, only used for to submit to the server */ }
+            <HFTextField
+              type="hidden"
+              name="id"
+              control={ control }
+              label={ "Id" }
+              sx={ { display: 'none', mt: '0px' } }
+            />
+
           </Stack>
         </DialogContent>
         <DialogActions sx={ { width: '100%' } }>

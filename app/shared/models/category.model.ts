@@ -31,14 +31,14 @@ export interface CategoryComment {
 
 export interface CategoryAddable extends AddEditResponse {
   name: string;
-  shown?: boolean;
+  shown?: boolean | null;
 }
 
 export interface CategoryEditable extends AddEditResponse {
   id: string;
   name: string;
-  disabled?: boolean;
-  shown?: boolean;
+  disabled?: boolean | null;
+  shown?: boolean | null;
 }
 
 export interface CategoryDialogData {

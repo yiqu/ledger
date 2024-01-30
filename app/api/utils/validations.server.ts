@@ -1,5 +1,5 @@
 import { date, string, object, number } from 'yup';
-import type { CategoryAddable } from '~/shared/models/category.model';
+import type { CategoryAddable, CategoryEditable } from '~/shared/models/category.model';
 import type { ExpenseAddable, ExpenseEditable } from '~/shared/models/expense.model';
 
 export async function isValidDate(dateString: string) {
@@ -22,7 +22,7 @@ export async function validateExpenseToAdd(expense: ExpenseAddable | ExpenseEdit
   return await schema.validate(expense);
 }
 
-export async function validateCategoryToAdd(expense: CategoryAddable) {
+export async function validateCategoryToAdd(expense: CategoryAddable | CategoryEditable) {
   const schema = object().shape({
     name: string().required("Name is required.").min(2, `Name has to be at least 2 characters long.`),
   });

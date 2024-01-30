@@ -19,7 +19,7 @@ function CategoryList() {
   const { data, totalCount, totalPages, pageSize, currentResultSetCount, filterParam } = useRouteLoaderData("routes/categories") as HttpResponsePaged<Category[]>;
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
-  console.log(data)
+
   const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
     // Get current params in the URL and keep them
     setSearchParams((params: URLSearchParams) => {
@@ -60,7 +60,7 @@ function CategoryList() {
           {
             data.map((category: Category) => {
               return (
-                <Grid key={ category.id } xs={ 12 } md={ 12 } lg={ 12 } xl={ 6 }>
+                <Grid key={ category.id } xs={ 12 } md={ 12 } lg={ 6 } xl={ 6 }>
                   <CategoryDisplay category={ category } />
                 </Grid>
               );

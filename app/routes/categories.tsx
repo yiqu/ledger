@@ -2,20 +2,18 @@ import { json } from "@remix-run/node";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
-import { Outlet, useLocation, useNavigate, useParams, useSearchParams, useSubmit } from "@remix-run/react";
+import { Outlet, useParams } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import type { ActionFunctionArgs, HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
 import AccountNavBar from "~/components/navbar/AccountNavBar";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { convertDateDisplay } from "~/api/utils/date.server";
-import { addCategory, getCategoriesPaged } from "~/api/categories.server";
+import { getCategoriesPaged } from "~/api/categories.server";
 import type { Category, CategoryAddable, CategoryDialogData } from "~/shared/models/category.model";
 import AddEditCategoryDialog from "~/components/category/AddEditNewCategory";
 import { useCallback, useState } from "react";
-import { validateCategoryToAdd } from "~/api/utils/validations.server";
-import { handleError } from "~/api/utils/utils.server";
 
 
 export const headers: HeadersFunction = ({
@@ -25,18 +23,13 @@ export const headers: HeadersFunction = ({
 });
 
 function Categories() {
-  const navigate = useNavigate();
-  const submit = useSubmit();
-  const [searchParams] = useSearchParams();
   const { isMobile } = useScreenSize();
   const { accountId } = useParams();
-  const { pathname } = useLocation();
   const [categoryData, setCategoryData] = useState<CategoryDialogData>({
     shown: false,
     editMode: false,
     initData: undefined
   });
-  const extraSearchParams = searchParams.size > 0 ? `?${searchParams.toString()}` : '';
 
   const handleAddNewCategory = () => {
     setCategoryData((curr) => {
@@ -49,7 +42,6 @@ function Categories() {
   };
 
   const handleOnAddNewClose = useCallback((currentEnteredData?: CategoryAddable) => {
-    console.log(currentEnteredData)
     if (currentEnteredData) {
       setCategoryData((curr) => {
         return {
@@ -71,22 +63,10 @@ function Categories() {
     }
   }, []);
 
-  const handleDeleteCategory = () => {
-    const proceed = confirm(`Are you sure you want to delete this item?`);
-    if (!proceed) return;
-
-  };
-
   const handleActionClick = useCallback((actionId: string) => {
     switch (actionId) {
       case 'addCategory': {
         handleAddNewCategory();
-        break;
-      }
-      case 'editCategory': {
-        break;
-      }
-      case 'deleteCategory': {
         break;
       }
     }
@@ -107,8 +87,7 @@ function Categories() {
       </Box>
 
       {
-        categoryData.shown &&
-        (
+        categoryData.shown && (
           <AddEditCategoryDialog initData={ categoryData.initData } isEditMode={ categoryData.editMode } open={ categoryData.shown } onClose={ handleOnAddNewClose } />
         )
       }
@@ -138,32 +117,6 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
     data: categories,
     filterParam
   });
-}
-
-
-export async function action({ request, context, params }: ActionFunctionArgs) {
-  const body = await request.formData();
-
-  const category: CategoryAddable = {
-    name: body.get("name") as string
-  };
-
-  try {
-    await validateCategoryToAdd(category);
-  } catch (err: any) {
-    return handleError({ message: err.message, error: true });
-  }
-
-  try {
-    const result = await addCategory(category);
-    return json({
-      ok: true,
-      ...result
-    });
-  } catch (err: any) {
-    return handleError({ message: err.message, error: true });
-  }
-
 }
 
 export const shouldRevalidate: ShouldRevalidateFunction = (payload) => {
