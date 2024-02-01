@@ -5,34 +5,18 @@ import { MyTypography } from './typography';
 
 export const getMyTheme = (mode: PaletteMode): ThemeOptions => {
   return {
+    typography: MyTypography,
     palette: {
       mode,
       ...(
-        mode === 'light' ? 
-        {
-          // palette values for light mode
-          ...MyPaletteOptions
-        }
-        : 
-        {
-          // palette values for dark mode
-        }
+        mode === 'light' ? { ...MyPaletteOptions } : {}
       )
     },
-    typography: MyTypography,
     components: {
       ...MyComponents,
-      ...( 
-        mode === 'light' ? 
-        {
-            // palette values for light mode
-        }
-        : 
-        {
-          // palette values for dark mode
-        }
+      ...(
+        mode === 'light' ? {} : {}
       ),
     },
   };
-  
 };

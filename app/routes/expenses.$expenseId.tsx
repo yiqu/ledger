@@ -68,7 +68,7 @@ function ExpenseDetail() {
       <ContentPaperWrap>
         <Stack width="100%" direction="row" justifyContent="start" alignItems="center" spacing={ 2 }>
 
-          <Typography variant="h5" className="montserrat" fontWeight="700">
+          <Typography variant="h5" fontWeight="700">
             ${ expense.amount.toLocaleString() }
           </Typography>
           <Divider orientation="vertical" flexItem variant="fullWidth" />
@@ -76,7 +76,7 @@ function ExpenseDetail() {
             <tbody>
               <tr>
                 <td>Expense Date:</td>
-                <td style={ { fontWeight: 500 } }>{ expense.dateFromNow?.display }</td>
+                <td>{ expense.dateFromNow?.display }</td>
               </tr>
               <tr>
                 <td>Added on:</td>

@@ -8,6 +8,7 @@ import { LinkableCellDisplay } from "./TableComponents";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Chip from "@mui/material/Chip";
+import { green, grey } from "@mui/material/colors";
 
 interface TableCellDisplayProps {
   data: Account;
@@ -36,7 +37,14 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCrea
     case 'shown': {
       return (
         <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 }>
-          <Chip label={ data.shown ? 'Yes' : 'No' } size="small" color={ data.shown ? 'success' : 'error' } />
+          <Chip label={ data.shown ? 'Shown' : 'Hidden' }
+            size="small"
+            sx={ {
+              border: '1px solid',
+              backgroundColor: data.shown ? green[200] : grey[300],
+              borderColor: data.shown ? green[400] : grey[500],
+            } }
+          />
         </Stack>
       );
     }

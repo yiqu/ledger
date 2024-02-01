@@ -50,7 +50,7 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
                 <MenuIcon />
               </IconButton>
               <Link to={ `/${location.pathname.split("/")[1]}` }>
-                <Typography variant="h5" noWrap sx={ { fontWeight: 400, fontFamily: 'Poppins', color: "#fff" } }>
+                <Typography variant="h5" noWrap sx={ { color: "#fff" } }>
                   { startCase(TransformPageTitle[`${title}`]) }
                 </Typography>
               </Link>

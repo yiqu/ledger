@@ -24,7 +24,7 @@ function ExpenseCommentDisplay({ comment }: { comment: ExpenseComment }) {
           <Moment fromNow date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
           <Moment format="(MM/DD/yyyy h:mm a)" date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
         </Stack>
-        <Typography fontSize="14px" fontWeight={ 400 }>
+        <Typography variant="body1">
           { comment.comment }
         </Typography>
       </Stack>

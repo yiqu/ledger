@@ -6,7 +6,7 @@ function OtherErrorDisplay({ error }: { error: any }) {
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" width="100%" spacing={ 3 }>
       <Alert severity="error">
-        <Typography variant="h5" fontFamily="Poppins">
+        <Typography variant="h5" >
           Oops! Something went wrong!
         </Typography>
       </Alert>

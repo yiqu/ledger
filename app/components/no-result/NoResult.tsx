@@ -31,7 +31,7 @@ function NoResult({ type }: NoResultProps) {
     <Stack direction="column" justifyContent="start" alignItems="center" width="100%" spacing={ 3 }>
       <Typography component="img" src={ searchParam ? noresultquerylogo : noresultlogo } sx={ { height: '5rem' } } alt="logo"></Typography>
 
-      <Typography variant="h4" fontFamily="Poppins">
+      <Typography variant="h4" >
         { notFoundText }
       </Typography>
     </Stack>

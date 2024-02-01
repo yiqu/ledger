@@ -10,7 +10,7 @@ function ActionLoaderErrorDisplay({ error, backToUrl = "/" }: { error: ErrorResp
   return (
     <Stack direction="column" justifyContent="center" alignItems="center" width="100%" spacing={ 3 } mt={ 3 }>
       <Alert severity="error">
-        <Typography variant="h5" fontFamily="Poppins">
+        <Typography variant="h5" >
           Status: { error.status } - { error.statusText }
         </Typography>
       </Alert>

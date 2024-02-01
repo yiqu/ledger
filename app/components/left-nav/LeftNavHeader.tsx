@@ -27,8 +27,8 @@ function LeftNavHeader({ closeDrawerHandler }: LeftNavHeaderProps) {
       <Link to={ "/" } style={ { color: '#000' } }>
         <Stack direction="row" sx={ { ...flexCenter } }>
           <img src={ notesLogo } style={ { height: '2rem', marginRight: '10px' } } alt="logo" className={ showProgress ? 'fade-in-out-animate' : '' } />
-          <Typography variant='h6' fontFamily="Poppins"
-            sx={ { color: (theme) => theme.palette.mode === 'light' ? 'primary.main' : 'white' } }>{ leftNavTitle }</Typography>
+          <Typography variant='h5'
+            sx={ { color: (theme) => theme.palette.mode === 'light' ? 'text.primary' : 'white' } }>{ leftNavTitle }</Typography>
         </Stack>
       </Link>
 

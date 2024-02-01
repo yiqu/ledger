@@ -40,13 +40,13 @@ function CategoryList() {
         <SearchInput queryValue={ filterParam || '' } />
         <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={ 1 }>
           <Box>
-            <Typography variant="body2">
+            <Typography variant="subtitle1">
               { `Items/Page: ${ITEMS_PER_PAGE}` }
             </Typography>
           </Box>
           <Divider flexItem orientation="vertical" />
           <Box>
-            <Typography variant="body2">
+            <Typography variant="subtitle1">
               { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
             </Typography>
           </Box>

@@ -20,12 +20,12 @@ function ExpenseDisplay({ expense }: { expense: IExpenseDisplay }) {
           } }
         </ClientOnly>
 
-        <Typography fontFamily="Montserrat" title={ `${expense.amount}` } letterSpacing="0.5px" component="div">
+        <Typography title={ `${expense.amount}` } letterSpacing="0.5px" component="div">
           <Link to={ `/expenses/${expense.id}` }>
             <Currency integer={ expense.amountOfInteger } decimal={ expense.amountOfDecimal } extraStyles={ { fontWeight: 400, fontSize: ('17px') } } />
           </Link>
         </Typography>
-        <Typography fontFamily="Montserrat" fontWeight="300" letterSpacing="0.5px" title={ `${expense.gainAmount}` }
+        <Typography fontWeight="300" letterSpacing="0.5px" title={ `${expense.gainAmount}` }
           component="div" display="flex" color={ grey[600] }>
           { expense.gainAmount > 0 ? '+' : (expense.gainAmount === 0 ? '' : '-') }${ expense.gainAmount === 0 ? '0'
             :

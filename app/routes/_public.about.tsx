@@ -44,7 +44,7 @@ function About() {
             <Box p={ 3 } borderRadius="20px" width="100%">
 
               <Stack direction="row" justifyContent="start" alignItems="center" mb={ 2 }>
-                <Typography variant="h5" fontFamily="Poppins" mr={ 2 }>
+                <Typography variant="h5" mr={ 2 }>
                   What is Ledger?
                 </Typography>
                 <Typography component="img" src={ dollarLogo } sx={ { height: '2rem', mr: '10px' } } alt="logo"></Typography>
@@ -53,7 +53,7 @@ function About() {
               </Stack>
 
 
-              <Typography variant="body1" fontFamily="Poppins" mb={ 2 }>
+              <Typography variant="body1" mb={ 2 }>
                 Ledger is a simple web app that helps you to keep track of your expenses.
               </Typography>
 
@@ -64,12 +64,12 @@ function About() {
                 <Icon fontSize="small">
                   <AccountBalanceIconOutlined color='primary' fontSize="small" />
                 </Icon>
-                <Typography variant="h5" fontFamily="Poppins" ml={ 1 }>
+                <Typography variant="h5" ml={ 1 }>
                   <Link to="/accounts">Accounts</Link>
                 </Typography>
               </Stack>
 
-              <Typography variant="body1" fontFamily="Poppins" mb={ 2 }>
+              <Typography variant="body1" mb={ 2 }>
                 Accounts holds the expenses of the user. Users can add their accounts to the ledger.
               </Typography>
             </Box>
@@ -79,12 +79,12 @@ function About() {
                 <Icon fontSize="small">
                   <FormatListBulletedOutlinedIcon color='primary' fontSize="medium" />
                 </Icon>
-                <Typography variant="h5" fontFamily="Poppins" ml={ 1 }>
+                <Typography variant="h5" ml={ 1 }>
                   <Link to="/data">Expenses</Link>
                 </Typography>
               </Stack>
 
-              <Typography variant="body1" fontFamily="Poppins" mb={ 2 }>
+              <Typography variant="body1" mb={ 2 }>
                 Expenses are account's balances at a date of time. Users can add their expenses to a ledger. This will help them to keep track of their expenses.
               </Typography>
             </Box>
@@ -94,12 +94,12 @@ function About() {
                 <Icon fontSize="small">
                   <DashboardOutlinedIcon color='primary' fontSize="small" />
                 </Icon>
-                <Typography variant="h5" fontFamily="Poppins" ml={ 1 }>
+                <Typography variant="h5" ml={ 1 }>
                   <Link to="/">Analysis</Link>
                 </Typography>
               </Stack>
 
-              <Typography variant="body1" fontFamily="Poppins" mb={ 2 }>
+              <Typography variant="body1" mb={ 2 }>
                 Dashboard will show the analysis of the user's expenses.
               </Typography>
             </Box>

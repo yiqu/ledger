@@ -7,12 +7,12 @@ function Currency({ integer, decimal, extraStyles }: { integer: number, decimal:
   return (
     <Stack direction="row" justifyContent="start" alignItems="center">
       <Box>
-        <Typography fontFamily="Montserrat" letterSpacing="0.5px" component="div" className="integer" { ...extraStyles }>
+        <Typography letterSpacing="0.5px" component="div" className="integer" { ...extraStyles }>
           { integer.toLocaleString() }
         </Typography>
       </Box>
       <Box>
-        <Typography fontFamily="Montserrat" className="decimal" letterSpacing="0px" component="div" { ...extraStyles }>
+        <Typography className="decimal" letterSpacing="0px" component="div" { ...extraStyles }>
           { decimal }
         </Typography>
       </Box>

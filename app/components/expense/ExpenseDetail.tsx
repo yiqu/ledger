@@ -22,10 +22,9 @@ function ExpenseDetail({ expense }: { expense: Expense }) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={ <Typography variant="h5" fontWeight={ 500 } className="montserrat">${ expense.amount.toLocaleString() }</Typography> }
+        title={ <Typography variant="h5" fontWeight={ 500 }>${ expense.amount.toLocaleString() }</Typography> }
         subheader={ expense.account.name }
         titleTypographyProps={ {
-          className: 'montserrat',
           variant: 'h5'
         } }
       />

@@ -12,11 +12,11 @@ function Empty({ type }: { type: 'account' | 'expense' | 'categorie' }) {
 
       <Typography component="img" src={ noresultlogo } sx={ { height: '5rem' } } alt="logo"></Typography>
 
-      <Typography variant="h4" fontFamily="Poppins">
+      <Typography variant="h4" >
         No { type }s found.
       </Typography>
 
-      <Typography variant="body1" fontFamily="Poppins">
+      <Typography variant="body1" >
         <Link to={ `/add?type=${type}&redirectUrl=${pathname}${search}` }>
           Add a new { type } to get started.
         </Link>

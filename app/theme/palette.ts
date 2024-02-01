@@ -1,8 +1,19 @@
 import type { PaletteOptions } from "@mui/material/styles";
 
-export const MyPaletteOptions: PaletteOptions  = {
+/**
+ * Usage.
+ * 
+ * Any MUI components' sx={{color : xx}}
+ * xx can be stated as primary.main, text.primary, etc
+ */
+export const MyPaletteOptions: PaletteOptions = {
   primary: {
-    main: '#092250',
+    main: '#092250', // Color primary, dark blue
+  },
+  text: {
+    primary: '#202124', // also the body default color
+    secondary: '#222',
+    disabled: '#5e5e5e'
   }
 };
 

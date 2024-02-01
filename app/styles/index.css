@@ -12,12 +12,13 @@ html {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'Google Sans', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  color: #202124;
 }
 
 #root {
@@ -31,15 +32,6 @@ code {
 
 .roboto {
   font-family: 'Roboto';
-}
-
-.poppins {
-  font-family: 'Poppins', sans-serif;
-}
-
-.montserrat {
-  font-family: 'Montserrat', sans-serif !important;
-  letter-spacing: 1px;
 }
 
 /* .list-parent .active {
@@ -87,4 +79,46 @@ code {
 
 fieldset {
   border: 0 none;
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/g-sans/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  font-weight: 400;
+  font-style: italic;
+  src: url('/assets/fonts/g-sans/GoogleSans-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  font-weight: 500;
+  font-style: italic;
+  src: url('/assets/fonts/g-sans/GoogleSans-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/assets/fonts/g-sans/GoogleSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  font-weight: 700;
+  font-style: italic;
+  src: url('/assets/fonts/g-sans/GoogleSans-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Google Sans';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/assets/fonts/g-sans/GoogleSans-Bold.ttf') format('truetype');
 }

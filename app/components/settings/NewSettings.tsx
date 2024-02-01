@@ -10,7 +10,7 @@ function NewSettings() {
 
   return (
     <Stack direction="column" justifyContent="start" alignItems="center" spacing={ 2 } width="100%">
-      <Typography variant="h5" fontFamily="Poppins">
+      <Typography variant="h5" >
         No settings found, create default settings?
       </Typography>
       <Form method="POST">
@@ -18,7 +18,7 @@ function NewSettings() {
           Create Default Settings
         </Button>
       </Form>
-      
+
     </Stack>
   );
 }

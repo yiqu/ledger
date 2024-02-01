@@ -48,7 +48,7 @@ function SettingsData({ addAnotherAfterSubmit, account, accountList }: { addAnot
   return (
     <Box p={ 3 } borderRadius="20px" width="100%" bgcolor="background.paper">
       <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 1 }>
-        <Typography variant="h5" fontFamily="Poppins">
+        <Typography variant="h5" >
           Data Settings
         </Typography>
         <Typography variant="body1">Settings related to adding and updating data.</Typography>

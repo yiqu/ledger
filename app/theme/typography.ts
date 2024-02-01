@@ -2,30 +2,45 @@ import type { Palette } from "@mui/material/styles";
 import type { TypographyOptions } from "@mui/material/styles/createTypography";
 
 export const MyTypography: TypographyOptions | ((palette: Palette) => TypographyOptions) | undefined = {
-  fontFamily: 'Roboto',
+  fontFamily: 'Google Sans, Roboto',
   subtitle1: {
-    fontWeight: 300
+    fontWeight: "normal",
+    fontSize: '14px',
+    color: '#5e5e5e'
   },
   subtitle2: {
-    fontWeight: 500,
-    fontSize: '12.5px',
-    textTransform: 'capitalize'
+    fontWeight: "normal",
+    fontSize: '12px',
+    color: '#5e5e5e'
   },
   body1: {
     fontSize: '14px',
-    // color: '#000000de'
+    color: '#222'
   },
   body2: {
-    fontSize: '16px'
+    fontSize: '14px',
+    color: '#222'
+  },
+  h1: {
+    color: '#1f1f1f'
+  },
+  h2: {
+    color: '#1f1f1f'
+  },
+  h3: {
+    color: '#1f1f1f'
   },
   h4: {
-    fontSize: '21px'
+    fontSize: '20px',
+    color: '#1f1f1f'
   },
   h5: {
-    fontSize: '18px'
+    fontSize: '18px',
+    color: '#1f1f1f'
   },
   h6: {
-    fontSize: '15px'
+    fontSize: '16px',
+    color: '#1f1f1f'
   }
 };
 
