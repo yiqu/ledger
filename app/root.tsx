@@ -25,16 +25,11 @@ import OtherErrorDisplay from "./components/error/OtherError";
 import { Analytics } from '@vercel/analytics/react';
 import { userPrefCookie } from "./server/user-preference.server";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
+import { gSansRegular } from "./shared/utils/link-descriptors";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [
-    {
-      rel: "preload",
-      href: "/assets/fonts/GoogleSans/GoogleSans-Regular.ttf",
-      as: "font",
-      type: "font/woff2",
-      crossOrigin: "anonymous" as any,
-    },
+    gSansRegular,
     { rel: "stylesheet", href: cssBundleHref },
     { rel: "stylesheet", href: fontStyles },
     { rel: "stylesheet", href: muiAlertStyles },
