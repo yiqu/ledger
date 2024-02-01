@@ -1,0 +1,129 @@
+/* Sans */
+@font-face {
+  font-family: 'G Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/GoogleSans/GoogleSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans';
+  font-weight: 400;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSans/GoogleSans-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans';
+  font-weight: 500;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSans/GoogleSans-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/assets/fonts/GoogleSans/GoogleSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans';
+  font-weight: 700;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSans/GoogleSans-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/assets/fonts/GoogleSans/GoogleSans-Bold.ttf') format('truetype');
+}
+
+
+/* Sans Text */
+@font-face {
+  font-family: 'G Sans Text';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/GoogleSansText/GoogleSansText-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Text';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/assets/fonts/GoogleSansText/GoogleSansText-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Text';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/assets/fonts/GoogleSansText/GoogleSansText-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Text';
+  font-weight: 400;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSansText/GoogleSansText-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Text';
+  font-weight: 500;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSansText/GoogleSansText-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Text';
+  font-weight: 700;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSansText/GoogleSansText-BoldItalic.ttf') format('truetype');
+}
+
+/* Sans Display */
+@font-face {
+  font-family: 'G Sans Display';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/assets/fonts/GoogleSansDisplay/GoogleSansDisplay-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Display';
+  font-weight: 500;
+  font-style: normal;
+  src: url('/assets/fonts/GoogleSansDisplay/GoogleSansDisplay-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Display';
+  font-weight: 700;
+  font-style: normal;
+  src: url('/assets/fonts/GoogleSansDisplay/GoogleSansDisplay-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Display';
+  font-weight: 400;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSansDisplay/GoogleSansDisplay-Italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Display';
+  font-weight: 500;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSansDisplay/GoogleSansDisplay-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'G Sans Display';
+  font-weight: 700;
+  font-style: italic;
+  src: url('/assets/fonts/GoogleSansDisplay/GoogleSansDisplay-BoldItalic.ttf') format('truetype');
+}

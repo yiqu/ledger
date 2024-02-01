@@ -17,8 +17,9 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import indexStyles from '~/styles/index.css';
+import fontStyles from '~/styles/fonts.css';
 import leftNavLogoStyles from '~/styles/left-nav-logo.css';
-import styles from "~/styles/mui-alert.css";
+import muiAlertStyles from "~/styles/mui-alert.css";
 import ActionLoaderErrorDisplay from "./components/error/ActionLoaderError";
 import OtherErrorDisplay from "./components/error/OtherError";
 import { Analytics } from '@vercel/analytics/react';
@@ -27,8 +28,16 @@ import { SpeedInsights } from "@vercel/speed-insights/remix";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [
+    {
+      rel: "preload",
+      href: "/assets/fonts/GoogleSans/GoogleSans-Regular.ttf",
+      as: "font",
+      type: "font/woff2",
+      crossOrigin: "anonymous" as any,
+    },
     { rel: "stylesheet", href: cssBundleHref },
-    { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: fontStyles },
+    { rel: "stylesheet", href: muiAlertStyles },
     { rel: "stylesheet", href: indexStyles },
     { rel: "stylesheet", href: leftNavLogoStyles }
   ] : []),

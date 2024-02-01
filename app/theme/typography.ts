@@ -2,7 +2,7 @@ import type { Palette } from "@mui/material/styles";
 import type { TypographyOptions } from "@mui/material/styles/createTypography";
 
 export const MyTypography: TypographyOptions | ((palette: Palette) => TypographyOptions) | undefined = {
-  fontFamily: 'Google Sans, Roboto',
+  fontFamily: 'G Sans, Roboto',
   subtitle1: {
     fontWeight: "normal",
     fontSize: '14px',
