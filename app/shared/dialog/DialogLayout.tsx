@@ -33,7 +33,7 @@ function DialogLayout({ id, open, title, maxWidth = "lg", onClose, children }: D
     >
       <DialogTitle sx={ { backgroundColor: 'primary.main', color: 'white', py: '10px' } }>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
-          <Typography variant="h5">
+          <Typography variant="h5" color="white">
             { title }
           </Typography>
           <IconButton aria-label="delete" sx={ { color: 'white' } } onClick={ handleClose }>

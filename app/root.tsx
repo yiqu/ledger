@@ -25,11 +25,13 @@ import OtherErrorDisplay from "./components/error/OtherError";
 import { Analytics } from '@vercel/analytics/react';
 import { userPrefCookie } from "./server/user-preference.server";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
-import { gSansRegular } from "./shared/utils/link-descriptors";
+import { gSansRegular, gSansTextRegular, gSansDisplayRegular } from "./shared/utils/link-descriptors";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [
     gSansRegular,
+    gSansTextRegular,
+    gSansDisplayRegular,
     { rel: "stylesheet", href: cssBundleHref },
     { rel: "stylesheet", href: fontStyles },
     { rel: "stylesheet", href: muiAlertStyles },

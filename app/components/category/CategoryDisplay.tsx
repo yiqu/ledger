@@ -14,6 +14,7 @@ import { useState } from 'react';
 import AddEditCategoryDialog from './AddEditNewCategory';
 import Chip from "@mui/material/Chip";
 import { green, grey } from '@mui/material/colors';
+import { ellipsisBlock } from '~/shared/utils/css.utils';
 
 
 interface CategoryDisplayProps {
@@ -81,23 +82,31 @@ function CategoryDisplay({ category }: CategoryDisplayProps) {
         <CardContent>
           <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 1 }>
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={ 1 } width="100%">
-              <Typography variant="body1" component="div" fontWeight={ 500 }>
+              <Typography variant="h6" component="div" style={ { ...ellipsisBlock } } title={ category.name }>
                 { category.name }
               </Typography>
-              <Stack>
-                <Chip
-                  label={ category.shown ? 'Shown' : 'Hidden' }
-                  size='small'
-                  sx={ {
-                    border: '1px solid',
-                    backgroundColor: category.shown ? green[200] : grey[300],
-                    borderColor: category.shown ? green[400] : grey[500],
-                  } }
-                />
-              </Stack>
             </Stack>
 
-            <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 0.5 } width="100%">
+            <Stack direction="row" justifyContent="start" alignItems="start" spacing={ 0.5 } width="100%">
+              <Chip
+                label={ category.shown ? 'Shown' : 'Hidden' }
+                size='small'
+                sx={ {
+                  border: '1px solid',
+                  backgroundColor: category.shown ? green[200] : grey[300],
+                  borderColor: category.shown ? green[400] : grey[500],
+                } }
+              />
+              <Chip
+                label={ `${category.accounts.length} accounts` }
+                size='small'
+                sx={ {
+                  border: '1px solid',
+                  backgroundColor: grey[300],
+                  borderColor: grey[500],
+                  color: 'primary.main'
+                } }
+              />
             </Stack>
           </Stack>
 

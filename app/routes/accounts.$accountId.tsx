@@ -68,7 +68,7 @@ function AccountDetail() {
           <TitleNameDisplay name={ account?.name ?? 'N/A' } />
         </Stack>
         <Stack direction="row" justifyContent="end" alignItems="center">
-          <Typography variant="h5" >
+          <Typography variant="h6" fontWeight={ 400 } >
             Total: { totalCount }
           </Typography>
         </Stack >

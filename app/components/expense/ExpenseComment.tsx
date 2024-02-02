@@ -5,6 +5,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { blueGrey, grey } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import Moment from "react-moment";
+import { GREY_TEXT } from "~/theme/typography";
 
 function ExpenseCommentDisplay({ comment }: { comment: ExpenseComment }) {
 
@@ -15,14 +16,14 @@ function ExpenseCommentDisplay({ comment }: { comment: ExpenseComment }) {
       </Avatar>
       <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 0.5 }>
         <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 0.5 }>
-          <Typography variant="body1" fontSize="12px" fontWeight={ 500 }>
+          <Typography variant="body1" fontWeight={ 500 }>
             @kq
           </Typography>
-          <Typography variant="body1" fontSize="12px">
+          <Typography variant="body1">
             &#x2022;
           </Typography>
-          <Moment fromNow date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
-          <Moment format="(MM/DD/yyyy h:mm a)" date={ comment.dateAdded } style={ { fontWeight: 500, color: grey[600], fontSize: '12px' } } />
+          <Moment fromNow date={ comment.dateAdded } style={ { color: GREY_TEXT, fontSize: '12px' } } />
+          <Moment format="(MM/DD/yyyy h:mm a)" date={ comment.dateAdded } style={ { color: GREY_TEXT, fontSize: '12px' } } />
         </Stack>
         <Typography variant="body1">
           { comment.comment }

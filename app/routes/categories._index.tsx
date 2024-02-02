@@ -35,7 +35,7 @@ function Categories() {
           <TitleNameDisplay name={ 'Categories' } />
         </Stack>
 
-        <Typography variant="h5" >
+        <Typography variant="h6" fontWeight={ 400 } >
           Total: { totalCount }
         </Typography>
       </TitleBarLayout>

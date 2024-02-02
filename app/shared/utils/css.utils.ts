@@ -39,3 +39,7 @@ export const stickyDataCellClass = {
   maxWidth: '23rem',
   backgroundColor: '#fff'
 };
+
+export const pxToRem = (px: number): string => {
+  return `${px / 16}rem`;
+}

@@ -1,4 +1,5 @@
 import type { Components, Theme } from "@mui/material/styles";
+import { GREY_TEXT } from "./typography";
 
 export const MyComponents: Components<Omit<Theme, "components">> | undefined = {
   MuiButton: {
@@ -43,7 +44,7 @@ export const MyComponents: Components<Omit<Theme, "components">> | undefined = {
   MuiFormHelperText: {
     styleOverrides: {
       root: {
-        color: '#888'
+        color: GREY_TEXT
       }
     }
   },

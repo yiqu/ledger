@@ -1,4 +1,5 @@
 import type { PaletteOptions } from "@mui/material/styles";
+import { APP_BODY_COLOR, APP_TEXT_COLOR, GREY_TEXT } from "./typography";
 
 /**
  * Usage.
@@ -8,12 +9,17 @@ import type { PaletteOptions } from "@mui/material/styles";
  */
 export const MyPaletteOptions: PaletteOptions = {
   primary: {
-    main: '#092250', // Color primary, dark blue
+    main: '#092250',  // Color primary, dark blue
+    light: '#0E357E'
+  },
+  secondary: {
+    main: '#e79d18',
+    light: '#ECB146'
   },
   text: {
-    primary: '#202124', // also the body default color
-    secondary: '#222',
-    disabled: '#5e5e5e'
+    primary: APP_TEXT_COLOR, // also the body default color
+    secondary: APP_BODY_COLOR,
+    disabled: GREY_TEXT
   }
 };
 

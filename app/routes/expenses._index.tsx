@@ -35,7 +35,7 @@ function ExpensesLanding() {
           <TitleNameDisplay name={ 'Expenses' } />
         </Stack>
 
-        <Typography variant="h5" >
+        <Typography variant="h6" fontWeight={ 400 } >
           Total: { totalCount }
         </Typography>
       </TitleBarLayout>

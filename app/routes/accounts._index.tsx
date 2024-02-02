@@ -35,7 +35,7 @@ function Accounts() {
           <TitleNameDisplay name={ 'Accounts' } />
         </Stack>
 
-        <Typography variant="h5" >
+        <Typography variant="h6" fontWeight={ 400 }>
           Total: { totalCount }
         </Typography>
       </TitleBarLayout>

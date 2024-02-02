@@ -1,6 +1,6 @@
 import TableCell from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
-import { ellipsis, ellipsisBlock } from '~/shared/utils/css.utils';
+import { ellipsis, ellipsisBlock, pxToRem } from '~/shared/utils/css.utils';
 import { GREY } from '~/theme/palette';
 import type { EXPENSES_TABLE_COLUMNS } from '~/shared/utils/table';
 import Stack from '@mui/material/Stack';
@@ -18,7 +18,7 @@ export const StyledHeaderCell = styled(TableCell)(() => ({
   ...ellipsis,
   paddingTop: '10px',
   paddingBottom: '10px',
-  fontSize: '15px',
+  fontSize: pxToRem(14),
   // borderRight: `1px solid ${GREY[400]}`,
   borderColor: GREY[400],
 }));
@@ -27,7 +27,7 @@ export const StyledDataCell = styled(TableCell)(() => ({
   ...ellipsis,
   paddingTop: '10px',
   paddingBottom: '10px',
-  fontSize: '14px',
+  fontSize: pxToRem(14),
   maxWidth: '22rem', // the max width data cells can have
 }));
 

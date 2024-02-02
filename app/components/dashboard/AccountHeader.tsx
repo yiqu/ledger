@@ -16,7 +16,7 @@ function AccountHeader({ name, total, count, accountId, totalInt, totalDecimal }
         <Typography variant="h5" sx={ { ...ellipsis } } title={ `${total}` } fontWeight={ 500 } className={ total > 0 ? 'positive' : (total === 0 ? 'no-change' : 'negative') } letterSpacing="0.5px" component="div">
           <Currency integer={ totalInt } decimal={ totalDecimal } />
         </Typography>
-        <Typography variant="body2" fontFamily="Roboto" title={ `${count} entries` } style={ { color: grey[600] } }>
+        <Typography variant="body1" fontFamily="Roboto" title={ `${count} entries` } style={ { color: grey[600] } }>
           ({ count })
         </Typography>
       </Stack>

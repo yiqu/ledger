@@ -21,7 +21,7 @@ function TablePagination({ currentPage, totalPages, pageSize, currentResultSetCo
   return (
     <Stack direction="row" justifyContent="flex-end" alignItems="center">
       <Box mr={ 2 }>
-        <Typography variant="body2">
+        <Typography variant="body1">
           { `${(currentPage * pageSize) + 1}-${(currentPage * pageSize) + data.length} of ${currentResultSetCount}` }
         </Typography>
       </Box>

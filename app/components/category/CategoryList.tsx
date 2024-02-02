@@ -60,7 +60,7 @@ function CategoryList() {
           {
             data.map((category: Category) => {
               return (
-                <Grid key={ category.id } xs={ 12 } md={ 12 } lg={ 6 } xl={ 6 }>
+                <Grid key={ category.id } xs={ 12 } md={ 12 } lg={ 4 } xl={ 4 }>
                   <CategoryDisplay category={ category } />
                 </Grid>
               );
