@@ -18,7 +18,7 @@ import { TitleNameDisplay } from "~/shared/components/Title";
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "About - Ledger" },
+    { title: "About | Ledger" },
     { name: "description", content: "What is Ledger" },
   ];
 };

@@ -68,7 +68,7 @@ function AddEditCategoryDialog({ open, initData, isEditMode, onClose }: AddNewCa
   };
 
   return (
-    <DialogLayout open={ !!open } onClose={ handleClose } title={ `${isEditMode ? 'Edit' : 'Add New'} Category${isEditMode ? `: ${initData?.name}` : ''}` } maxWidth="sm">
+    <DialogLayout open={ !!open } onClose={ handleClose } title={ `${isEditMode ? 'Edit' : 'Add New'} Category${isEditMode ? `: ${initData?.name}` : ''}` } maxWidth="xs">
       <Box width="100%">
         { (isFetcherActionSubmission) && <LinearProgress color={ 'warning' } /> }
       </Box>

@@ -33,7 +33,7 @@ export function links() {
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "Account Detail - Ledger" },
+    { title: "Account Detail | Ledger" },
     { name: "description", content: "Account detail" },
   ];
 };

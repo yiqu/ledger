@@ -28,7 +28,7 @@ import { getAccounts } from "~/api/accounts.server";
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "Expense Detail - Ledger" },
+    { title: "Expense Detail | Ledger" },
     { name: "description", content: "Expense detail" },
   ];
 };

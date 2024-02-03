@@ -9,7 +9,7 @@ import notfoundlogo from '../../public/images/no-money.png';
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "404 Not Found - Ledger" },
+    { title: "404 Not Found | Ledger" },
     { name: "description", content: "Page not found." },
   ];
 };

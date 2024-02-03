@@ -13,7 +13,7 @@ import Expenses from "~/components/expense/Expenses";
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "Expenses - Ledger" },
+    { title: "Expenses | Ledger" },
     { name: "description", content: "Summary of all expenses." },
   ];
 };

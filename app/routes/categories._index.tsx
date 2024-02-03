@@ -12,7 +12,7 @@ import CategoryList from "~/components/category/CategoryList";
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "Categories - Ledger" },
+    { title: "Categories | Ledger" },
     { name: "description", content: "Summary of all categories." },
   ];
 };

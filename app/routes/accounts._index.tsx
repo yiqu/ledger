@@ -12,7 +12,7 @@ import type { HttpResponsePaged } from "~/shared/models/http.model";
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "Accounts - Ledger" },
+    { title: "Accounts | Ledger" },
     { name: "description", content: "Summary of all accounts." },
   ];
 };

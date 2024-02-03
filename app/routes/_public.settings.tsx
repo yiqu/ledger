@@ -19,7 +19,7 @@ import { getAccounts } from "~/api/accounts.server";
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "Settings - Ledger" },
+    { title: "Settings | Ledger" },
     { name: "description", content: "App Settings" },
   ];
 };

@@ -8,7 +8,7 @@ import Stack from "@mui/material/Stack";
 import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 import Add from '@mui/icons-material/Add';
-import { useFetcher } from '@remix-run/react';
+import { Link, useFetcher } from '@remix-run/react';
 import { useFetcherType } from '~/shared/hooks/useFetcherType';
 import { useState } from 'react';
 import AddEditCategoryDialog from './AddEditNewCategory';
@@ -81,9 +81,9 @@ function CategoryDisplay({ category }: CategoryDisplayProps) {
       /> */}
         <CardContent>
           <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 1 }>
-            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={ 1 } width="100%">
+            <Stack direction="row" justifyContent="start" alignItems="center" width="100%">
               <Typography variant="h6" component="div" style={ { ...ellipsisBlock } } title={ category.name }>
-                { category.name }
+                <Link to={ `/categories/${category.id}__${category.name}` }>{ category.name }</Link>
               </Typography>
             </Stack>
 

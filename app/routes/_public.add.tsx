@@ -34,7 +34,7 @@ import ButtonReset from "~/shared/components/ResetButton";
 
 export const meta: MetaFunction = (data) => {
   return [
-    { title: "Add New Expense - Ledger" },
+    { title: "Add New Expense | Ledger" },
     { name: "description", content: "Add a new expense." },
   ];
 };

@@ -39,7 +39,7 @@ function Expenses() {
         <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={ 1 }>
           <Box>
             <Typography variant="body1">
-              { `Items/Page: ${ITEMS_PER_PAGE}` }
+              { `Items/page: ${ITEMS_PER_PAGE}` }
             </Typography>
           </Box>
           <Divider flexItem orientation="vertical" />

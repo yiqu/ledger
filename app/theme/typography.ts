@@ -84,18 +84,17 @@ export const MyTypography: TypographyOptions | ((palette: Palette) => Typography
     color: APP_HEADER_COLOR
   },
   h4: {
-    fontFamily: 'G Sans Display, Roboto',
+    fontFamily: 'G Sans, Roboto',
     fontSize: '20px',
-    fontWeight: 500,
     color: APP_HEADER_COLOR
   },
   h5: {
-    fontFamily: 'G Sans Display, Roboto',
+    fontFamily: 'G Sans, Roboto',
     fontSize: '18px',
     color: APP_HEADER_COLOR
   },
   h6: {
-    fontFamily: 'G Sans Display, Roboto',
+    fontFamily: 'G Sans, Roboto',
     fontSize: '16px',
     color: APP_HEADER_COLOR
   }

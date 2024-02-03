@@ -9,7 +9,7 @@ export async function addCategory(item: CategoryAddable) {
     const res = await prisma.category.create({
       data: {
         name: item.name,
-        shown: (item.shown !== undefined && item.shown !== null) ? Boolean(item.shown) : true,
+        shown: Boolean(item.shown)
       },
     });
     return res;
@@ -58,6 +58,28 @@ export async function deleteCategory(id: string) {
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
     console.log('Server error at deleteCategory(): ', JSON.stringify(error));
     throw new Error(`Category could not be deleted. Code: ${error.code}`);
+  }
+}
+
+export async function getCategoryById(id: string) {
+  try {
+    const res = await prisma.category.findUnique({
+      where: {
+        id: id
+      },
+      include: {
+        accounts: {
+          orderBy: {
+            name: 'asc'
+          }
+        },
+        comments: true
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getCategoryById(): ', JSON.stringify(error));
+    throw new Error(`Category could not be retrieved. Code: ${error.code}`);
   }
 }
 
