@@ -7,6 +7,15 @@ export interface AddEditResponse {
   error?: boolean;
 }
 
+export interface CategoryOriginal {
+  id: string;
+  name: string;
+  shown: boolean;
+  disabled: boolean;
+  dateAdded: Date | string;
+  updatedAt: string | null | Date;
+}
+
 export interface Category {
   id: string;
   name: string;

@@ -45,7 +45,7 @@ function HFTextField({ name, label, control, clearField, ...props }: FieldProps)
               } } />
             <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ { ml: 0 } } >
               {
-                <Typography variant="caption" color={ red } component="span"> { error ? error.message : props.helperText } </Typography>
+                <Typography variant="body0" color={ red } component="span"> { error ? error.message : props.helperText } </Typography>
               }
             </FormHelperText>
           </FormControl>

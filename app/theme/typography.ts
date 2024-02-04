@@ -8,11 +8,17 @@ export const GREY_TEXT = "#5e5e5e";
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {
+    italic0: React.CSSProperties;
+    italic1: React.CSSProperties;
+    italic2: React.CSSProperties;
     body0: React.CSSProperties;
     subtitle0: React.CSSProperties;
   }
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
+    italic0?: React.CSSProperties;
+    italic1?: React.CSSProperties;
+    italic2?: React.CSSProperties;
     body0?: React.CSSProperties;
     subtitle0?: React.CSSProperties;
   }
@@ -20,6 +26,9 @@ declare module '@mui/material/styles' {
 // Update the Typography's variant prop options
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
+    italic0: true;
+    italic1: true;
+    italic2: true;
     body0: true;
     subtitle0: false;
   }
@@ -34,7 +43,6 @@ export const MyTypography: TypographyOptions | ((palette: Palette) => Typography
     fontSize: '10px',
     color: GREY_TEXT
   },
-
   subtitle1: {
     fontWeight: "normal",
     fontSize: '12px',
@@ -46,18 +54,33 @@ export const MyTypography: TypographyOptions | ((palette: Palette) => Typography
     color: GREY_TEXT
   },
 
-  body0: {
+  italic0: {
+    fontFamily: 'G Sans Text',
     fontSize: '12px',
+    fontStyle: 'italic',
+    color: APP_TEXT_COLOR
+  },
+  italic1: {
+    fontFamily: 'G Sans Text',
+    fontSize: '14px',
+    fontStyle: 'italic',
+    color: APP_TEXT_COLOR
+  },
+  italic2: {
+    fontFamily: 'G Sans Text',
+    fontSize: '16px',
+    fontStyle: 'italic',
     color: APP_TEXT_COLOR
   },
 
+  body0: {
+    fontSize: '12px',
+  },
   body1: {
     fontSize: '14px',
-    color: APP_TEXT_COLOR
   },
   body2: {
     fontSize: '16px',
-    color: APP_TEXT_COLOR
   },
 
   caption: {

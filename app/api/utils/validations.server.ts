@@ -7,7 +7,7 @@ export async function isValidDate(dateString: string) {
   return await schema.isValid(new Date(dateString));
 }
 
-export async function isValidStringCount(text: string, count: number = 1) {
+export async function isValidStringCount(text: string | null, count: number = 1) {
   const schema = string().required("This field is required.").min(count, `This field must be at least ${count} character long.`);
   return await schema.validate(text);
 }

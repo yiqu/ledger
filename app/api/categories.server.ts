@@ -138,3 +138,31 @@ export async function getCategoriesPaged(page: number, filterString: string | nu
     throw new Error(`Categories could not be retrieved. Code: ${error.code}`);
   }
 }
+
+export async function getCategoriesAll() {
+  try {
+    const res = await prisma.category.findMany({
+      orderBy: {
+        name: 'asc'
+      },
+      include: {
+        accounts: {
+          orderBy: {
+            name: 'asc'
+          }
+        },
+        comments: true
+      }
+    });
+    return {
+      data: res,
+      totalPages: 0,
+      totalCount: res.length,
+      currentResultSetCount: res.length,
+      pageSize: 0
+    };
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getCategories(): ', JSON.stringify(error));
+    throw new Error(`Categories could not be retrieved. Code: ${error.code}`);
+  }
+}

@@ -10,7 +10,7 @@ import AccountNavBar from "~/components/navbar/AccountNavBar";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { convertDateDisplay } from "~/api/utils/date.server";
-import { getCategoriesPaged } from "~/api/categories.server";
+import { getCategoriesAll, getCategoriesPaged } from "~/api/categories.server";
 import type { Category, CategoryAddable, CategoryDialogData } from "~/shared/models/category.model";
 import AddEditCategoryDialog from "~/components/category/AddEditNewCategory";
 import { useCallback, useState } from "react";
@@ -99,11 +99,12 @@ export default Categories;
 
 export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const url = new URL(request.url);
+  const isGetAll: boolean = Boolean(url.searchParams.get('getAll') as string | null);
   const pageParam = url.searchParams.get('page') as string | null;
   const filterParam: string | null = url.searchParams.get('q');
   const page: number = pageParam ? (parseInt(pageParam) ? (parseInt(pageParam) < 0 ? 0 : parseInt(pageParam)) : 0) : 0;
 
-  const response: HttpResponsePaged<Category[]> = await getCategoriesPaged(page, filterParam);
+  const response: HttpResponsePaged<Category[]> = isGetAll ? await getCategoriesAll() : await getCategoriesPaged(page, filterParam);
   const categories = response.data.map((category: Category) => {
     return {
       ...category,

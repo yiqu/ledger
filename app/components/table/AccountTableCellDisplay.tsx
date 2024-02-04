@@ -9,6 +9,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Chip from "@mui/material/Chip";
 import { green, grey } from "@mui/material/colors";
+import Typography from "@mui/material/Typography";
+import { ellipsis } from "~/shared/utils/css.utils";
 
 interface TableCellDisplayProps {
   data: Account;
@@ -27,7 +29,7 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCrea
   switch (columnId) {
     case 'name': {
       return (
-        <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 }>
+        <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 } style={ { ...ellipsis } }>
           <LinkableCellDisplay url={ `/accounts/${data.id}` } display={ data.name } />
           { isNewlyCreated && (<Chip label="New" size="small" color="info" />) }
           { isDeleting && (<CircularProgress size={ 12 } />) }
@@ -35,38 +37,59 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCrea
       );
     }
     case 'shown': {
+      if (data.category) {
+        return (
+          <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 }>
+            <Chip label={ data.category.shown ? 'Shown' : 'Hidden' }
+              size="small"
+              sx={ {
+                border: '1px solid',
+                backgroundColor: data.category.shown ? green[200] : grey[300],
+                borderColor: data.category.shown ? green[400] : grey[500],
+              } }
+            />
+          </Stack>
+        );
+      }
       return (
-        <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 }>
-          <Chip label={ data.shown ? 'Shown' : 'Hidden' }
-            size="small"
-            sx={ {
-              border: '1px solid',
-              backgroundColor: data.shown ? green[200] : grey[300],
-              borderColor: data.shown ? green[400] : grey[500],
-            } }
-          />
-        </Stack>
+        <Typography title="There is no category associated with this account" variant="italic1">
+          N/A
+        </Typography>
       );
     }
     case 'dateAdded': {
       return (
-        <span title={ data.dateAddedFromNow?.tooltip }>
+        <span title={ data.dateAddedFromNow?.tooltip } style={ { ...ellipsis } }>
           { data.dateAddedFromNow?.display }
         </span>
       );
     }
     case 'updatedAt': {
       return (
-        <span title={ data.updatedAtEpoch ? data.updatedAtFromNow?.tooltip : 'N/A' }>
+        <span title={ data.updatedAtEpoch ? data.updatedAtFromNow?.tooltip : 'N/A' } style={ { ...ellipsis } }>
           { data.updatedAtEpoch ? data.updatedAtFromNow?.display : 'N/A' }
         </span>
       );
     }
     case 'expensesCount': {
       return (
-        <span title={ `${data._count?.expenses}` }>
+        <span title={ `${data._count?.expenses}` } style={ { ...ellipsis } }>
           { `${data._count?.expenses ?? 'N/A'}` }
         </span>
+      );
+    }
+    case 'category': {
+      if (data.category) {
+        return (
+          <Typography title={ `${data.category.name}` } style={ { ...ellipsis } }>
+            { data.category.name }
+          </Typography>
+        );
+      }
+      return (
+        <Typography title="There is no category associated with this account" variant="italic1">
+          N/A
+        </Typography>
       );
     }
     case 'actions': {

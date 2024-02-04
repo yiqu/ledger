@@ -167,7 +167,6 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
 
   if (entityType === 'account') {
     const accountName = body.get('name') as string;
-    const accountShown = body.get('shown') as string;
     try {
       await isValidStringCount(accountName, 2);
     } catch (err: any) {
@@ -177,7 +176,6 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
     try {
       const result = await addAccount({
         name: accountName,
-        shown: accountShown === 'true',
         dateAddedEpoch: Date.now(),
         updatedAtEpoch: 0
       });

@@ -13,9 +13,10 @@ export async function addAccount(item: AccountAddable) {
   try {
     const res = await prisma.account.create({
       data: {
-        ...item,
+        name: item.name,
         dateAddedEpoch: Date.now(),
-        updatedAtEpoch: 0
+        updatedAtEpoch: 0,
+        category: item.categoryId ? { connect: { id: item.categoryId } } : undefined,
       },
     });
     return res;
@@ -72,7 +73,8 @@ export async function getAccountsPaged(page: number, filterString: string | null
       include: {
         _count: {
           select: { expenses: true }
-        }
+        },
+        category: true
       }
     });
 
@@ -86,7 +88,6 @@ export async function getAccountsPaged(page: number, filterString: string | null
     });
 
     const totalPages: number = Math.ceil(currentResultSetCount / pageSize);
-
     return {
       data: res,
       totalPages: totalPages,
@@ -105,6 +106,9 @@ export async function getAccount(accountId: string) {
     const res = await prisma.account.findUnique({
       where: {
         id: accountId
+      },
+      include: {
+        category: true
       }
     });
     return res;
@@ -121,9 +125,9 @@ export async function updateAccount(accountId: string, item: AccountUpdateable) 
         id: accountId
       },
       data: {
-        name: item.name || undefined,
-        shown: item.shown,
-        updatedAtEpoch: Date.now()
+        name: item.name,
+        updatedAtEpoch: Date.now(),
+        category: item.categoryId ? { connect: { id: item.categoryId } } : undefined
       },
     });
     return res;

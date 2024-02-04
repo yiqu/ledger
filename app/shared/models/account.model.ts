@@ -1,17 +1,18 @@
+import type { CategoryOriginal } from "./category.model";
 import type { Expense, ExpenseDisplay, ExpenseWithoutAccount } from "./expense.model";
 import type { DateDisplayFormat } from "./general.model";
 import type { DashboardChartType } from "@prisma/client";
 
 export interface AccountAddable {
   name: string;
-  shown?: boolean;
+  categoryId?: string | null;
   dateAddedEpoch: number;
-  updatedAtEpoch: number
+  updatedAtEpoch: number;
 }
 
 export interface AccountUpdateable {
-  name: string | null;
-  shown?: boolean;
+  name: string;
+  categoryId?: string | null;
 }
 
 export interface Account extends AccountAddable {
@@ -23,6 +24,8 @@ export interface Account extends AccountAddable {
   };
   dateAddedFromNow?: DateDisplayFormat;
   updatedAtFromNow?: DateDisplayFormat;
+  category?: CategoryOriginal | null;
+  categoryId?: string | null;
 }
 
 export interface AccountWithPreCalculateExpenses {

@@ -83,7 +83,8 @@ function AccountDetail() {
                   <ReverseListItem primaryText={ "Account Name" } secondaryText={ account.name } />
                   <ReverseListItem primaryText={ "Created" } secondaryText={ `${account.dateAddedFromNow.display}` } />
                   <ReverseListItem primaryText={ "Last Edited" } secondaryText={ account.updatedAtFromNow.display } />
-                  <ReverseListItem primaryText={ "Shown On Dashboard" } secondaryText={ account.shown ? 'Yes' : 'No' } />
+                  <ReverseListItem primaryText={ "Category" } secondaryText={ account.category?.name ?? 'N/A' } />
+                  <ReverseListItem primaryText={ "Shown On Dashboard" } secondaryText={ account.category?.shown ? 'Yes' : 'No' } />
                   <ReverseListItem primaryText={ "ID" } secondaryText={ `${account.id}` } />
                 </List>
               </Stack>

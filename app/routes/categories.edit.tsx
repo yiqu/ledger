@@ -7,7 +7,6 @@ import { handleError } from "~/api/utils/utils.server";
 
 export async function action({ request, context, params }: ActionFunctionArgs) {
   const body = await request.formData();
-  console.log(body.get("id"), body.get("name"), body.get("shown"));
 
   const category: CategoryEditable = {
     id: body.get("id") as string,

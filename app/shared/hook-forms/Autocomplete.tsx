@@ -16,7 +16,6 @@ export interface HFAutocompleteProps {
 export type FieldProps = HFAutocompleteProps & any;
 
 function HFAutocompleteField({ name, label, control, options, helperText, propertyIdToSelect, ...autoCompleteProps }: FieldProps) {
-
   return (
     <Controller
       name={ name }
@@ -35,7 +34,7 @@ function HFAutocompleteField({ name, label, control, options, helperText, proper
             onChange={ (e, data: any) => field.onChange(propertyIdToSelect ? data[propertyIdToSelect] : data) }
             { ...autoCompleteProps }
           />
-          <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ {ml: 0} } >
+          <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ { ml: 0 } } >
             {
               <Typography variant="caption" component="span"> { error ? error.message : helperText } </Typography>
             }

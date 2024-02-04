@@ -9,7 +9,6 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
   invariant(categoryId, "Expected account id in body to be defined");
 
   if (request.method === 'DELETE') {
-    console.log('categoryId', categoryId);
     try {
       await deleteCategory(categoryId);
     } catch (err: any) {
