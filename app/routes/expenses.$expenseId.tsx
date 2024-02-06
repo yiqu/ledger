@@ -3,7 +3,6 @@ import { json, type ActionFunctionArgs, type MetaFunction, redirect } from "@rem
 import { Link, Outlet, useFetchers, useLoaderData } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
-import Typography from "@mui/material/Typography";
 import { handleError } from "~/api/utils/utils.server";
 import TitleBarLayout from "~/components/title/TitleBarLayout";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -21,10 +20,14 @@ import ExpenseCommentsSkeleton from "~/components/expense/ExpenseCommentsSkeleto
 import { ClientOnly } from "remix-utils/client-only";
 import ExpenseComments from "~/components/expense/ExpenseComments";
 import ContentPaperWrap from "~/shared/layouts/ContentPaperWrap";
-import Divider from "@mui/material/Divider";
 import { expenseCommentFormFetcherId } from "~/shared/constants/fetcher-ids";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getAccounts } from "~/api/accounts.server";
+import Box from "@mui/material/Box";
+import Grid from '@mui/material/Unstable_Grid2';
+import List from "@mui/material/List";
+import ReverseListItem from "~/shared/components/ReverseListItem";
+import AccountBalanceIconOutlined from '@mui/icons-material/AccountBalanceOutlined';
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -65,7 +68,59 @@ function ExpenseDetail() {
         </Stack >
       </TitleBarLayout>
 
-      <ContentPaperWrap>
+      <Box sx={ { flexGrow: 1, width: '100%' } }>
+        <Grid container columnSpacing={ 2 }>
+          <Grid xs={ 12 } md={ 4 }>
+            <ContentPaperWrap>
+              <Stack direction="column" justifyContent="start" alignItems="start">
+                <List sx={ { width: '100%' } }>
+                  <ReverseListItem primaryText={ "Amount" } secondaryText={ expense.amount.toLocaleString() } />
+                  <ReverseListItem primaryText={ "Date of expense" } secondaryText={ expense.dateFromNow?.display } />
+                  <ReverseListItem primaryText={ "Date added" } secondaryText={ expense.dateAddedFromNow?.display } />
+                  <ReverseListItem primaryText={ "Date updated" } secondaryText={ expense.updatedAtEpoch ? expense.updatedAtFromNow?.display : 'N/A' } />
+                  <ReverseListItem primaryText={ "Account" }
+                    secondaryText={
+                      <Link to={ `/accounts/${expense.account.id}__${expense.account.name}` }>
+                        <Stack direction="row" component="span" justifyContent="start" alignItems="center">
+                          <AccountBalanceIconOutlined color='primary' fontSize="small" sx={ { mr: 0.5 } } />
+                          { expense.account.name }
+                        </Stack>
+                      </Link>
+                    }
+                  />
+                </List>
+              </Stack>
+            </ContentPaperWrap>
+          </Grid>
+
+          <Grid xs={ 12 } md={ 8 }>
+
+            <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
+              <ContentPaperWrap>
+                <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 2 }>
+
+                  <ExpenseCommentForm expenseId={ expense.id } />
+
+                  <Suspense fallback={ <ExpenseCommentsSkeleton /> }>
+                    <Await resolve={ comments }>
+                      { (comments) => {
+                        return (
+                          <ClientOnly fallback={ <>Loading</> }>
+                            { () => <ExpenseComments comments={ comments } /> }
+                          </ClientOnly>
+                        );
+                      } }
+                    </Await>
+                  </Suspense>
+                </Stack>
+              </ContentPaperWrap>
+            </Stack>
+
+          </Grid>
+        </Grid>
+      </Box>
+
+      {/* <ContentPaperWrap>
         <Stack width="100%" direction="row" justifyContent="start" alignItems="center" spacing={ 2 }>
 
           <Typography variant="h5" fontWeight="700">
@@ -115,7 +170,7 @@ function ExpenseDetail() {
             </Await>
           </Suspense>
         </Stack>
-      </ContentPaperWrap>
+      </ContentPaperWrap> */}
 
       <Outlet />
     </Stack>

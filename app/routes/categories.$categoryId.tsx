@@ -1,12 +1,15 @@
-import { Stack, Typography, Box, List } from '@mui/material';
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
 import Grid from '@mui/material/Unstable_Grid2';
-import SearchInput from '~/components/data/SearchInput';
 import TitleBarLayout from '~/components/title/TitleBarLayout';
 import ReverseListItem from '~/shared/components/ReverseListItem';
 import { TitleNameDisplay } from '~/shared/components/Title';
 import ContentPaperWrap from '~/shared/layouts/ContentPaperWrap';
 import CategoryIcon from '@mui/icons-material/Category';
-import { LoaderFunctionArgs, MetaFunction, json } from '@remix-run/node';
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
+import { json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
 import { getCategoryById } from '~/api/categories.server';
 import { getIdNameFromIdAndNamePathCombo } from '~/shared/utils/url.utils';
@@ -78,12 +81,11 @@ export default CategoryDetails;
 
 export async function loader({ request, params, context }: LoaderFunctionArgs) {
   invariant(params.categoryId, "Expected params.categoryId to be defined");
-  const { id, name } = getIdNameFromIdAndNamePathCombo(params.categoryId);
+  const { id } = getIdNameFromIdAndNamePathCombo(params.categoryId);
   invariant(id, "Expected categoryId-id to be defined");
+
   const url = new URL(request.url);
-  const pageParam = url.searchParams.get('page') as string | null;
   const filterParam: string | null = url.searchParams.get('q');
-  const page: number = pageParam ? (parseInt(pageParam) ? (parseInt(pageParam) < 0 ? 0 : parseInt(pageParam)) : 0) : 0;
   const category = await getCategoryById(id);
 
   const result = {

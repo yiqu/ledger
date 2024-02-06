@@ -33,7 +33,7 @@ export const StyledDataCell = styled(TableCell)(() => ({
 
 export function LinkableCellDisplay({ url, display }: { url: string, display: string }) {
   return (
-    <Typography style={ { ...ellipsisBlock } } className='roboto' title={ display }>
+    <Typography style={ { ...ellipsisBlock } } title={ display }>
       <Link to={ url }>
         { display }
       </Link>

@@ -93,13 +93,15 @@ function AccountDetailEdit() {
           <Stack direction="column" justifyContent="start" alignItems="start" spacing={ 2 } width="100%">
             { hasActionError && <Alert severity="error" sx={ { width: '100%' } }> { actionData.message } </Alert> }
 
-            <HFTextField name="name" label="Account Name" control={ control } variant="standard" type="text" helperText="Account name." fullWidth autoFocus
+            <HFTextField name="name" label="Account name" control={ control } type="text"
+              helperText="Account name has to be at least 2 characters long." fullWidth autoFocus
               clearField={ handleClearField } />
 
             <HFAutocompleteField
               name="category"
               label="Category"
               control={ control }
+              helperText="Select a category for this account."
               options={ allCategoriesFetcher.data?.data ?? [] }
               getOptionLabel={ (option: Category) => (option?.name ?? '') }
               fullWidth={ true }

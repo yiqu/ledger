@@ -16,7 +16,7 @@ export function getIdNameFromIdAndNamePathCombo(url: string) {
     return {
       id,
       name: name
-    }
+    };
   }
   return {
     id: url,

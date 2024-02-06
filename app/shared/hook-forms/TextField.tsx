@@ -35,14 +35,21 @@ function HFTextField({ name, label, control, clearField, ...props }: FieldProps)
       }) => {
         return (
           <FormControl fullWidth={ props.fullWidth } size={ props.size ?? 'medium' } sx={ { ...props.sx } }>
-            <TextField id={ name } label={ label } { ...props } { ...field } error={ !!(error) } helperText={ undefined } autoComplete="off"
+            <TextField id={ name } label={ label } { ...props } { ...field } error={ !!(error) }
+              helperText={ undefined } autoComplete="off" variant="outlined"
               InputProps={ {
                 endAdornment: (field.value && <InputAdornment position="end" >
                   <IconButton onClick={ clearValue } size="small">
                     <Close />
                   </IconButton>
-                </InputAdornment>)
-              } } />
+                </InputAdornment>), ...props.InputProps
+              } }
+              InputLabelProps={ {
+                shrink: true,
+                ...props.InputLabelProps
+              } }
+              size="medium"
+            />
             <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ { ml: 0 } } >
               {
                 <Typography variant="body0" color={ red } component="span"> { error ? error.message : props.helperText } </Typography>

@@ -2,7 +2,7 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import type { ExpenseComment } from "~/shared/models/comment.model";
 import PersonIcon from '@mui/icons-material/Person';
-import { blueGrey, grey } from "@mui/material/colors";
+import { blueGrey } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 import Moment from "react-moment";
 import { GREY_TEXT } from "~/theme/typography";

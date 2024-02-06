@@ -10,7 +10,8 @@
     "start": "remix dev --manual",
     "start2": "remix-serve ./build/index.js",
     "typecheck": "tsc",
-    "lint": "eslint --fix app",
+    "lint": "eslint app",
+    "lint-fix": "eslint --fix app",
     "push-prisma": "npx prisma db push",
     "update-prisma": "npx prisma generate",
     "vercel-build": "npx prisma generate && npx prisma db push && remix build"

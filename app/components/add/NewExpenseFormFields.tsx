@@ -16,7 +16,8 @@ function NewExpenseFormFields({ control, onClearField }: NewExpenseFormFieldsPro
 
   return (
     <>
-      <HFTextField name="amount" label="Amount" control={ control } variant="standard" type="number" helperText="Expense amount" fullWidth autoFocus
+      <HFTextField name="amount" label="Amount" control={ control } variant="standard"
+        type="number" helperText="Enter a dollar amount." fullWidth autoFocus
         InputProps={ {
           startAdornment: <InputAdornment position="start">$</InputAdornment>,
         } }
@@ -26,13 +27,13 @@ function NewExpenseFormFields({ control, onClearField }: NewExpenseFormFieldsPro
         } }
       />
 
-      <HFTextField name="date" label="" control={ control } type="datetime-local" variant="standard" helperText="Expense submission date" fullWidth clearField={ onClearField } />
-
-      { }
+      <HFTextField name="date" label="" control={ control } type="datetime-local" variant="standard"
+        helperText="Enter the date of the expense." fullWidth clearField={ onClearField } />
 
       <HFAutocompleteField
         name="account"
-        label="Select an Account"
+        label="Select an account"
+        helperText="Select the account to associate with this expense."
         control={ control }
         options={ accountList }
         getOptionLabel={ (option: Account) => (option?.name ?? '') }

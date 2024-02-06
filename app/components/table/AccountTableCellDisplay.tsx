@@ -30,7 +30,7 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCrea
     case 'name': {
       return (
         <Stack direction="row" justifyContent="start" alignItems="center" spacing={ 1 } style={ { ...ellipsis } }>
-          <LinkableCellDisplay url={ `/accounts/${data.id}` } display={ data.name } />
+          <LinkableCellDisplay url={ `/accounts/${data.id}__${data.name}` } display={ data.name } />
           { isNewlyCreated && (<Chip label="New" size="small" color="info" />) }
           { isDeleting && (<CircularProgress size={ 12 } />) }
         </Stack>

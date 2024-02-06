@@ -11,7 +11,8 @@ function NewFormFields({ type, control, onClearField }: { type: 'expense' | 'acc
   } else if (type === 'account') {
     return (
       <>
-        <HFTextField name="name" label="Account Name" control={ control } variant="standard" type="text" helperText="Account name." fullWidth autoFocus
+        <HFTextField name="name" label="Account name" control={ control } type="text"
+          helperText="Account name has to be at least 2 characters long." fullWidth autoFocus
           clearField={ onClearField } />
       </>
 

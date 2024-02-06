@@ -2,7 +2,7 @@ import startCase from "lodash/startCase";
 
 export const EXPENSES_TABLE_COLUMNS = ['account', 'amount', 'date', 'dateAdded', 'updatedAt', 'commentsCount', 'actions'];
 
-export const ACCOUNTS_TABLE_COLUMNS = ['name', 'shown', 'category', 'dateAdded', 'updatedAt', "expensesCount", "actions"] as const;
+export const ACCOUNTS_TABLE_COLUMNS = ['name', 'category', 'shown', 'dateAdded', 'updatedAt', "expensesCount", "actions"] as const;
 
 export const transformColumnName = (colId: string) => {
   let result = colId;
@@ -41,6 +41,61 @@ export const transformColumnName = (colId: string) => {
     }
     case "commentsCount": {
       result = 'Comments';
+      break;
+    }
+    case "actions": {
+      result = '';
+      break;
+    }
+    default: {
+      result = startCase(colId);
+    }
+  }
+  return result;
+};
+
+
+export const getColumnWidth = (colId: string) => {
+  let result = 'auto';
+  switch (colId) {
+    case "account": {
+      result = 'auto';
+      break;
+    }
+    case "category": {
+      result = '15%';
+      break;
+    }
+    case "amount": {
+      result = '14%';
+      break;
+    }
+    case "updatedAt": {
+      result = '8%';
+      break;
+    }
+    case "dateAdded": {
+      result = '8%';
+      break;
+    }
+    case "expensesCount": {
+      result = '8%';
+      break;
+    }
+    case "name": {
+      result = '14%';
+      break;
+    }
+    case "shown": {
+      result = '7%';
+      break;
+    }
+    case "commentsCount": {
+      result = '8%';
+      break;
+    }
+    case "actions": {
+      result = '6%';
       break;
     }
     default: {

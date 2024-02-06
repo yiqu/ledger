@@ -10,7 +10,7 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Box from "@mui/material/Box";
 import TableBody from "@mui/material/TableBody";
 import { ellipsis } from "~/shared/utils/css.utils";
-import { ACCOUNTS_TABLE_COLUMNS, transformColumnName } from "~/shared/utils/table";
+import { ACCOUNTS_TABLE_COLUMNS, getColumnWidth, transformColumnName } from "~/shared/utils/table";
 import { StyledHeaderCell, StyledDataCell } from "../table/TableComponents";
 import { TableCellDisplayMemoized } from "../table/AccountTableCellDisplay";
 import { useCallback, useEffect } from "react";
@@ -19,9 +19,11 @@ import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import urlcat from "urlcat";
 import type { DeleteFetcher } from "~/shared/models/http.model";
 import toast from "react-hot-toast";
+import useScreenSize from "~/shared/hooks/useIsMobile";
 
 
 function AccountsTable({ accounts }: { accounts: Account[] }) {
+  const { isAboveXl } = useScreenSize();
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const deleteFetcher = useFetcher<DeleteFetcher>();
@@ -66,7 +68,7 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
   return (
     <ContentPaperWrap>
       <TableContainer sx={ { overflowX: 'hidden', '&:hover': { overflowX: 'auto' } } }>
-        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: 'auto' } }>
+        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: isAboveXl ? 'auto' : 'fixed' } }>
           <TableHead>
             <TableRow>
               {
@@ -74,7 +76,7 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
                   return (
                     <StyledHeaderCell
                       key={ col }
-                    // style={ col === 'name' ? { ...stickyDataCellClass as any } : {} }
+                      style={ isAboveXl ? {} : { width: getColumnWidth(col) } }
                     >
                       <Stack direction="row" justifyContent="space-between" alignItems="center" overflow="hidden">
                         <TableSortLabel active={ false } direction="asc" style={ { width: 'calc(100%)' } }>

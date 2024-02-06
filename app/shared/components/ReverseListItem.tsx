@@ -1,4 +1,5 @@
-import ListItem, { ListItemProps } from "@mui/material/ListItem";
+import type { ListItemProps } from "@mui/material/ListItem";
+import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import type { ReactNode } from "react";
 

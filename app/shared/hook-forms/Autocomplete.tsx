@@ -3,6 +3,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Typography from "@mui/material/Typography";
 import { Controller } from "react-hook-form";
 import Autocomplete from '@mui/material/Autocomplete';
+import Box from "@mui/material/Box";
 
 export interface HFAutocompleteProps {
   name: string;
@@ -25,13 +26,16 @@ function HFAutocompleteField({ name, label, control, options, helperText, proper
         fieldState: { invalid, isTouched, isDirty, error },
         formState,
       }) => (
-        <>
+        <Box width='100%'>
           <Autocomplete
             id={ name }
             options={ options }
             { ...field }
-            renderInput={ (params) => <TextField { ...params } label={ label } variant="standard" /> }
+            renderInput={ (params) => <TextField { ...params } label={ label } variant="outlined" InputLabelProps={ {
+              shrink: true,
+            } } size="medium" /> }
             onChange={ (e, data: any) => field.onChange(propertyIdToSelect ? data[propertyIdToSelect] : data) }
+            size="medium"
             { ...autoCompleteProps }
           />
           <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ { ml: 0 } } >
@@ -39,7 +43,7 @@ function HFAutocompleteField({ name, label, control, options, helperText, proper
               <Typography variant="caption" component="span"> { error ? error.message : helperText } </Typography>
             }
           </FormHelperText>
-        </>
+        </Box>
       ) }
     />
   );
