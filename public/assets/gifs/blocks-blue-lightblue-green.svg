@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(241, 242, 243); display: block;" width="122px" height="122px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+<rect fill="#0051a2" x="6" y="6" width="39" height="39" rx="10" ry="10">
+<animate attributeName="x" dur="20s" repeatCount="indefinite" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" values="6;55;55;55;55;6;6;6;6" begin="-18.333333333333332s"></animate>
+<animate attributeName="y" dur="20s" repeatCount="indefinite" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" values="6;55;55;55;55;6;6;6;6" begin="-13.333333333333332s"></animate>
+</rect><rect fill="#14cb6b" x="6" y="6" width="39" height="39" rx="10" ry="10">
+<animate attributeName="x" dur="20s" repeatCount="indefinite" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" values="6;55;55;55;55;6;6;6;6" begin="-11.666666666666666s"></animate>
+<animate attributeName="y" dur="20s" repeatCount="indefinite" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" values="6;55;55;55;55;6;6;6;6" begin="-6.666666666666666s"></animate>
+</rect><rect fill="#0080ff" x="6" y="6" width="39" height="39" rx="10" ry="10">
+<animate attributeName="x" dur="20s" repeatCount="indefinite" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" values="6;55;55;55;55;6;6;6;6" begin="-5s"></animate>
+<animate attributeName="y" dur="20s" repeatCount="indefinite" keyTimes="0;0.083;0.25;0.333;0.5;0.583;0.75;0.833;1" values="6;55;55;55;55;6;6;6;6" begin="0s"></animate>
+</rect>
+</svg>
