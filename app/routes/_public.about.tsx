@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import type { MetaFunction } from "@remix-run/node";
+import type { LinkDescriptor, MetaFunction } from "@remix-run/node";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import LayoutWithGutter from "~/shared/layouts/LayoutWithGutter";
 import dollarLogo from '../../public/images/dollar.png';
@@ -16,10 +16,22 @@ import TitleBarLayout from "~/components/title/TitleBarLayout";
 import InfoIcon from '@mui/icons-material/Info';
 import { TitleNameDisplay } from "~/shared/components/Title";
 
+export const faviconDescriptor: LinkDescriptor = {
+  rel: "icon",
+  href: "/favicon1.ico",
+  type: "image/png",
+};
+
 export const meta: MetaFunction = (data) => {
   return [
     { title: "About | Ledger" },
     { name: "description", content: "What is Ledger" },
+  ];
+};
+
+export const links = () => {
+  return [
+    faviconDescriptor
   ];
 };
 

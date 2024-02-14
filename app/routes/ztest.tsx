@@ -15,9 +15,19 @@ import circleBlueGreen from '../../public/assets/gifs/circle-blue-green.svg';
 import blocks from '../../public/assets/gifs/blocks.svg';
 import hourglassGreen from '../../public/assets/gifs/hourglass-green.svg';
 import blocksgDrive from '../../public/assets/gifs/blocks-g-drive.svg';
+import type { LinkDescriptor } from "@remix-run/node";
+
+export const faviconDescriptor: LinkDescriptor = {
+  rel: "icon",
+  href: "/favicon4.ico",
+  type: "image/png",
+};
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+    faviconDescriptor
+  ];
 }
 
 function Ztest() {
@@ -29,8 +39,27 @@ function Ztest() {
       return curr + 5;
     });
   };
+
+  const handleChangeFavIcon = () => {
+  };
+
+
   return (
-    <Stack width="100%" spacing={ 2 }>
+    <Stack spacing={ 2 }>
+      <Stack direction="column">
+        <Button variant="outlined" onClick={ handleChangeFavIcon }>
+          Change favicon 1
+        </Button>
+        <Button variant="outlined">
+          Change favicon 2
+        </Button>
+        <Button variant="outlined">
+          Change favicon 3
+        </Button>
+      </Stack>
+
+
+
       Test page aa. { progress }
 
       <Box sx={ { width: '100%' } }>

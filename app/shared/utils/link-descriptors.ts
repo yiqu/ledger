@@ -23,3 +23,9 @@ export const gSansDisplayRegular: LinkDescriptor = {
   type: "font/woff2",
   crossOrigin: "anonymous",
 };
+
+export const faviconDescriptor: LinkDescriptor = {
+  rel: "icon",
+  href: "/favicon.ico",
+  type: "image/png",
+};

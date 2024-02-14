@@ -30,9 +30,13 @@ import Paper from "@mui/material/Paper";
 import { getFirstAndLastExpenseDatesByShownAccounts } from "~/api/expenses.server";
 import DashboardChartYearSelect from "~/components/chart/DashboardChartYearSelect";
 import { useCallback } from "react";
+import { faviconDescriptor } from "~/shared/utils/link-descriptors";
 
 export function links() {
-  return [{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: styles },
+    faviconDescriptor
+  ];
 }
 
 export const meta: MetaFunction = (data) => {

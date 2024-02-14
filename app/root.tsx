@@ -29,6 +29,7 @@ import { gSansRegular, gSansTextRegular, gSansDisplayRegular } from "./shared/ut
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [
+    //faviconDescriptor,
     gSansRegular,
     gSansTextRegular,
     gSansDisplayRegular,

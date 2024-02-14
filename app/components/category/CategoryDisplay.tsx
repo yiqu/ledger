@@ -15,7 +15,7 @@ import AddEditCategoryDialog from './AddEditNewCategory';
 import Chip from "@mui/material/Chip";
 import { green, grey } from '@mui/material/colors';
 import { ellipsisBlock } from '~/shared/utils/css.utils';
-
+import bakeryLogo from '../../../public/assets/category/bakery.png';
 
 interface CategoryDisplayProps {
   category: Category;
@@ -75,11 +75,20 @@ function CategoryDisplay({ category }: CategoryDisplayProps) {
     <>
       <Card elevation={ 0 }>
         {/* <CardMedia
-        sx={ { height: 140 } }
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="green iguana"
-      /> */}
-        <CardContent>
+          sx={ { height: 70, backgroundSize: 'contain' } }
+          image={ bakeryLogo }
+          title="logo"
+        /> */}
+        <CardContent
+          sx={ {
+            backgroundImage: `url(${bakeryLogo})`,
+            backgroundSize: '2.7rem',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right',
+            backgroundPositionX: 'calc(100% - 10px)',
+            backgroundPositionY: 'calc(100% - 2px)',
+          } }
+        >
           <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 1 }>
             <Stack direction="row" justifyContent="start" alignItems="center" width="100%">
               <Typography variant="h6" component="div" style={ { ...ellipsisBlock } } title={ category.name }>

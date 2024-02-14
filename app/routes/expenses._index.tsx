@@ -9,7 +9,13 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import type { Expense } from "~/shared/models/expense.model";
 import { TitleNameDisplay } from "~/shared/components/Title";
 import Expenses from "~/components/expense/Expenses";
+import { faviconDescriptor } from "~/shared/utils/link-descriptors";
 
+export function links() {
+  return [
+    faviconDescriptor
+  ];
+}
 
 export const meta: MetaFunction = (data) => {
   return [
