@@ -1,13 +1,10 @@
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import type { Category, CategoryDialogData, CategoryEditable } from '~/shared/models/category.model';
 import Stack from "@mui/material/Stack";
 import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
-import Add from '@mui/icons-material/Add';
 import { Link, useFetcher } from '@remix-run/react';
 import { useFetcherType } from '~/shared/hooks/useFetcherType';
 import { useState } from 'react';
@@ -15,17 +12,17 @@ import AddEditCategoryDialog from './AddEditNewCategory';
 import Chip from "@mui/material/Chip";
 import { green, grey } from '@mui/material/colors';
 import { ellipsisBlock } from '~/shared/utils/css.utils';
-import bakeryLogo from '../../../public/assets/category/bakery.png';
+import CategoryDisplayMedia from './CategoryDisplayMedia';
+import CardContent from '@mui/material/CardContent';
+import IconButton from "@mui/material/IconButton";
 
 interface CategoryDisplayProps {
   category: Category;
 }
 
 function CategoryDisplay({ category }: CategoryDisplayProps) {
-  const editFetcher = useFetcher<CategoryEditable>();
   const deleteFetcher = useFetcher<CategoryEditable>();
   const { isFetcherActionReload, isFetcherActionSubmission } = useFetcherType(deleteFetcher);
-  const { isFetcherActionReload: editActionReload, isFetcherActionSubmission: editSubmission } = useFetcherType(editFetcher);
 
   const [categoryData, setCategoryData] = useState<CategoryDialogData>({
     shown: false,
@@ -74,26 +71,13 @@ function CategoryDisplay({ category }: CategoryDisplayProps) {
   return (
     <>
       <Card elevation={ 0 }>
-        {/* <CardMedia
-          sx={ { height: 70, backgroundSize: 'contain' } }
-          image={ bakeryLogo }
-          title="logo"
-        /> */}
-        <CardContent
-          sx={ {
-            backgroundImage: `url(${bakeryLogo})`,
-            backgroundSize: '2.7rem',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right',
-            backgroundPositionX: 'calc(100% - 10px)',
-            backgroundPositionY: 'calc(100% - 2px)',
-          } }
-        >
+        <CardContent>
           <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 1 }>
-            <Stack direction="row" justifyContent="start" alignItems="center" width="100%">
+            <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
               <Typography variant="h6" component="div" style={ { ...ellipsisBlock } } title={ category.name }>
                 <Link to={ `/categories/${category.id}__${category.name}` }>{ category.name }</Link>
               </Typography>
+              <CategoryDisplayMedia category={ category.name } />
             </Stack>
 
             <Stack direction="row" justifyContent="start" alignItems="start" spacing={ 0.5 } width="100%">
@@ -122,17 +106,13 @@ function CategoryDisplay({ category }: CategoryDisplayProps) {
         </CardContent>
         <CardActions>
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
-            <Button size="small" color='success' startIcon={ <Add fontSize='small' /> } disabled={ isApiLoading }
-              onClick={ handleAction('addAccount') }>
-              Add account
-            </Button>
-            <Stack direction="row" justifyContent="end" alignItems="center">
-              <Button size="small" color='info' startIcon={ <Edit fontSize='small' /> } disabled={ isApiLoading } onClick={ handleAction('edit') }>
-                Edit
-              </Button>
-              <Button size="small" color='error' startIcon={ <Delete fontSize='small' /> } disabled={ isApiLoading } onClick={ handleAction('delete') }>
-                Delete
-              </Button>
+            <Stack direction="row" justifyContent="start" alignItems="center">
+              <IconButton size="small" disabled={ isApiLoading } onClick={ handleAction('edit') }>
+                <Edit fontSize='small' />
+              </IconButton>
+              <IconButton size="small" disabled={ isApiLoading } onClick={ handleAction('delete') }>
+                <Delete fontSize='small' />
+              </IconButton >
             </Stack>
           </Stack>
         </CardActions>

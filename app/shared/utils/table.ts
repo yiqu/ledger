@@ -2,7 +2,7 @@ import startCase from "lodash/startCase";
 
 export const EXPENSES_TABLE_COLUMNS = ['account', 'amount', 'date', 'dateAdded', 'updatedAt', 'commentsCount', 'actions'];
 
-export const ACCOUNTS_TABLE_COLUMNS = ['name', 'category', 'shown', 'dateAdded', 'updatedAt', "expensesCount", "actions"] as const;
+export const ACCOUNTS_TABLE_COLUMNS = ['name', 'category', 'shown', "expensesCount", 'dateAdded', 'updatedAt', "actions"];
 
 export const transformColumnName = (colId: string) => {
   let result = colId;

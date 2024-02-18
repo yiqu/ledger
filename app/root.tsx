@@ -22,7 +22,7 @@ import leftNavLogoStyles from '~/styles/left-nav-logo.css';
 import muiAlertStyles from "~/styles/mui-alert.css";
 import ActionLoaderErrorDisplay from "./components/error/ActionLoaderError";
 import OtherErrorDisplay from "./components/error/OtherError";
-import { Analytics } from '@vercel/analytics/react';
+// import { Analytics } from '@vercel/analytics/react';
 import { userPrefCookie } from "./server/user-preference.server";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 import { gSansRegular, gSansTextRegular, gSansDisplayRegular } from "./shared/utils/link-descriptors";
@@ -65,7 +65,7 @@ function Document({ title, children }: { title?: string; children: React.ReactNo
         <Scripts />
         <LiveReload />
         { process.env.NODE_ENV === "production" && (
-          <Analytics />
+          <></>
         ) }
         { process.env.NODE_ENV === "production" && (
           <SpeedInsights />

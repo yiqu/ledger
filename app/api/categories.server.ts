@@ -92,7 +92,9 @@ export async function getCategoriesPaged(page: number, filterString: string | nu
   try {
     const res = await prisma.category.findMany({
       orderBy: {
-        name: 'asc'
+        accounts: {
+          _count: 'desc'
+        }
       },
       skip: offset,
       take: pageSize,
@@ -164,5 +166,70 @@ export async function getCategoriesAll() {
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
     console.log('Server error at getCategories(): ', JSON.stringify(error));
     throw new Error(`Categories could not be retrieved. Code: ${error.code}`);
+  }
+}
+
+export async function getAccountsByCategoryId(id: string, page: number, filterString: string | null) {
+  const pageSize = ITEMS_PER_PAGE;
+  const offset = page * pageSize;
+  const totalCount: number = await prisma.account.count({
+    where: {
+      categoryId: id
+    }
+  });
+  const filter = (filterString !== null) ? filterString.trim() : '';
+
+  try {
+    const res = await prisma.account.findMany({
+      where: {
+        categoryId: id,
+        OR: [
+          {
+            name: {
+              contains: filter,
+              mode: 'insensitive',
+            }
+          },
+        ]
+      },
+      orderBy: {
+        name: 'asc'
+      },
+      include: {
+        category: true,
+        _count: {
+          select: { expenses: true }
+        }
+      },
+      skip: offset,
+      take: pageSize,
+    });
+
+    const currentResultSetCount: number = await prisma.account.count({
+      where: {
+        categoryId: id,
+        OR: [
+          {
+            name: {
+              contains: filter,
+              mode: 'insensitive',
+            }
+          },
+        ]
+      }
+    });
+
+    const totalPages: number = Math.ceil(currentResultSetCount / pageSize);
+
+    return {
+      data: res,
+      totalPages: totalPages,
+      totalCount: totalCount,
+      currentResultSetCount: currentResultSetCount,
+      pageSize: pageSize
+    };
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getAccountsByCategoryId(): ', JSON.stringify(error));
+    throw new Error(`Accounts could not be retrieved. Code: ${error.code}`);
   }
 }

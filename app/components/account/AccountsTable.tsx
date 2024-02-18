@@ -21,8 +21,13 @@ import type { DeleteFetcher } from "~/shared/models/http.model";
 import toast from "react-hot-toast";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 
+export interface AccountsTableProps {
+  accounts: Account[];
+  isTableFixed?: boolean;
+  columnIds?: string[];
+}
 
-function AccountsTable({ accounts }: { accounts: Account[] }) {
+function AccountsTable({ accounts, isTableFixed, columnIds = ACCOUNTS_TABLE_COLUMNS }: AccountsTableProps) {
   const { isAboveXl } = useScreenSize();
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
@@ -67,12 +72,17 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
 
   return (
     <ContentPaperWrap>
-      <TableContainer sx={ { overflowX: 'hidden', '&:hover': { overflowX: 'auto' } } }>
-        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: isAboveXl ? 'auto' : 'fixed' } }>
+      <TableContainer sx={ { overflowX: 'auto', '&:hover': { overflowX: 'auto' } } }>
+        <Table
+          size="medium"
+          aria-label="table"
+          stickyHeader
+          style={ { width: '100%', tableLayout: isTableFixed ? 'fixed' : 'auto' } }
+        >
           <TableHead>
             <TableRow>
               {
-                ACCOUNTS_TABLE_COLUMNS.map((col, index, array) => {
+                columnIds.map((col, index, array) => {
                   return (
                     <StyledHeaderCell
                       key={ col }
@@ -103,7 +113,7 @@ function AccountsTable({ accounts }: { accounts: Account[] }) {
                     sx={ { opacity: isWorking ? 0.5 : 1 } }
                   >
                     {
-                      ACCOUNTS_TABLE_COLUMNS.map((col, index) => {
+                      columnIds.map((col, index) => {
                         return (
                           <StyledDataCell key={ `${account.id}-${col}` }>
                             <TableCellDisplayMemoized

@@ -73,7 +73,12 @@ function ExpenseTable({ expenses, isTableFixed, columnIds = EXPENSES_TABLE_COLUM
   return (
     <ContentPaperWrap>
       <TableContainer sx={ { overflowX: 'auto', '&:hover': { overflowX: 'auto' } } }>
-        <Table size="medium" aria-label="table" stickyHeader style={ { width: '100%', tableLayout: isTableFixed ? 'fixed' : 'auto' } }>
+        <Table
+          size="medium"
+          aria-label="table"
+          stickyHeader
+          style={ { width: '100%', tableLayout: isTableFixed ? 'fixed' : 'auto' } }
+        >
           <TableHead>
             <TableRow>
               {

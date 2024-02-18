@@ -1,5 +1,5 @@
 import * as  fromCartActions from './ThemeActions';
-import produce from 'immer';
+import { produce } from "immer";
 
 interface ThemeReducerState {
   theme: any;
