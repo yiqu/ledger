@@ -14,11 +14,16 @@ import invariant from 'tiny-invariant';
 import { getAccountsByCategoryId, getCategoryById } from '~/api/categories.server';
 import { getIdNameFromIdAndNamePathCombo, getParamsAsObject } from '~/shared/utils/url.utils';
 import { convertDateDisplay } from '~/api/utils/date.server';
-import { useLoaderData, useSearchParams } from '@remix-run/react';
+import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react';
 import SearchInput from "~/components/data/SearchInput";
 import TablePagination from "~/shared/components/TablePagination";
 import AccountsTable from "~/components/account/AccountsTable";
 import { ACCOUNTS_TABLE_COLUMNS } from "~/shared/utils/table";
+import useScreenSize from "~/shared/hooks/useIsMobile";
+import type { Account } from "~/shared/models/account.model";
+import type { DeleteFetcher } from "~/shared/models/http.model";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 export const meta: MetaFunction = (data) => {
   const params = data.params;
@@ -34,12 +39,21 @@ export const meta: MetaFunction = (data) => {
 };
 
 function CategoryDetails() {
+  const { isBiggerThanMobile } = useScreenSize();
   const [searchParams, setSearchParams] = useSearchParams();
+  const removeAccountFromCategoryFetcher = useFetcher<DeleteFetcher>();
   const { category, accounts: { currentResultSetCount, data, pageSize, totalCount, totalPages }, filterParam } = useLoaderData<typeof loader>();
-  invariant(category, "Expected category to be defined");
-
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
+
+  useEffect(() => {
+    if (removeAccountFromCategoryFetcher.state === 'idle' && removeAccountFromCategoryFetcher.data?.showToast) {
+      toast.success(removeAccountFromCategoryFetcher.data.message);
+    }
+    return (() => {
+      toast.remove();
+    });
+  }, [removeAccountFromCategoryFetcher.data?.message, removeAccountFromCategoryFetcher.data?.showToast, removeAccountFromCategoryFetcher.state]);
 
   const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
     setSearchParams((params: URLSearchParams) => {
@@ -47,6 +61,20 @@ function CategoryDetails() {
       return { ...currentParams, page: `${value - 1}` };
     });
   };
+
+  const handleOnAction = (actionId: 'delete' | 'edit', payload: Account) => {
+    if (category.id && category.name) {
+      const proceed = confirm(`Are you sure you want to remove ${payload.name} from ${category.name}?`);
+      if (!proceed) return;
+
+      removeAccountFromCategoryFetcher.submit(
+        { categoryId: category.id, accountId: payload.id, categoryName: category.name },
+        { method: 'DELETE', action: `/categories/removeAccount`, preventScrollReset: true }
+      );
+    }
+  };
+
+  invariant(category, "Expected category to be defined");
 
   return (
     <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 3 }>
@@ -94,7 +122,14 @@ function CategoryDetails() {
               />
             </Stack>
 
-            <AccountsTable accounts={ data } isTableFixed={ true } columnIds={ ACCOUNTS_TABLE_COLUMNS.filter((c) => c !== 'category') } />
+            <AccountsTable
+              accounts={ data }
+              isTableFixed={ isBiggerThanMobile ? true : false }
+              columnIds={
+                ACCOUNTS_TABLE_COLUMNS.filter((c) => (c !== 'category' && c !== 'dateAdded' && c !== 'updatedAt'))
+              }
+              onAction={ handleOnAction }
+            />
           </Grid>
         </Grid>
       </Box>

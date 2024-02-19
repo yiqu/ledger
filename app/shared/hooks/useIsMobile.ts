@@ -7,22 +7,18 @@ import { useTheme } from '@mui/material/styles';
  * @returns 
  */
 const useScreenSize = () => {
-
   const theme = useTheme();
 
   const isMobileScreenSize = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const isBiggerThanMobileSize = useMediaQuery(theme.breakpoints.up('sm'));
   const isMediumSize = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-
   const isLargeSize = useMediaQuery(theme.breakpoints.between('md', 'lg'));
-
   const isXlSize = useMediaQuery(theme.breakpoints.between('lg', 'xl'));
-
   const isAboveXlSize = useMediaQuery(theme.breakpoints.up('xl'));
-
 
   return {
     isMobile: isMobileScreenSize,
+    isBiggerThanMobile: isBiggerThanMobileSize,
     isMed: isMediumSize,
     isLg: isLargeSize,
     isXl: isXlSize,

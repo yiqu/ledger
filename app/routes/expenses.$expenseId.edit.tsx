@@ -4,7 +4,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogLayout from "~/shared/dialog/DialogLayout";
 import { Form, useActionData, useNavigate, useParams, useRouteLoaderData, useSearchParams, useSubmit } from "@remix-run/react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import type { BaseSyntheticEvent } from "react";
 import { useCallback } from "react";
 import invariant from "tiny-invariant";
@@ -21,7 +20,6 @@ import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/e
 import { validateExpenseToAdd } from "~/api/utils/validations.server";
 import { editExpense } from "~/api/expenses.server";
 import type { Account, ExpenseAndAccounts } from "~/shared/models/account.model";
-import { expenseSchema } from "~/shared/validation/yup-schemas";
 import ExpenseEditFormFields from "~/components/expense/ExpenseEditFormFields";
 import ButtonClose from "~/shared/components/CloseButton";
 import ButtonReset from "~/shared/components/ResetButton";
@@ -52,8 +50,8 @@ function ExpenseEdit() {
       dateStringForInput: format(new Date(expenseData?.date ?? 0), 'yyyy-MM-dd HH:mm'),
       date: expenseData.date,
     },
-    resolver: yupResolver(expenseSchema),
-    mode: "onSubmit"
+    //resolver: yupResolver(expenseSchema),
+    //mode: "onSubmit"
   });
 
   const handleClearField = useCallback((name: any) => {

@@ -19,16 +19,15 @@ import { useFetcher, useLocation, useNavigate } from "@remix-run/react";
 import urlcat from "urlcat";
 import type { DeleteFetcher } from "~/shared/models/http.model";
 import toast from "react-hot-toast";
-import useScreenSize from "~/shared/hooks/useIsMobile";
 
 export interface AccountsTableProps {
   accounts: Account[];
   isTableFixed?: boolean;
   columnIds?: string[];
+  onAction?: (actionId: 'edit' | 'delete', payload: Account) => void;
 }
 
-function AccountsTable({ accounts, isTableFixed, columnIds = ACCOUNTS_TABLE_COLUMNS }: AccountsTableProps) {
-  const { isAboveXl } = useScreenSize();
+function AccountsTable({ accounts, isTableFixed, columnIds = ACCOUNTS_TABLE_COLUMNS, onAction }: AccountsTableProps) {
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const deleteFetcher = useFetcher<DeleteFetcher>();
@@ -53,14 +52,20 @@ function AccountsTable({ accounts, isTableFixed, columnIds = ACCOUNTS_TABLE_COLU
         break;
       }
       case 'delete': {
-        const proceed = confirm(`Are you sure you want to delete this account?`);
-        if (!proceed) return;
+        // use the passed in action logic if available
+        if (onAction) {
+          onAction('delete', data);
+        }
+        else {
+          const proceed = confirm(`Are you sure you want to delete this account?`);
+          if (!proceed) return;
 
-        const url = urlcat('', '/accounts/:accountId', { accountId: data.id, redirectUrl: `${pathname}${search}` });
-        deleteFetcher.submit({ id: data.id }, { method: 'DELETE', action: url, preventScrollReset: true });
+          const url = urlcat('', '/accounts/:accountId', { accountId: data.id, redirectUrl: `${pathname}${search}` });
+          deleteFetcher.submit({ id: data.id }, { method: 'DELETE', action: url, preventScrollReset: true });
+        }
       }
     }
-  }, [deleteFetcher, navigate, pathname, search]);
+  }, [deleteFetcher, navigate, pathname, search, onAction]);
 
   if (accounts.length < 1) {
     return (
@@ -86,7 +91,9 @@ function AccountsTable({ accounts, isTableFixed, columnIds = ACCOUNTS_TABLE_COLU
                   return (
                     <StyledHeaderCell
                       key={ col }
-                      style={ isAboveXl ? {} : { width: getColumnWidth(col) } }
+                      style={ {
+                        width: getColumnWidth(col)
+                      } }
                     >
                       <Stack direction="row" justifyContent="space-between" alignItems="center" overflow="hidden">
                         <TableSortLabel active={ false } direction="asc" style={ { width: 'calc(100%)' } }>

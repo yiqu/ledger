@@ -5,7 +5,6 @@ import startCase from "lodash/startCase";
 import DialogLayout from "~/shared/dialog/DialogLayout";
 import { Form, useActionData, useNavigate, useRouteLoaderData, useSearchParams, useSubmit } from "@remix-run/react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useCallback, useEffect } from "react";
 import invariant from "tiny-invariant";
 import type { ActionFunctionArgs } from "@remix-run/node";
@@ -18,7 +17,6 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import type { AccountAndExpense } from "~/shared/models/general.model";
 import type { Account, AccountUpdateable } from "~/shared/models/account.model";
-import { accountSchema } from "~/shared/validation/yup-schemas";
 import { updateAccount } from "~/api/accounts.server";
 import ButtonReset from "~/shared/components/ResetButton";
 import ButtonSubmit from "~/shared/components/SubmitButton";
@@ -50,8 +48,8 @@ function AccountDetailEdit() {
   const navigate = useNavigate();
   const { control, reset, setValue, formState, handleSubmit } = useForm<Account>({
     defaultValues: account,
-    resolver: yupResolver(accountSchema),
-    mode: "onChange"
+    //resolver: yupResolver(accountSchema),
+    //mode: "onChange"
   });
   const { isActionSubmission, isActionRedirect } = useNavigationType();
   const isApiLoading = isActionSubmission || isActionRedirect;

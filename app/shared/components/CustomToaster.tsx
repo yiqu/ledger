@@ -12,14 +12,13 @@ function CustomToaster() {
         className: 'app-toast',
         duration: 5000,
         success: {
-          duration: 3000,
+          duration: 5000,
         },
         error: {
-          duration: 6000
+          duration: 9000
         },
         style: {
           maxWidth: '25rem',
-          width: '25rem'
         }
       } }
     >

@@ -81,9 +81,9 @@ function TableCellDisplay({ data, columnId, onMenuClick, isDeleting, isNewlyCrea
     case 'category': {
       if (data.category) {
         return (
-          <Typography title={ `${data.category.name}` } style={ { ...ellipsis } }>
-            { data.category.name }
-          </Typography>
+          <Stack direction="row" justifyContent="start" alignItems="center" style={ { ...ellipsis } }>
+            <LinkableCellDisplay url={ `/categories/${data.category.id}__${data.category.name}` } display={ data.category.name } />
+          </Stack>
         );
       }
       return (

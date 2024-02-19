@@ -8,6 +8,7 @@ export interface AccountAddable {
   categoryId?: string | null;
   dateAddedEpoch: number;
   updatedAtEpoch: number;
+  userId?: string | null;
 }
 
 export interface AccountUpdateable {
@@ -25,7 +26,6 @@ export interface Account extends AccountAddable {
   dateAddedFromNow?: DateDisplayFormat;
   updatedAtFromNow?: DateDisplayFormat;
   category?: CategoryOriginal | null;
-  categoryId?: string | null;
 }
 
 export interface AccountWithPreCalculateExpenses {

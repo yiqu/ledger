@@ -63,7 +63,7 @@ export const getColumnWidth = (colId: string) => {
       break;
     }
     case "category": {
-      result = '15%';
+      result = '11%';
       break;
     }
     case "amount": {
@@ -79,11 +79,11 @@ export const getColumnWidth = (colId: string) => {
       break;
     }
     case "expensesCount": {
-      result = '8%';
+      result = '7.5%';
       break;
     }
     case "name": {
-      result = '14%';
+      result = '15%';
       break;
     }
     case "shown": {

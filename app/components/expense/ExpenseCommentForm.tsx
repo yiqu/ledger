@@ -1,8 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { useForm } from "react-hook-form";
 import type { ExpenseComment, ExpenseCommentInput } from "~/shared/models/comment.model";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { expenseCommentSchema } from "~/shared/validation/yup-schemas";
 import HFTextField from "~/shared/hook-forms/TextField";
 import { useFetcher } from "@remix-run/react";
 import Button from "@mui/material/Button";
@@ -24,8 +22,8 @@ function ExpenseCommentForm({ expenseId }: { expenseId: string }) {
     defaultValues: {
       comment: '',
     },
-    resolver: yupResolver(expenseCommentSchema),
-    mode: "onSubmit"
+    //resolver: yupResolver(expenseCommentSchema),
+    //mode: "onSubmit"
   });
 
   useEffect(() => {

@@ -11,8 +11,10 @@ import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { getParamsAsObject } from "~/shared/utils/url.utils";
 import { ITEMS_PER_PAGE } from "~/shared/utils/constants";
 import Divider from "@mui/material/Divider";
+import useScreenSize from "~/shared/hooks/useIsMobile";
 
 function Expenses() {
+  const { isBiggerThanMobile } = useScreenSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data, totalCount, totalPages, pageSize, currentResultSetCount, filterParam } = useRouteLoaderData("routes/expenses") as HttpResponsePaged<Expense[]>;
   const searchParamPage: string | null = searchParams.get('page');
@@ -53,7 +55,7 @@ function Expenses() {
         </Stack>
       </Stack>
 
-      <ExpenseTable expenses={ data } />
+      <ExpenseTable expenses={ data } isTableFixed={ isBiggerThanMobile ? true : false } />
     </>
   );
 }

@@ -11,9 +11,11 @@ import type { HttpResponsePaged } from "~/shared/models/http.model";
 import AccountsTable from "./AccountsTable";
 import { ITEMS_PER_PAGE } from "~/shared/utils/constants";
 import Divider from "@mui/material/Divider";
+import useScreenSize from "~/shared/hooks/useIsMobile";
 
 
 function Accounts() {
+  const { isBiggerThanMobile } = useScreenSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data, totalCount, totalPages, pageSize, currentResultSetCount, filterParam } = useRouteLoaderData("routes/accounts") as HttpResponsePaged<Account[]>;
   const searchParamPage: string | null = searchParams.get('page');
@@ -32,7 +34,6 @@ function Accounts() {
       <Empty type='account' />
     );
   }
-
   return (
     <>
       <Stack direction="row" justifyContent="space-between" alignItems="center" mb={ 2 } width="100%">
@@ -54,7 +55,7 @@ function Accounts() {
         </Stack>
       </Stack>
 
-      <AccountsTable accounts={ data } />
+      <AccountsTable accounts={ data } isTableFixed={ isBiggerThanMobile ? true : false } />
     </>
   );
 }
