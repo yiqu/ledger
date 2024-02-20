@@ -29,6 +29,19 @@ export interface Category {
   comments: CategoryComment[];
 }
 
+export interface CategoryNullable {
+  id?: string;
+  name?: string;
+  dateAdded?: string | Date;
+  updatedAt?: string | null | Date;
+  dateAddedFromNow?: DateDisplayFormat;
+  updatedAtFromNow?: DateDisplayFormat;
+  disabled?: boolean;
+  shown?: boolean;
+  accounts?: Account[];
+  comments?: CategoryComment[];
+}
+
 export interface CategoryComment {
   id: string;
   dateAdded: string | Date;

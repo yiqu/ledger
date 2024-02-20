@@ -41,8 +41,8 @@ function About() {
   return (
     <Stack direction="column" width="100%">
 
-      <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
-        <LayoutWithGutter size={ 'wide' }>
+      <Box mt={ 2 } mx={ isMobile ? 1 : 0 }>
+        <LayoutWithGutter size={ isMobile ? 'full' : 'wider' }>
 
           <Stack direction="column" justifyContent="start" alignItems="center" width="100%" spacing={ 3 }>
 

@@ -5,7 +5,7 @@ import type { ShouldRevalidateFunction } from "@remix-run/react";
 import { Outlet, useParams } from "@remix-run/react";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import type { HeadersFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import AccountNavBar from "~/components/navbar/AccountNavBar";
 import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
@@ -15,12 +15,6 @@ import type { Category, CategoryAddable, CategoryDialogData } from "~/shared/mod
 import AddEditCategoryDialog from "~/components/category/AddEditNewCategory";
 import { useCallback, useState } from "react";
 
-
-export const headers: HeadersFunction = ({
-  loaderHeaders,
-}) => ({
-  "Cache-Control": 'public, no-cache, max-age=0',
-});
 
 function Categories() {
   const { isMobile } = useScreenSize();
@@ -78,8 +72,8 @@ function Categories() {
         <AccountNavBar accountId={ accountId } onClickAction={ handleActionClick } />
       </StickyToolbar>
 
-      <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
-        <LayoutWithGutter size={ 'wide' }>
+      <Box mt={ 2 } mx={ isMobile ? 1 : 0 }>
+        <LayoutWithGutter size={ isMobile ? 'full' : 'wider' }>
 
           <Outlet />
 

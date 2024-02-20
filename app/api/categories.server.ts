@@ -250,3 +250,20 @@ export async function removeAccountFromCategoryByCategoryId(id: string, accountI
     throw new Error(`Account could not be removed from category. Code: ${error.code}`);
   }
 }
+
+export async function getAllAccountsByCategoryId(id: string) {
+  try {
+    const res = await prisma.account.findMany({
+      where: {
+        categoryId: id
+      },
+      orderBy: {
+        name: 'asc'
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getAllAccountsByCategoryId(): ', JSON.stringify(error));
+    throw new Error(`Accounts could not be retrieved. Code: ${error.code}`);
+  }
+}

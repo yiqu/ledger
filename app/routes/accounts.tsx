@@ -80,8 +80,8 @@ function Accounts() {
         <AccountNavBar accountId={ accountId } onClickAction={ handleActionClick } />
       </StickyToolbar>
 
-      <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
-        <LayoutWithGutter size={ 'wide' }>
+      <Box mt={ 2 } mx={ isMobile ? 1 : 0 }>
+        <LayoutWithGutter size={ isMobile ? 'full' : 'wider' }>
 
           <Outlet />
 

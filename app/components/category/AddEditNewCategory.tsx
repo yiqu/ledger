@@ -3,7 +3,6 @@ import LinearProgress from "@mui/material/LinearProgress";
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
-import DialogActions from "@mui/material/DialogActions";
 import { useForm } from "react-hook-form";
 import ButtonClose from "~/shared/components/CloseButton";
 import ButtonReset from "~/shared/components/ResetButton";
@@ -15,6 +14,8 @@ import HFTextField from "~/shared/hook-forms/TextField";
 import { useFetcherType } from "~/shared/hooks/useFetcherType";
 import type { CategoryAddable, CategoryEditable } from "~/shared/models/category.model";
 import HFSwitch from "~/shared/hook-forms/Switch";
+import Divider from "@mui/material/Divider";
+import DialogActionBar from "~/shared/dialog/DialogActionBar";
 
 interface AddNewCategoryProps {
   open?: boolean;
@@ -92,7 +93,8 @@ function AddEditCategoryDialog({ open, initData, isEditMode, onClose }: AddNewCa
 
           </Stack>
         </DialogContent>
-        <DialogActions sx={ { width: '100%' } }>
+        <Divider flexItem />
+        <DialogActionBar dialogActionsProps={ { sx: { width: '100%' } } }>
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
             <Stack direction="row" justifyContent="start" alignItems="center">
               <ButtonClose onClick={ handleClose } disabled={ isApiLoading } />
@@ -105,8 +107,7 @@ function AddEditCategoryDialog({ open, initData, isEditMode, onClose }: AddNewCa
               </ButtonSubmit>
             </Stack>
           </Stack>
-
-        </DialogActions>
+        </DialogActionBar>
       </addFetcher.Form>
     </DialogLayout>
   );

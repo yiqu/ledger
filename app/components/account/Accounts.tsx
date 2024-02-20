@@ -15,7 +15,7 @@ import useScreenSize from "~/shared/hooks/useIsMobile";
 
 
 function Accounts() {
-  const { isBiggerThanMobile } = useScreenSize();
+  const { isMobile } = useScreenSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data, totalCount, totalPages, pageSize, currentResultSetCount, filterParam } = useRouteLoaderData("routes/accounts") as HttpResponsePaged<Account[]>;
   const searchParamPage: string | null = searchParams.get('page');
@@ -55,7 +55,7 @@ function Accounts() {
         </Stack>
       </Stack>
 
-      <AccountsTable accounts={ data } isTableFixed={ isBiggerThanMobile ? true : false } />
+      <AccountsTable accounts={ data } isTableFixed={ isMobile ? false : true } />
     </>
   );
 }

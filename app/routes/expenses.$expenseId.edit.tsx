@@ -1,6 +1,5 @@
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
-import DialogActions from "@mui/material/DialogActions";
 import DialogLayout from "~/shared/dialog/DialogLayout";
 import { Form, useActionData, useNavigate, useParams, useRouteLoaderData, useSearchParams, useSubmit } from "@remix-run/react";
 import { useForm } from "react-hook-form";
@@ -24,6 +23,8 @@ import ExpenseEditFormFields from "~/components/expense/ExpenseEditFormFields";
 import ButtonClose from "~/shared/components/CloseButton";
 import ButtonReset from "~/shared/components/ResetButton";
 import ButtonSubmit from "~/shared/components/SubmitButton";
+import Divider from "@mui/material/Divider";
+import DialogActionBar from "~/shared/dialog/DialogActionBar";
 
 function ExpenseEdit() {
   const { expenseId } = useParams();
@@ -106,7 +107,8 @@ function ExpenseEdit() {
             />
           </Stack>
         </DialogContent>
-        <DialogActions sx={ { width: '100%' } }>
+        <Divider flexItem />
+        <DialogActionBar dialogActionsProps={ { sx: { width: '100%' } } }>
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
             <Stack direction="row" justifyContent="start" alignItems="center">
               <ButtonClose onClick={ handleClose } />
@@ -118,7 +120,7 @@ function ExpenseEdit() {
               </ButtonSubmit>
             </Stack>
           </Stack>
-        </DialogActions>
+        </DialogActionBar>
       </Form>
     </DialogLayout>
   );

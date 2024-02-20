@@ -10,7 +10,7 @@ import { APP_BODY_COLOR, APP_TEXT_COLOR, GREY_TEXT } from "./typography";
 export const MyPaletteOptions: PaletteOptions = {
   primary: {
     main: '#092250',  // Color primary, dark blue
-    light: '#0E357E'
+    light: '#f4f7fc',
   },
   secondary: {
     main: '#e79d18',

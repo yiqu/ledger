@@ -19,7 +19,7 @@ function NotFound404() {
 
   return (
     <Stack direction="column" width="100%">
-      <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
+      <Box mt={ 2 } mx={ isMobile ? 1 : 0 }>
         <LayoutWithGutter size={ 'wide' }>
           <Stack direction="column" width="100%" justifyContent="center" alignItems="center" spacing={ 3 }>
 

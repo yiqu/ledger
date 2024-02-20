@@ -14,7 +14,7 @@ import Divider from "@mui/material/Divider";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 
 function Expenses() {
-  const { isBiggerThanMobile } = useScreenSize();
+  const { isMobile } = useScreenSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data, totalCount, totalPages, pageSize, currentResultSetCount, filterParam } = useRouteLoaderData("routes/expenses") as HttpResponsePaged<Expense[]>;
   const searchParamPage: string | null = searchParams.get('page');
@@ -55,7 +55,7 @@ function Expenses() {
         </Stack>
       </Stack>
 
-      <ExpenseTable expenses={ data } isTableFixed={ isBiggerThanMobile ? true : false } />
+      <ExpenseTable expenses={ data } isTableFixed={ isMobile ? false : true } />
     </>
   );
 }

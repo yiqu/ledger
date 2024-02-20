@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import TableBody from "@mui/material/TableBody";
 import { ellipsis } from "~/shared/utils/css.utils";
-import { EXPENSES_TABLE_COLUMNS, transformColumnName } from "~/shared/utils/table";
+import { EXPENSES_TABLE_COLUMNS, getColumnWidth, transformColumnName } from "~/shared/utils/table";
 import { StyledDataCell, StyledHeaderCell, TableCellDisplayMemoized } from "../table/TableComponents";
 import { useLocation, useNavigate } from "@remix-run/react";
 import { useFetcher } from '@remix-run/react';
@@ -88,6 +88,9 @@ function ExpenseTable({ expenses, isTableFixed, columnIds = EXPENSES_TABLE_COLUM
                       key={ col }
                       sx={ {
                         //borderRight: (index < array.length - 1) ? `1px solid ${GREY[400]}` : 'none',
+                      } }
+                      style={ {
+                        width: getColumnWidth(col)
                       } }
                     >
                       <Stack direction="row" justifyContent="space-between" alignItems="center" overflow="hidden">

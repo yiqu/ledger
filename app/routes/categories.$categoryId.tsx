@@ -1,17 +1,14 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import List from "@mui/material/List";
 import Grid from '@mui/material/Unstable_Grid2';
 import TitleBarLayout from '~/components/title/TitleBarLayout';
-import ReverseListItem from '~/shared/components/ReverseListItem';
 import { TitleNameDisplay } from '~/shared/components/Title';
-import ContentPaperWrap from '~/shared/layouts/ContentPaperWrap';
 import CategoryIcon from '@mui/icons-material/Category';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import invariant from 'tiny-invariant';
-import { getAccountsByCategoryId, getCategoryById } from '~/api/categories.server';
+import { getAccountsByCategoryId, getAllAccountsByCategoryId, getCategoryById } from '~/api/categories.server';
 import { getIdNameFromIdAndNamePathCombo, getParamsAsObject } from '~/shared/utils/url.utils';
 import { convertDateDisplay } from '~/api/utils/date.server';
 import { useFetcher, useLoaderData, useSearchParams } from '@remix-run/react';
@@ -24,6 +21,10 @@ import type { Account } from "~/shared/models/account.model";
 import type { DeleteFetcher } from "~/shared/models/http.model";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { getExpensesSumByAccountIdsInDateRange, getTotalExpensesSumByAccountIds } from "~/api/expenses.server";
+import startOfMonth from "date-fns/startOfMonth";
+import endOfMonth from "date-fns/endOfMonth";
+import CategorySideBar from "~/components/category/CategorySideBar";
 
 export const meta: MetaFunction = (data) => {
   const params = data.params;
@@ -39,10 +40,11 @@ export const meta: MetaFunction = (data) => {
 };
 
 function CategoryDetails() {
-  const { isBiggerThanMobile } = useScreenSize();
+  const { isMobile } = useScreenSize();
   const [searchParams, setSearchParams] = useSearchParams();
   const removeAccountFromCategoryFetcher = useFetcher<DeleteFetcher>();
-  const { category, accounts: { currentResultSetCount, data, pageSize, totalCount, totalPages }, filterParam } = useLoaderData<typeof loader>();
+  const { category, accounts: { currentResultSetCount, data, pageSize, totalCount, totalPages },
+    filterParam, expensesAllTimeSum, currentMonthExpensesSum } = useLoaderData<typeof loader>();
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
@@ -74,7 +76,15 @@ function CategoryDetails() {
     }
   };
 
-  invariant(category, "Expected category to be defined");
+  if (!category) {
+    return (
+      <Stack direction="column" justifyContent="center" alignItems="center" spacing={ 3 }>
+        <Typography variant="h6" fontWeight={ 400 } >
+          No Category Found
+        </Typography>
+      </Stack>
+    );
+  }
 
   return (
     <Stack direction="column" justifyContent="start" alignItems="start" width="100%" spacing={ 3 }>
@@ -94,18 +104,12 @@ function CategoryDetails() {
       <Box sx={ { flexGrow: 1, width: '100%' } }>
         <Grid container columnSpacing={ 2 }>
           <Grid xs={ 12 } md={ 4 }>
-            <ContentPaperWrap>
-              <Stack direction="column" justifyContent="start" alignItems="start">
-                <List sx={ { width: '100%' } }>
-                  <ReverseListItem primaryText={ "Category Name" } secondaryText={ `${category.name}` } />
-                  <ReverseListItem primaryText={ "Accounts" } secondaryText={ `${totalCount}` } />
-                  <ReverseListItem primaryText={ "Created" } secondaryText={ `${category.dateAddedFromNow.display}` } />
-                  <ReverseListItem primaryText={ "Last Edited" } secondaryText={ `${category.updatedAtFromNow.display}` } />
-                  <ReverseListItem primaryText={ "Shown On Dashboard" } secondaryText={ category.shown ? 'Yes' : 'No' } />
-                  <ReverseListItem primaryText={ "ID" } secondaryText={ `${category.id}` } />
-                </List>
-              </Stack>
-            </ContentPaperWrap>
+            <CategorySideBar
+              category={ category }
+              totalAccounts={ totalCount }
+              expensesAllTimeSum={ expensesAllTimeSum }
+              currentMonthExpensesSum={ currentMonthExpensesSum }
+            />
           </Grid>
 
           <Grid xs={ 12 } md={ 8 }>
@@ -124,7 +128,7 @@ function CategoryDetails() {
 
             <AccountsTable
               accounts={ data }
-              isTableFixed={ isBiggerThanMobile ? true : false }
+              isTableFixed={ isMobile ? false : true }
               columnIds={
                 ACCOUNTS_TABLE_COLUMNS.filter((c) => (c !== 'category' && c !== 'dateAdded' && c !== 'updatedAt'))
               }
@@ -148,8 +152,15 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const pageParam = url.searchParams.get('page') as string | null;
   const filterParam: string | null = url.searchParams.get('q');
   const page: number = pageParam ? (parseInt(pageParam) ? (parseInt(pageParam) < 0 ? 0 : parseInt(pageParam)) : 0) : 0;
+
   const category = await getCategoryById(id);
   const accounts = await getAccountsByCategoryId(id, page, filterParam);
+  const allAccountsByCategory = await getAllAccountsByCategoryId(id);
+  const totalExpensesAllTimeSum = await getTotalExpensesSumByAccountIds(allAccountsByCategory.map((a) => a.id));
+  const expensesAllTimeSum: number | null = totalExpensesAllTimeSum._sum.amount;
+
+  const [monthStart, monthEnd] = [startOfMonth(new Date()), endOfMonth(new Date())];
+  const currentMonthExpensesSum = await getExpensesSumByAccountIdsInDateRange(allAccountsByCategory.map((a) => a.id), monthStart.getTime(), monthEnd.getTime());
 
   const accountsWithDataDisplay = accounts.data.map((account) => {
     return {
@@ -169,7 +180,9 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
       ...accounts,
       data: accountsWithDataDisplay
     },
-    filterParam
+    filterParam,
+    expensesAllTimeSum,
+    currentMonthExpensesSum: currentMonthExpensesSum._sum.amount
   };
   return json(result);
 }

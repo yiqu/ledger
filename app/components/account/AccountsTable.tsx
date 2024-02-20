@@ -34,6 +34,7 @@ function AccountsTable({ accounts, isTableFixed, columnIds = ACCOUNTS_TABLE_COLU
   const searchParams = new URLSearchParams(search);
   const newlyAddedAccountId = searchParams.get('addedAccountId');
   const deleteId: string = deleteFetcher.formData?.get('id')?.toString() || '';
+  const tableFixedMode = (isTableFixed && columnIds.length > 5) ? 'fixed' : 'auto';
 
   useEffect(() => {
     if (deleteFetcher.state === 'idle' && deleteFetcher.data?.showToast) {
@@ -82,7 +83,7 @@ function AccountsTable({ accounts, isTableFixed, columnIds = ACCOUNTS_TABLE_COLU
           size="medium"
           aria-label="table"
           stickyHeader
-          style={ { width: '100%', tableLayout: isTableFixed ? 'fixed' : 'auto' } }
+          style={ { width: '100%', tableLayout: tableFixedMode } }
         >
           <TableHead>
             <TableRow>

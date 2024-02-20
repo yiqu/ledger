@@ -80,8 +80,8 @@ export default function Index() {
         <AccountNavBar onClickAction={ handleActionClick } />
       </StickyToolbar>
 
-      <Box mt={ 2 } mx={ isMobile ? 2 : 0 }>
-        <LayoutWithGutter size={ 'wide' }>
+      <Box mt={ 2 } mx={ isMobile ? 1 : 0 }>
+        <LayoutWithGutter size={ isMobile ? 'full' : 'wider' }>
 
           <Stack direction="column" justifyContent="center" alignItems="center" width="100%" spacing={ 3 }>
             <TitleBarLayout>

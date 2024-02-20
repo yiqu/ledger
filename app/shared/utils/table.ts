@@ -58,40 +58,41 @@ export const transformColumnName = (colId: string) => {
 export const getColumnWidth = (colId: string) => {
   let result = 'auto';
   switch (colId) {
-    case "account": {
+    case "account":
+    case "name": {
       result = 'auto';
       break;
     }
     case "category": {
-      result = '11%';
+      result = '18%';
       break;
     }
     case "amount": {
       result = '14%';
       break;
     }
-    case "updatedAt": {
-      result = '8%';
-      break;
-    }
-    case "dateAdded": {
-      result = '8%';
-      break;
-    }
-    case "expensesCount": {
-      result = '7.5%';
-      break;
-    }
-    case "name": {
+    case "date": {
       result = '15%';
       break;
     }
+    case "updatedAt": {
+      result = '11%';
+      break;
+    }
+    case "dateAdded": {
+      result = '11%';
+      break;
+    }
+    case "expensesCount": {
+      result = '12%';
+      break;
+    }
     case "shown": {
-      result = '7%';
+      result = '12%';
       break;
     }
     case "commentsCount": {
-      result = '8%';
+      result = '10%';
       break;
     }
     case "actions": {
@@ -99,7 +100,7 @@ export const getColumnWidth = (colId: string) => {
       break;
     }
     default: {
-      result = startCase(colId);
+      result = 'auto';
     }
   }
   return result;

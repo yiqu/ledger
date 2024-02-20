@@ -300,3 +300,61 @@ export async function editExpense(expense: ExpenseEditable) {
     throw new Error(`Expense could not be edited. Code: ${error.code}`);
   }
 }
+
+export async function getExpensesByAccountIds(accountIds: string[]) {
+  try {
+    const res = await prisma.expense.findMany({
+      where: {
+        accountId: {
+          in: accountIds
+        }
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getExpensesByAccountIds(): ', JSON.stringify(error));
+    throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
+  }
+}
+
+export async function getTotalExpensesSumByAccountIds(accountIds: string[]) {
+  try {
+    const res = await prisma.expense.aggregate({
+      _sum: {
+        amount: true
+      },
+      where: {
+        accountId: {
+          in: accountIds
+        }
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getTotalExpensesSumByAccountIds(): ', JSON.stringify(error));
+    throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
+  }
+}
+
+export async function getExpensesSumByAccountIdsInDateRange(accountIds: string[], startDate: number, endDate: number) {
+  try {
+    const res = await prisma.expense.aggregate({
+      _sum: {
+        amount: true
+      },
+      where: {
+        accountId: {
+          in: accountIds
+        },
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getExpensesSumByAccountIdsInDateRange(): ', JSON.stringify(error));
+    throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
+  }
+}

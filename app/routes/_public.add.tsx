@@ -9,7 +9,6 @@ import { json, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
-import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import { handleError } from "~/api/utils/utils.server";
 import { badRequest } from "~/api/utils/request.server";
@@ -31,6 +30,8 @@ import { USER_ID } from "~/shared/utils/constants";
 import ButtonClose from "~/shared/components/CloseButton";
 import ButtonSubmit from "~/shared/components/SubmitButton";
 import ButtonReset from "~/shared/components/ResetButton";
+import Divider from "@mui/material/Divider";
+import DialogActionBar from "~/shared/dialog/DialogActionBar";
 
 export const meta: MetaFunction = (data) => {
   return [
@@ -111,7 +112,8 @@ function AddNew() {
               <NewFormFields type={ entityType } control={ control } onClearField={ handleClearField } />
             </Stack>
           </DialogContent>
-          <DialogActions sx={ { width: '100%' } }>
+          <Divider flexItem />
+          <DialogActionBar dialogActionsProps={ { sx: { width: '100%' } } }>
             <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
               <Stack direction="row" justifyContent="start" alignItems="center">
                 <ButtonClose onClick={ handleClose } disabled={ isApiLoading } />
@@ -124,8 +126,7 @@ function AddNew() {
                 </ButtonSubmit>
               </Stack>
             </Stack>
-
-          </DialogActions>
+          </DialogActionBar>
         </Form>
       </DialogLayout>
     </>

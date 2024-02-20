@@ -1,6 +1,5 @@
 import DialogContent from "@mui/material/DialogContent";
 import Stack from "@mui/material/Stack";
-import DialogActions from "@mui/material/DialogActions";
 import startCase from "lodash/startCase";
 import DialogLayout from "~/shared/dialog/DialogLayout";
 import { Form, useActionData, useNavigate, useRouteLoaderData, useSearchParams, useSubmit } from "@remix-run/react";
@@ -27,6 +26,7 @@ import { useFetcher } from "@remix-run/react";
 import HFAutocompleteField from "~/shared/hook-forms/Autocomplete";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { isValidStringCount } from "~/api/utils/validations.server";
+import DialogActionBar from "~/shared/dialog/DialogActionBar";
 
 function AccountDetailEdit() {
   const [searchParams] = useSearchParams();
@@ -109,8 +109,8 @@ function AccountDetailEdit() {
 
           </Stack>
         </DialogContent>
-        <Divider flexItem variant="fullWidth" />
-        <DialogActions sx={ { width: '100%' } }>
+        <Divider flexItem />
+        <DialogActionBar dialogActionsProps={ { sx: { width: '100%' } } }>
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
             <Stack direction="row" justifyContent="start" alignItems="center">
               <ButtonClose onClick={ handleClose } />
@@ -122,7 +122,7 @@ function AccountDetailEdit() {
               </ButtonSubmit>
             </Stack>
           </Stack>
-        </DialogActions>
+        </DialogActionBar>
       </Form>
     </DialogLayout>
   );
