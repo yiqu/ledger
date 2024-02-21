@@ -20,3 +20,6 @@ export const ITEMS_PER_PAGE = 50;
 export const TIME_STAMP_FORMAT = 'M-d-yy h:mm bbb';
 
 export const DASHBOARD_CHART_BG_COLOR = '#fdfaf6b0';
+export const CHART_POLAR_GRID_STROKE_COLOR = '#e6e6e6';
+export const CHART_POLAR_GRID_TOP_HIGHLIGHT_COUNT = 3;
+export const HIGHLIGHT_TOP_X_POLAR_CHART = true;
