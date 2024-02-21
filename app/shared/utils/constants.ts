@@ -19,4 +19,4 @@ export const ITEMS_PER_PAGE = 50;
 
 export const TIME_STAMP_FORMAT = 'M-d-yy h:mm bbb';
 
-export const DASHBOARD_CHART_BG_COLOR = '#FDFAF6';
+export const DASHBOARD_CHART_BG_COLOR = '#fdfaf6b0';

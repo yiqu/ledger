@@ -21,3 +21,7 @@ export interface SuccessJsonObj<T> {
   timestamp: string;
   result: T;
 }
+
+export interface PrismaAmountResult {
+  amount: number | null;
+}

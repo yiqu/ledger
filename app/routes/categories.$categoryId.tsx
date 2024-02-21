@@ -21,10 +21,12 @@ import type { Account } from "~/shared/models/account.model";
 import type { DeleteFetcher } from "~/shared/models/http.model";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { getExpensesSumByAccountIdsInDateRange, getTotalExpensesSumByAccountIds } from "~/api/expenses.server";
+import { getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange, getExpensesSumByAccountIdsInDateRange, getTotalExpensesSumByAccountIds } from "~/api/expenses.server";
 import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import CategorySideBar from "~/components/category/CategorySideBar";
+import CategoryAccountByExpenseMonthlySumChart from "~/components/chart/CategoryAccountByExpenseMonthlySumChart";
+import ChartLayout from "~/components/chart/ChartLayout";
 
 export const meta: MetaFunction = (data) => {
   const params = data.params;
@@ -44,7 +46,7 @@ function CategoryDetails() {
   const [searchParams, setSearchParams] = useSearchParams();
   const removeAccountFromCategoryFetcher = useFetcher<DeleteFetcher>();
   const { category, accounts: { currentResultSetCount, data, pageSize, totalCount, totalPages },
-    filterParam, expensesAllTimeSum, currentMonthExpensesSum } = useLoaderData<typeof loader>();
+    filterParam, expensesAllTimeSum, currentMonthExpensesSum, accountsExpensesSumByDateRange } = useLoaderData<typeof loader>();
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
@@ -101,8 +103,25 @@ function CategoryDetails() {
         </Stack >
       </TitleBarLayout>
 
-      <Box sx={ { flexGrow: 1, width: '100%' } }>
-        <Grid container columnSpacing={ 2 }>
+      <Stack width="100%" direction="column" justifyContent="start" alignItems="start" spacing={ 3 }>
+        <Grid container width="100%">
+          <Grid xs={ 12 } md={ 6 }>
+            <ChartLayout>
+              <Stack direction="row" justifyContent="center" alignItems="center" width="100%">
+                <Typography>
+                  Expense Sum By Account
+                </Typography>
+              </Stack>
+              <Box height="300px" minHeight="300px">
+                <CategoryAccountByExpenseMonthlySumChart data={ accountsExpensesSumByDateRange } />
+              </Box>
+            </ChartLayout>
+          </Grid>
+          <Grid xs={ 12 } md={ 6 }>
+
+          </Grid>
+        </Grid>
+        <Grid container columnSpacing={ 2 } width="100%">
           <Grid xs={ 12 } md={ 4 }>
             <CategorySideBar
               category={ category }
@@ -136,7 +155,7 @@ function CategoryDetails() {
             />
           </Grid>
         </Grid>
-      </Box>
+      </Stack>
     </Stack>
   );
 }
@@ -162,6 +181,8 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const [monthStart, monthEnd] = [startOfMonth(new Date()), endOfMonth(new Date())];
   const currentMonthExpensesSum = await getExpensesSumByAccountIdsInDateRange(allAccountsByCategory.map((a) => a.id), monthStart.getTime(), monthEnd.getTime());
 
+  const accountsExpensesSumByDateRange = await getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange(allAccountsByCategory, monthStart.getTime(), monthEnd.getTime());
+
   const accountsWithDataDisplay = accounts.data.map((account) => {
     return {
       ...account,
@@ -182,7 +203,8 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
     },
     filterParam,
     expensesAllTimeSum,
-    currentMonthExpensesSum: currentMonthExpensesSum._sum.amount
+    currentMonthExpensesSum: currentMonthExpensesSum._sum.amount,
+    accountsExpensesSumByDateRange
   };
   return json(result);
 }

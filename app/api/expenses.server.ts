@@ -5,6 +5,7 @@ import parseInt from "lodash/parseInt";
 import type { Expense, ExpenseAddable, ExpenseEditable } from "~/shared/models/expense.model";
 import { ITEMS_PER_PAGE } from "~/shared/utils/constants";
 import { convertDateDisplay } from "./utils/date.server";
+import type { Account } from "~/shared/models/account.model";
 
 /**
  * Get all expenses paged
@@ -355,6 +356,54 @@ export async function getExpensesSumByAccountIdsInDateRange(accountIds: string[]
     return res;
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
     console.log('Server error at getExpensesSumByAccountIdsInDateRange(): ', JSON.stringify(error));
+    throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
+  }
+}
+
+
+/**
+ * Powers the Category detail accounts expense sum radar chart
+ * @param accounts 
+ * @param startDate 
+ * @param endDate 
+ * @returns 
+ */
+export async function getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange(accounts: Account[], startDate: number, endDate: number) {
+  try {
+    const res = await prisma.expense.groupBy({
+      by: ['accountId'],
+      _sum: {
+        amount: true,
+      },
+      _count: {
+        amount: true
+      },
+      where: {
+        accountId: {
+          in: accounts.map((a) => a.id)
+        },
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      },
+      orderBy: {
+        accountId: 'asc'
+      }
+    });
+    const resultWithAccountInfo = res.map((r) => {
+      const account = accounts.find((a) => a.id === r.accountId);
+      return {
+        ...r,
+        account: account,
+        expensesCount: r._count.amount,
+        expensesSum: r._sum.amount,
+        accountName: account?.name ?? 'N/A'
+      };
+    });
+    return resultWithAccountInfo;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange(): ', JSON.stringify(error));
     throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
   }
 }
