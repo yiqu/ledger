@@ -7,7 +7,7 @@ import { isRouteErrorResponse, useLoaderData, useNavigate, useRouteError, useSea
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import Dashboard from "~/components/dashboard/Dashboard";
-import styles from "~/styles/dashboard.css";
+import styles from "~/styles/dashboard.css?url";
 import type { ShouldRevalidateFunction } from "@remix-run/react";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TitleBarLayout from "~/components/title/TitleBarLayout";

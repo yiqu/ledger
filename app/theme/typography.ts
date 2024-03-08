@@ -1,5 +1,6 @@
 import type { Palette } from "@mui/material/styles";
 import type { TypographyOptions } from "@mui/material/styles/createTypography";
+import type { CSSProperties } from "react";
 
 export const APP_BODY_COLOR = "#202124";
 export const APP_TEXT_COLOR = "#222";
@@ -8,19 +9,19 @@ export const GREY_TEXT = "#5e5e5e";
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {
-    italic0: React.CSSProperties;
-    italic1: React.CSSProperties;
-    italic2: React.CSSProperties;
-    body0: React.CSSProperties;
-    subtitle0: React.CSSProperties;
+    italic0: CSSProperties;
+    italic1: CSSProperties;
+    italic2: CSSProperties;
+    body0: CSSProperties;
+    subtitle0: CSSProperties;
   }
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
-    italic0?: React.CSSProperties;
-    italic1?: React.CSSProperties;
-    italic2?: React.CSSProperties;
-    body0?: React.CSSProperties;
-    subtitle0?: React.CSSProperties;
+    italic0?: CSSProperties;
+    italic1?: CSSProperties;
+    italic2?: CSSProperties;
+    body0?: CSSProperties;
+    subtitle0?: CSSProperties;
   }
 }
 // Update the Typography's variant prop options

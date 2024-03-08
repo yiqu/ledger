@@ -1,44 +1,37 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { json, type LinksFunction, type LoaderFunctionArgs } from "@remix-run/node";
 import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
   isRouteErrorResponse,
-  useRouteError,
+  Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError
 } from "@remix-run/react";
 import Layout from "./components/layouts/Layout";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import indexStyles from '~/styles/index.css';
-import fontStyles from '~/styles/fonts.css';
-import leftNavLogoStyles from '~/styles/left-nav-logo.css';
-import muiAlertStyles from "~/styles/mui-alert.css";
+import '@fontsource/roboto/300.css?url';
+import '@fontsource/roboto/400.css?url';
+import '@fontsource/roboto/500.css?url';
+import '@fontsource/roboto/700.css?url';
+import indexStyles from '~/styles/index.css?url';
+import fontStyles from '~/styles/fonts.css?url';
+import leftNavLogoStyles from '~/styles/left-nav-logo.css?url';
+import muiAlertStyles from "~/styles/mui-alert.css?url";
 import ActionLoaderErrorDisplay from "./components/error/ActionLoaderError";
 import OtherErrorDisplay from "./components/error/OtherError";
 // import { Analytics } from '@vercel/analytics/react';
 import { userPrefCookie } from "./server/user-preference.server";
 import { SpeedInsights } from "@vercel/speed-insights/remix";
 import { gSansRegular, gSansTextRegular, gSansDisplayRegular } from "./shared/utils/link-descriptors";
+import type { ReactNode } from "react";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [
+  ...[
     //faviconDescriptor,
     gSansRegular,
     gSansTextRegular,
     gSansDisplayRegular,
-    { rel: "stylesheet", href: cssBundleHref },
     { rel: "stylesheet", href: fontStyles },
     { rel: "stylesheet", href: muiAlertStyles },
     { rel: "stylesheet", href: indexStyles },
     { rel: "stylesheet", href: leftNavLogoStyles }
-  ] : []),
+  ]
 ];
 
 export default function App() {
@@ -49,7 +42,7 @@ export default function App() {
   );
 }
 
-function Document({ title, children }: { title?: string; children: React.ReactNode }) {
+function Document({ title, children }: { title?: string; children: ReactNode }) {
   return (
     <html lang="en">
       <head>
@@ -63,7 +56,6 @@ function Document({ title, children }: { title?: string; children: React.ReactNo
         <Layout child={ children } />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
         { process.env.NODE_ENV === "production" && (
           <></>
         ) }

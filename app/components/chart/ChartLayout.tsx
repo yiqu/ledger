@@ -1,6 +1,7 @@
 import Paper from "@mui/material/Paper";
+import type { ReactNode } from 'react';
 
-function ChartLayout({ children }: { children: React.ReactNode }) {
+function ChartLayout({ children }: { children: ReactNode }) {
   return (
     <Paper
       variant="outlined"

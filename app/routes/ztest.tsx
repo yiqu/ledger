@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material";
 import { green, red } from "@mui/material/colors";
-import styles from "~/styles/index.css";
+import styles from "~/styles/index.css?url";
 import { useState } from "react";
 import gears from '../../public/assets/gifs/gears.svg';
 import blocksGrey from '../../public/assets/gifs/blocks-grey.svg';

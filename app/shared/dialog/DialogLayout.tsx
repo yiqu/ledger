@@ -5,14 +5,15 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
+import type { ReactNode } from "react";
 
 export interface DialogLayoutProps {
   id?: string;
   open: boolean;
-  title: React.ReactNode;
+  title: ReactNode;
   maxWidth?: DialogProps['maxWidth'];
   onClose: (payload?: any) => void;
-  children: React.ReactNode
+  children: ReactNode
 }
 
 function DialogLayout({ id, open, title, maxWidth = "lg", onClose, children }: DialogLayoutProps) {

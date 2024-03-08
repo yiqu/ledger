@@ -6,9 +6,11 @@ import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import type { SyntheticEvent } from "react";
+import type { ChangeEvent, SyntheticEvent } from "react";
 import { useEffect, useState } from "react";
 import { Form, useSearchParams } from "@remix-run/react";
+
+
 interface SearchInputProps {
   queryValue: string;
 }
@@ -21,7 +23,7 @@ function SearchInput({ queryValue }: SearchInputProps) {
     setSearchInput(queryValue || '');
   }, [queryValue]);
 
-  const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
   };
 

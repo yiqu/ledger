@@ -2,6 +2,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
+import type { ChangeEvent } from "react";
 
 interface TablePaginationProps {
   currentPage: number;
@@ -9,7 +10,7 @@ interface TablePaginationProps {
   pageSize: number;
   currentResultSetCount: number;
   data: any[];
-  handlePageUpdate: (event: React.ChangeEvent<unknown>, value: number) => void;
+  handlePageUpdate: (event: ChangeEvent<unknown>, value: number) => void;
 }
 
 function TablePagination({ currentPage, totalPages, pageSize, currentResultSetCount, data, handlePageUpdate }: TablePaginationProps) {

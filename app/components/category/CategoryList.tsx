@@ -12,7 +12,7 @@ import { getParamsAsObject } from "~/shared/utils/url.utils";
 import Empty from "../no-result/Empty";
 import CategoryDisplay from "./CategoryDisplay";
 import Grid from '@mui/material/Unstable_Grid2';
-
+import type { ChangeEvent } from 'react';
 
 function CategoryList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,7 +20,7 @@ function CategoryList() {
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
-  const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageUpdate = (event: ChangeEvent<unknown>, value: number) => {
     // Get current params in the URL and keep them
     setSearchParams((params: URLSearchParams) => {
       const currentParams = getParamsAsObject(params);

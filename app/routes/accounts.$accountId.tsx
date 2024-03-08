@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import invariant from "tiny-invariant";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import Typography from "@mui/material/Typography";
-import styles from "~/styles/mui-alert.css";
+import styles from "~/styles/mui-alert.css?url";
 import OtherErrorDisplay from "~/components/error/OtherError";
 import ActionLoaderErrorDisplay from "~/components/error/ActionLoaderError";
 import { handleError } from "~/api/utils/utils.server";
@@ -30,6 +30,7 @@ import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
 import Add from "@mui/icons-material/Add";
 //@ts-ignore
 import urlcat from 'urlcat';
+import type { ChangeEvent } from "react";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -65,7 +66,7 @@ function AccountDetail() {
 
   const editAccountUrl = urlcat('', '/accounts/:accountId/edit', { accountId: account.id, redirectUrl: pathname });
 
-  const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageUpdate = (event: ChangeEvent<unknown>, value: number) => {
     setSearchParams((params: URLSearchParams) => {
       const currentParams = getParamsAsObject(params);
       return { ...currentParams, page: `${value - 1}` };

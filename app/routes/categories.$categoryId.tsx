@@ -19,6 +19,7 @@ import { ACCOUNTS_TABLE_COLUMNS } from "~/shared/utils/table";
 import useScreenSize from "~/shared/hooks/useIsMobile";
 import type { Account } from "~/shared/models/account.model";
 import type { DeleteFetcher } from "~/shared/models/http.model";
+import type { ChangeEvent } from "react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange, getExpensesSumByAccountIdsInDateRange, getTotalExpensesSumByAccountIds } from "~/api/expenses.server";
@@ -59,7 +60,7 @@ function CategoryDetails() {
     });
   }, [removeAccountFromCategoryFetcher.data?.message, removeAccountFromCategoryFetcher.data?.showToast, removeAccountFromCategoryFetcher.state]);
 
-  const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageUpdate = (event: ChangeEvent<unknown>, value: number) => {
     setSearchParams((params: URLSearchParams) => {
       const currentParams = getParamsAsObject(params);
       return { ...currentParams, page: `${value - 1}` };

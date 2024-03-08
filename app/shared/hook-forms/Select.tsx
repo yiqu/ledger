@@ -1,4 +1,4 @@
-import type { SelectProps} from "@mui/material";
+import type { SelectProps } from "@mui/material";
 import FormHelperText from "@mui/material/FormHelperText";
 import Typography from "@mui/material/Typography";
 import { Controller } from "react-hook-form";
@@ -6,13 +6,14 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { red } from '@mui/material/colors';
+import type { ReactNode } from "react";
 
 
 export interface HFSelectFieldProps {
   name: string;
   label: string;
   control: any;
-  children: React.ReactNode;
+  children: ReactNode;
   helperText?: string;
 }
 
@@ -41,7 +42,7 @@ function HFSelectField({ name, label, control, children, helperText, ...props }:
           >
             { children }
           </Select>
-          <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ {ml: 0} } >
+          <FormHelperText id={ `${name}-helper-text` } error={ !!error } sx={ { ml: 0 } } >
             {
               <Typography variant="caption" color={ red } component="span"> { error ? error.message : helperText } </Typography>
             }

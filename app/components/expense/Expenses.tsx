@@ -12,6 +12,7 @@ import { getParamsAsObject } from "~/shared/utils/url.utils";
 import { ITEMS_PER_PAGE } from "~/shared/utils/constants";
 import Divider from "@mui/material/Divider";
 import useScreenSize from "~/shared/hooks/useIsMobile";
+import type { ChangeEvent } from 'react';
 
 function Expenses() {
   const { isMobile } = useScreenSize();
@@ -20,7 +21,7 @@ function Expenses() {
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
-  const handlePageUpdate = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageUpdate = (event: ChangeEvent<unknown>, value: number) => {
     // Get current params in the URL and keep them
     setSearchParams((params: URLSearchParams) => {
       const currentParams = getParamsAsObject(params);

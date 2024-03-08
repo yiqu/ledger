@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext, Fragment } from "react";
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -32,7 +32,7 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
   };
 
   return (
-    <React.Fragment>
+    <Fragment>
       <AppBar position="fixed" open={ open } elevation={ 1 }>
         <Toolbar variant="dense">
           <Stack direction="row" justifyContent="space-between" alignItems="center" width="100%">
@@ -74,6 +74,6 @@ export default function TopNav({ open, onNavOpen }: TopNavProps) {
         </AppBar> */}
 
       </AppBar>
-    </React.Fragment>
+    </Fragment>
   );
 }

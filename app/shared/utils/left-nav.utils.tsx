@@ -14,6 +14,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsIconOutlined from '@mui/icons-material/SettingsOutlined';
 
 import { NavigationItem } from "~/shared/models/nav-item.model";
+import type { ReactNode } from 'react';
 
 export const GET_LEFT_NAV_ITEMS = () => {
   const LEFT_NAV_ITEMS = [
@@ -27,7 +28,7 @@ export const GET_LEFT_NAV_ITEMS = () => {
   return LEFT_NAV_ITEMS;
 };
 
-export const getFilledIcon = (pathName: string): JSX.Element => {
+export const getFilledIcon = (pathName: string): ReactNode => {
   switch (pathName) {
     case 'dashboard': {
       return <DashboardIcon color='primary' />;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import type { LeftNavProps, NavigationItem } from "~/shared/models/nav-item.model";
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -31,10 +31,10 @@ function LeftNav(props: LeftNavProps) {
   }, [location.pathname]);
 
   return (
-    <React.Fragment>
+    <Fragment>
       <List sx={ { p: 0 } }>
         { leftNavItems.map((navItem: NavigationItem, index) => (
-          <React.Fragment key={ navItem.id }>
+          <Fragment key={ navItem.id }>
             {
               (navItem.id === 'settings') && <Divider sx={ { my: 1 } } />
             }
@@ -62,11 +62,11 @@ function LeftNav(props: LeftNavProps) {
                 <ListItemText primary={ navItem.display } sx={ { opacity: props.open ? 1 : 0 } } />
               </ListItemButton>
             </ListItem>
-          </React.Fragment>
+          </Fragment>
         )) }
       </List>
 
-    </React.Fragment>
+    </Fragment>
   );
 }
 

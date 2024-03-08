@@ -1,9 +1,10 @@
 
+// eslint-disable-next-line no-undef
 export function scrollToElementById(id: string, timeout?: number, position?: ScrollLogicalPosition): void {
   let top = document.getElementById(id);
   if (top) {
     setTimeout(() => {
-      top?.scrollIntoView({block: position as any ?? "end"});
+      top?.scrollIntoView({ block: position as any ?? "end" });
       top = null;
     }, timeout ?? 0);
   }
@@ -45,9 +46,9 @@ export function capitalizeFirstLetter(str: string): string | undefined {
 
 export function objectsEqual(o1: any, o2: any): boolean {
   return typeof o1 === 'object' && Object.keys(o1).length > 0
-  ? Object.keys(o1).length === Object.keys(o2).length
-      && Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
-  : o1 === o2;
+    ? Object.keys(o1).length === Object.keys(o2).length
+    && Object.keys(o1).every(p => objectsEqual(o1[p], o2[p]))
+    : o1 === o2;
 }
 
 export function arraysEqual(a1: any[], a2: any[]): boolean {

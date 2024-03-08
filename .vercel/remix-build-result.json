@@ -1,0 +1,404 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs-eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "routes/accounts.$accountId.expense.$expenseId.$displayTypeId": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/expenses.$expenseId.comments": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/accounts.$accountId.edit": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/categories.removeAccount": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/expenses.$expenseId.edit": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/categories.$categoryId": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/accounts.$accountId": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/expenses.$expenseId": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/categories._index": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/categories.delete": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_public.settings": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/accounts._index": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/categories.edit": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/expenses._index": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_public._index": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/categories.add": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_public.about": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/_public.add": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/ztest": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0",
+      "routes/$": "nodejs-eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "app/root.tsx",
+        "config": {}
+      },
+      "routes/accounts.$accountId.expense.$expenseId.$displayTypeId": {
+        "file": "app/routes/accounts.$accountId.expense.$expenseId.$displayTypeId.tsx",
+        "id": "routes/accounts.$accountId.expense.$expenseId.$displayTypeId",
+        "path": "expense/:expenseId/:displayTypeId",
+        "parentId": "routes/accounts.$accountId",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/expenses.$expenseId.comments": {
+        "file": "app/routes/expenses.$expenseId.comments.tsx",
+        "id": "routes/expenses.$expenseId.comments",
+        "path": "comments",
+        "parentId": "routes/expenses.$expenseId",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/accounts.$accountId.edit": {
+        "file": "app/routes/accounts.$accountId.edit.tsx",
+        "id": "routes/accounts.$accountId.edit",
+        "path": "edit",
+        "parentId": "routes/accounts.$accountId",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/categories.removeAccount": {
+        "file": "app/routes/categories.removeAccount.tsx",
+        "id": "routes/categories.removeAccount",
+        "path": "removeAccount",
+        "parentId": "routes/categories",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/expenses.$expenseId.edit": {
+        "file": "app/routes/expenses.$expenseId.edit.tsx",
+        "id": "routes/expenses.$expenseId.edit",
+        "path": "edit",
+        "parentId": "routes/expenses.$expenseId",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/categories.$categoryId": {
+        "file": "app/routes/categories.$categoryId.tsx",
+        "id": "routes/categories.$categoryId",
+        "path": ":categoryId",
+        "parentId": "routes/categories",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/accounts.$accountId": {
+        "file": "app/routes/accounts.$accountId.tsx",
+        "id": "routes/accounts.$accountId",
+        "path": ":accountId",
+        "parentId": "routes/accounts",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/expenses.$expenseId": {
+        "file": "app/routes/expenses.$expenseId.tsx",
+        "id": "routes/expenses.$expenseId",
+        "path": ":expenseId",
+        "parentId": "routes/expenses",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/categories._index": {
+        "file": "app/routes/categories._index.tsx",
+        "id": "routes/categories._index",
+        "index": true,
+        "parentId": "routes/categories",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/categories.delete": {
+        "file": "app/routes/categories.delete.tsx",
+        "id": "routes/categories.delete",
+        "path": "delete",
+        "parentId": "routes/categories",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_public.settings": {
+        "file": "app/routes/_public.settings.tsx",
+        "id": "routes/_public.settings",
+        "path": "settings",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/accounts._index": {
+        "file": "app/routes/accounts._index.tsx",
+        "id": "routes/accounts._index",
+        "index": true,
+        "parentId": "routes/accounts",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/categories.edit": {
+        "file": "app/routes/categories.edit.tsx",
+        "id": "routes/categories.edit",
+        "path": "edit",
+        "parentId": "routes/categories",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/expenses._index": {
+        "file": "app/routes/expenses._index.tsx",
+        "id": "routes/expenses._index",
+        "index": true,
+        "parentId": "routes/expenses",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_public._index": {
+        "file": "app/routes/_public._index.tsx",
+        "id": "routes/_public._index",
+        "index": true,
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/categories.add": {
+        "file": "app/routes/categories.add.tsx",
+        "id": "routes/categories.add",
+        "path": "add",
+        "parentId": "routes/categories",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_public.about": {
+        "file": "app/routes/_public.about.tsx",
+        "id": "routes/_public.about",
+        "path": "about",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/_public.add": {
+        "file": "app/routes/_public.add.tsx",
+        "id": "routes/_public.add",
+        "path": "add",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/categories": {
+        "file": "app/routes/categories.tsx",
+        "id": "routes/categories",
+        "path": "categories",
+        "parentId": "root",
+        "config": {}
+      },
+      "routes/accounts": {
+        "file": "app/routes/accounts.tsx",
+        "id": "routes/accounts",
+        "path": "accounts",
+        "parentId": "root",
+        "config": {}
+      },
+      "routes/expenses": {
+        "file": "app/routes/expenses.tsx",
+        "id": "routes/expenses",
+        "path": "expenses",
+        "parentId": "root",
+        "config": {}
+      },
+      "routes/ztest": {
+        "file": "app/routes/ztest.tsx",
+        "id": "routes/ztest",
+        "path": "ztest",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "routes/$": {
+        "file": "app/routes/$.tsx",
+        "id": "routes/$",
+        "path": "*",
+        "parentId": "root",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "remixConfig": {
+    "appDirectory": "/Users/yiqu/workspace/ledger/app",
+    "basename": "/",
+    "buildDirectory": "/Users/yiqu/workspace/ledger/build",
+    "future": {
+      "v3_fetcherPersist": false,
+      "v3_relativeSplatPath": false,
+      "v3_throwAbortReason": false
+    },
+    "manifest": false,
+    "publicPath": "/",
+    "routes": {
+      "root": {
+        "path": "",
+        "id": "root",
+        "file": "root.tsx"
+      },
+      "routes/accounts.$accountId.expense.$expenseId.$displayTypeId": {
+        "file": "routes/accounts.$accountId.expense.$expenseId.$displayTypeId.tsx",
+        "id": "routes/accounts.$accountId.expense.$expenseId.$displayTypeId",
+        "path": "expense/:expenseId/:displayTypeId",
+        "parentId": "routes/accounts.$accountId"
+      },
+      "routes/expenses.$expenseId.comments": {
+        "file": "routes/expenses.$expenseId.comments.tsx",
+        "id": "routes/expenses.$expenseId.comments",
+        "path": "comments",
+        "parentId": "routes/expenses.$expenseId"
+      },
+      "routes/accounts.$accountId.edit": {
+        "file": "routes/accounts.$accountId.edit.tsx",
+        "id": "routes/accounts.$accountId.edit",
+        "path": "edit",
+        "parentId": "routes/accounts.$accountId"
+      },
+      "routes/categories.removeAccount": {
+        "file": "routes/categories.removeAccount.tsx",
+        "id": "routes/categories.removeAccount",
+        "path": "removeAccount",
+        "parentId": "routes/categories"
+      },
+      "routes/expenses.$expenseId.edit": {
+        "file": "routes/expenses.$expenseId.edit.tsx",
+        "id": "routes/expenses.$expenseId.edit",
+        "path": "edit",
+        "parentId": "routes/expenses.$expenseId"
+      },
+      "routes/categories.$categoryId": {
+        "file": "routes/categories.$categoryId.tsx",
+        "id": "routes/categories.$categoryId",
+        "path": ":categoryId",
+        "parentId": "routes/categories"
+      },
+      "routes/accounts.$accountId": {
+        "file": "routes/accounts.$accountId.tsx",
+        "id": "routes/accounts.$accountId",
+        "path": ":accountId",
+        "parentId": "routes/accounts"
+      },
+      "routes/expenses.$expenseId": {
+        "file": "routes/expenses.$expenseId.tsx",
+        "id": "routes/expenses.$expenseId",
+        "path": ":expenseId",
+        "parentId": "routes/expenses"
+      },
+      "routes/categories._index": {
+        "file": "routes/categories._index.tsx",
+        "id": "routes/categories._index",
+        "index": true,
+        "parentId": "routes/categories"
+      },
+      "routes/categories.delete": {
+        "file": "routes/categories.delete.tsx",
+        "id": "routes/categories.delete",
+        "path": "delete",
+        "parentId": "routes/categories"
+      },
+      "routes/_public.settings": {
+        "file": "routes/_public.settings.tsx",
+        "id": "routes/_public.settings",
+        "path": "settings",
+        "parentId": "root"
+      },
+      "routes/accounts._index": {
+        "file": "routes/accounts._index.tsx",
+        "id": "routes/accounts._index",
+        "index": true,
+        "parentId": "routes/accounts"
+      },
+      "routes/categories.edit": {
+        "file": "routes/categories.edit.tsx",
+        "id": "routes/categories.edit",
+        "path": "edit",
+        "parentId": "routes/categories"
+      },
+      "routes/expenses._index": {
+        "file": "routes/expenses._index.tsx",
+        "id": "routes/expenses._index",
+        "index": true,
+        "parentId": "routes/expenses"
+      },
+      "routes/_public._index": {
+        "file": "routes/_public._index.tsx",
+        "id": "routes/_public._index",
+        "index": true,
+        "parentId": "root"
+      },
+      "routes/categories.add": {
+        "file": "routes/categories.add.tsx",
+        "id": "routes/categories.add",
+        "path": "add",
+        "parentId": "routes/categories"
+      },
+      "routes/_public.about": {
+        "file": "routes/_public.about.tsx",
+        "id": "routes/_public.about",
+        "path": "about",
+        "parentId": "root"
+      },
+      "routes/_public.add": {
+        "file": "routes/_public.add.tsx",
+        "id": "routes/_public.add",
+        "path": "add",
+        "parentId": "root"
+      },
+      "routes/categories": {
+        "file": "routes/categories.tsx",
+        "id": "routes/categories",
+        "path": "categories",
+        "parentId": "root"
+      },
+      "routes/accounts": {
+        "file": "routes/accounts.tsx",
+        "id": "routes/accounts",
+        "path": "accounts",
+        "parentId": "root"
+      },
+      "routes/expenses": {
+        "file": "routes/expenses.tsx",
+        "id": "routes/expenses",
+        "path": "expenses",
+        "parentId": "root"
+      },
+      "routes/ztest": {
+        "file": "routes/ztest.tsx",
+        "id": "routes/ztest",
+        "path": "ztest",
+        "parentId": "root"
+      },
+      "routes/$": {
+        "file": "routes/$.tsx",
+        "id": "routes/$",
+        "path": "*",
+        "parentId": "root"
+      }
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true
+  }
+}
