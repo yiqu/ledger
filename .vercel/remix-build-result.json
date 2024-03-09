@@ -246,8 +246,8 @@
     "basename": "/",
     "buildDirectory": "/Users/yiqu/workspace/ledger/build",
     "future": {
-      "v3_fetcherPersist": false,
-      "v3_relativeSplatPath": false,
+      "v3_fetcherPersist": true,
+      "v3_relativeSplatPath": true,
       "v3_throwAbortReason": false
     },
     "manifest": false,
@@ -398,7 +398,7 @@
       }
     },
     "serverBuildFile": "index.js",
-    "serverModuleFormat": "esm",
+    "serverModuleFormat": "cjs",
     "ssr": true
   }
 }
