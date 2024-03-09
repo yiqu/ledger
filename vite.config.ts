@@ -13,7 +13,7 @@ export default defineConfig({
       {
         presets: [vercelPreset()],
         ignoredRouteFiles: ["**/.*"],
-        serverModuleFormat: "cjs",
+        // serverModuleFormat: "cjs",
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true
