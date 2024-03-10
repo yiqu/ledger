@@ -13,6 +13,7 @@ import shopping from '../../../public/assets/category/mobile-shopping.png';
 import popcorn from '../../../public/assets/category/popcorn.png';
 import shampoo from '../../../public/assets/category/shampoo.png';
 import taxi from '../../../public/assets/category/taxi.png';
+import medicine from '../../../public/assets/category/medicine.png';
 import app from '../../../public/assets/category/app.png';
 
 function CategoryDisplayMedia({ category }: { category: string; }) {
@@ -63,6 +64,9 @@ function CategoryDisplayMedia({ category }: { category: string; }) {
       break;
     case 'Taxi':
       logo = taxi;
+      break;
+    case 'Pharmacy':
+      logo = medicine;
       break;
     default:
       logo = app;
