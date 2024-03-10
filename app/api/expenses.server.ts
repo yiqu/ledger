@@ -341,7 +341,7 @@ export async function getExpensesSumByAccountIdsInDateRange(accountIds: string[]
   try {
     const res = await prisma.expense.aggregate({
       _sum: {
-        amount: true
+        amount: true,
       },
       where: {
         accountId: {
@@ -404,6 +404,53 @@ export async function getListOfExpensesSumAndExpensesCountByAccountIdsInDateRang
     return resultWithAccountInfo;
   } catch (error: Prisma.PrismaClientKnownRequestError | any) {
     console.log('Server error at getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange(): ', JSON.stringify(error));
+    throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
+  }
+}
+
+export async function getNumberOfExpensesPerAccountByAccountIdsInDateRange(accountIds: string[], startDate: number, endDate: number) {
+  try {
+    const res = await prisma.expense.groupBy({
+      by: ['accountId'],
+      _count: {
+        amount: true,
+      },
+      where: {
+        accountId: {
+          in: accountIds
+        },
+        date: {
+          gte: startDate,
+          lte: endDate
+        },
+      },
+      orderBy: {
+        _count: {
+          amount: 'desc'
+        }
+      }
+    });
+
+    const getAccountNamesByIds = await prisma.account.findMany({
+      where: {
+        id: {
+          in: accountIds
+        }
+      }
+    });
+
+    const resultWithAccountNames = res.map((r) => {
+      const account = getAccountNamesByIds.find((a) => a.id === r.accountId);
+      return {
+        ...r,
+        account: account,
+        expensesCount: r._count.amount,
+        accountName: account?.name ?? 'N/A'
+      };
+    });
+    return resultWithAccountNames;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getNumberOfExpensesPerAccountByAccountIdsInDateRange(): ', JSON.stringify(error));
     throw new Error(`Expenses could not be retrieved. Code: ${error.code}`);
   }
 }

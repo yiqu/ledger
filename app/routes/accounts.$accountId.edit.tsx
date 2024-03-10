@@ -72,8 +72,12 @@ function AccountDetailEdit() {
   const handleFormSubmit = (data: Account) => {
     const dataToSave: AccountUpdateable = {
       name: data.name,
-      categoryId: data.category?.id ?? null
     };
+    // add the category id if user selected it or updated it
+    if (data.category?.id) {
+      dataToSave.categoryId = data.category.id;
+    }
+
     submit(dataToSave as any, {
       method: 'PATCH',
       replace: true,

@@ -21,12 +21,13 @@ import type { Account } from "~/shared/models/account.model";
 import type { DeleteFetcher } from "~/shared/models/http.model";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange, getExpensesSumByAccountIdsInDateRange, getTotalExpensesSumByAccountIds } from "~/api/expenses.server";
+import { getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange, getExpensesSumByAccountIdsInDateRange, getTotalExpensesSumByAccountIds, getNumberOfExpensesPerAccountByAccountIdsInDateRange } from "~/api/expenses.server";
 import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import CategorySideBar from "~/components/category/CategorySideBar";
-import CategoryAccountByExpenseMonthlySumChart from "~/components/chart/CategoryAccountByExpenseMonthlySumChart";
+import ExpensesSumByAccountRadarChart from "~/components/chart/ExpensesSumByAccountRadarChart";
 import ChartLayout from "~/components/chart/ChartLayout";
+import ExpensesCountTreeChart from "~/components/chart/ExpensesCountTreeChart";
 
 export const meta: MetaFunction = (data) => {
   const params = data.params;
@@ -46,7 +47,8 @@ function CategoryDetails() {
   const [searchParams, setSearchParams] = useSearchParams();
   const removeAccountFromCategoryFetcher = useFetcher<DeleteFetcher>();
   const { category, accounts: { currentResultSetCount, data, pageSize, totalCount, totalPages },
-    filterParam, expensesAllTimeSum, currentMonthExpensesSum, accountsExpensesSumByDateRange } = useLoaderData<typeof loader>();
+    filterParam, expensesAllTimeSum, currentMonthExpensesSum, accountsExpensesSumByDateRange,
+    expensesCountByAccounts } = useLoaderData<typeof loader>();
   const searchParamPage: string | null = searchParams.get('page');
   const currentPage = searchParamPage ? (parseInt(searchParamPage) ? (parseInt(searchParamPage) < 0 ? 0 : parseInt(searchParamPage)) : 0) : 0;
 
@@ -104,7 +106,7 @@ function CategoryDetails() {
       </TitleBarLayout>
 
       <Stack width="100%" direction="column" justifyContent="start" alignItems="start" spacing={ 3 }>
-        <Grid container width="100%">
+        <Grid container columnSpacing={ 2 } width="100%">
           <Grid xs={ 12 } md={ 6 }>
             <ChartLayout>
               <Stack direction="row" justifyContent="center" alignItems="center" width="100%">
@@ -113,12 +115,21 @@ function CategoryDetails() {
                 </Typography>
               </Stack>
               <Box height="300px" minHeight="300px">
-                <CategoryAccountByExpenseMonthlySumChart data={ accountsExpensesSumByDateRange } />
+                <ExpensesSumByAccountRadarChart data={ accountsExpensesSumByDateRange } />
               </Box>
             </ChartLayout>
           </Grid>
           <Grid xs={ 12 } md={ 6 }>
-
+            <ChartLayout>
+              <Stack direction="row" justifyContent="center" alignItems="center" width="100%">
+                <Typography>
+                  Expenses Count By Account
+                </Typography>
+              </Stack>
+              <Box height="300px" minHeight="300px">
+                <ExpensesCountTreeChart data={ expensesCountByAccounts } />
+              </Box>
+            </ChartLayout>
           </Grid>
         </Grid>
         <Grid container columnSpacing={ 2 } width="100%">
@@ -182,6 +193,7 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
   const currentMonthExpensesSum = await getExpensesSumByAccountIdsInDateRange(allAccountsByCategory.map((a) => a.id), monthStart.getTime(), monthEnd.getTime());
 
   const accountsExpensesSumByDateRange = await getListOfExpensesSumAndExpensesCountByAccountIdsInDateRange(allAccountsByCategory, monthStart.getTime(), monthEnd.getTime());
+  const expensesCountByAccountIds = await getNumberOfExpensesPerAccountByAccountIdsInDateRange(allAccountsByCategory.map((a) => a.id), monthStart.getTime(), monthEnd.getTime());
 
   const accountsWithDataDisplay = accounts.data.map((account) => {
     return {
@@ -203,8 +215,9 @@ export async function loader({ request, params, context }: LoaderFunctionArgs) {
     },
     filterParam,
     expensesAllTimeSum,
-    currentMonthExpensesSum: currentMonthExpensesSum._sum.amount,
-    accountsExpensesSumByDateRange
+    currentMonthExpensesSum: currentMonthExpensesSum._sum.amount ?? 0,
+    accountsExpensesSumByDateRange,
+    expensesCountByAccounts: expensesCountByAccountIds
   };
   return json(result);
 }

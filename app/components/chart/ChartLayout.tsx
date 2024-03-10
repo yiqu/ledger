@@ -4,7 +4,7 @@ function ChartLayout({ children }: { children: React.ReactNode }) {
   return (
     <Paper
       variant="outlined"
-      sx={ { width: '100%', pt: 2, pb: 1, px: 1, borderRadius: '12px' } }
+      sx={ { width: '100%', p: 1, borderRadius: '12px' } }
       elevation={ 0 }
     >
       { children }

@@ -14,6 +14,7 @@ import StickyToolbar from "~/shared/toolbar/StickyToolbar";
 import type { Account } from "~/shared/models/account.model";
 import type { HttpResponsePaged } from "~/shared/models/http.model";
 import { convertDateDisplay } from "~/api/utils/date.server";
+import { getIdNameFromIdAndNamePathCombo } from "~/shared/utils/url.utils";
 
 
 export const headers: HeadersFunction = ({
@@ -28,6 +29,7 @@ function Accounts() {
   const [searchParams] = useSearchParams();
   const { isMobile } = useScreenSize();
   const { accountId } = useParams();
+  const { id: accountIdOnly } = getIdNameFromIdAndNamePathCombo(accountId ?? '');
   const { pathname } = useLocation();
   const extraSearchParams = searchParams.size > 0 ? `?${searchParams.toString()}` : '';
 
@@ -37,7 +39,7 @@ function Accounts() {
   };
 
   const handleAddNewExpense = () => {
-    const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/accounts/${accountId ?? ''}${extraSearchParams}`, accountId: accountId });
+    const url = urlcat('/add', '', { type: 'expense', redirectUrl: `/accounts/${accountIdOnly ?? ''}${extraSearchParams}`, accountId: accountIdOnly });
     navigate(url);
   };
 
@@ -45,8 +47,8 @@ function Accounts() {
     const proceed = confirm(`Are you sure you want to delete this item?`);
     if (!proceed) return;
 
-    submit({ id: accountId } as any, {
-      action: `/accounts/${accountId}`,
+    submit({ id: accountIdOnly } as any, {
+      action: `/accounts/${accountIdOnly}?redirectUrl=/accounts`,
       method: 'DELETE',
       replace: true,
     });
@@ -59,7 +61,7 @@ function Accounts() {
         break;
       }
       case 'editAccount': {
-        const url = urlcat('', '/accounts/:accountId/edit', { accountId: accountId, redirectUrl: pathname });
+        const url = urlcat('', '/accounts/:accountId/edit', { accountId: accountIdOnly, redirectUrl: pathname });
         navigate(url);
         break;
       }
