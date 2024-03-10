@@ -29,7 +29,7 @@ function ExpensesCountTreeChart({ data }: ExpensesCountTreeChartProps) {
         data={ data }
         dataKey="expensesCount"
         stroke="#fff"
-        animationDuration={ 100 }
+        animationDuration={ 0 }
         content={ <CustomizedContent colors={ ALL_COLORS } /> }
       />
     </ResponsiveContainer>
