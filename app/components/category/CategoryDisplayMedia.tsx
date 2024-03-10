@@ -15,6 +15,7 @@ import shampoo from '../../../public/assets/category/shampoo.png';
 import taxi from '../../../public/assets/category/taxi.png';
 import medicine from '../../../public/assets/category/medicine.png';
 import app from '../../../public/assets/category/app.png';
+import misc from '../../../public/assets/category/misc.png';
 
 function CategoryDisplayMedia({ category }: { category: string; }) {
   let logo: string | undefined = undefined;
@@ -67,6 +68,9 @@ function CategoryDisplayMedia({ category }: { category: string; }) {
       break;
     case 'Pharmacy':
       logo = medicine;
+      break;
+    case 'Miscellaneous':
+      logo = misc;
       break;
     default:
       logo = app;
