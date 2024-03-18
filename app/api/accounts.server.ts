@@ -328,3 +328,80 @@ export async function getShownAccounts(): Promise<Account[]> {
     throw new Error(`Shown accounts could not be retrieved. Code: ${error.code}`);
   }
 }
+
+export async function getTotalExpensesForAccounByDateRange(accountId: string, startDate: number, endDate: number): Promise<number> {
+  try {
+    const res = await prisma.expense.aggregate({
+      _sum: {
+        amount: true,
+      },
+      where: {
+        accountId: accountId,
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      }
+    });
+    return res._sum?.amount || 0;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getTotalExpensesForAccounByDateRange(): ', JSON.stringify(error));
+    throw new Error(`Total expenses for account could not be retrieved. Code: ${error.code}`);
+  }
+}
+
+export async function getTotalExpensesCountForAccountByDateRange(accountId: string, startDate: number, endDate: number): Promise<number> {
+  try {
+    const res = await prisma.expense.count({
+      where: {
+        accountId: accountId,
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      }
+    });
+    return res;
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getTotalExpensesCountForAccountByDateRange(): ', JSON.stringify(error));
+    throw new Error(`Total expenses count for account could not be retrieved. Code: ${error.code}`);
+  }
+}
+
+export async function getHighestAndLowestForAccountByDateRange(accountId: string, startDate: number, endDate: number): Promise<{ highest: number, lowest: number }> {
+  try {
+    const highest = await prisma.expense.findFirst({
+      where: {
+        accountId: accountId,
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      },
+      orderBy: {
+        amount: 'desc'
+      }
+    });
+
+    const lowest = await prisma.expense.findFirst({
+      where: {
+        accountId: accountId,
+        date: {
+          gte: startDate,
+          lte: endDate
+        }
+      },
+      orderBy: {
+        amount: 'asc'
+      }
+    });
+
+    return {
+      highest: highest?.amount || 0,
+      lowest: lowest?.amount || 0
+    };
+  } catch (error: Prisma.PrismaClientKnownRequestError | any) {
+    console.log('Server error at getHighestAndLowestForAccountByDateRange(): ', JSON.stringify(error));
+    throw new Error(`Highest and lowest expenses for account could not be retrieved. Code: ${error.code}`);
+  }
+}
