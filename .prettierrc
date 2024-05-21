@@ -1,0 +1,6 @@
+{
+  "bracketSpacing": true,
+  "singleQuote": true,
+  "experimentalTernaries": true,
+  "printWidth": 120
+}

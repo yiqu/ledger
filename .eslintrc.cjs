@@ -1,45 +1,45 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
-  extends: ["@remix-run/eslint-config", "@remix-run/eslint-config/node"],
+  extends: ['@remix-run/eslint-config', '@remix-run/eslint-config/node'],
   plugins: [
-    "mui-path-imports"
+    'mui-path-imports'
   ],
   rules: {
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-unused-vars": "warn",
-    "@typescript-eslint/no-explicit-any": "off",
-    "no-empty-function": "off",
-    "no-empty": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-empty-interface": "warn",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "mui-path-imports/mui-path-imports": "error",
-    "semi": [
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'no-empty-function': 'off',
+    'no-empty': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-empty-interface': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    'mui-path-imports/mui-path-imports': 'error',
+    'semi': [
       1,
-      "always"
+      'always'
     ],
-    "react/jsx-curly-spacing": [
+    'react/jsx-curly-spacing': [
       1,
-      "always"
+      'always'
     ],
-    "no-use-before-define": [
+    'no-use-before-define': [
       0,
       {
-        "functions": false
+        'functions': false
       }
     ],
-    "react/jsx-indent": [
+    'react/jsx-indent': [
       1,
       2
     ],
-    "space-in-parens": [
+    'space-in-parens': [
       1,
-      "never"
+      'never'
     ],
-    "no-const-assign": [
+    'no-const-assign': [
       2
     ],
-    "no-unused-vars": "off",
-    "import/no-duplicates": "off",
+    'no-unused-vars': 'off',
+    'import/no-duplicates': 'off',
   },
 };
